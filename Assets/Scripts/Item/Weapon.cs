@@ -12,7 +12,7 @@ public class Weapon : PlayerUI
     CancellationTokenSource cancellationTokenSource;
     ArrowPool arrowPool;
     EnemyManager enemyManager;
-    public List<Attachment> Attachments { get; set; }
+    public Attachment Attachment { get; set; }
     [System.Serializable]
     struct Status
     {
@@ -27,7 +27,6 @@ public class Weapon : PlayerUI
         cancellationTokenSource = new CancellationTokenSource();
         arrowPool = itemManager.MainManager.WeaponManager.ArrowPool;
         enemyManager = itemManager.MainManager.EnemyManager;
-        Attachments = new List<Attachment>();
         attachUI.Init(itemManager);
         Attack(cancellationTokenSource.Token).Forget();
     }
@@ -49,6 +48,7 @@ public class Weapon : PlayerUI
     public override void CloseUI()
     {
         attachUI.CloseUI();
+        var attachedItem = attachUI.GetAttachedItem();
     }
     public override void Select(Vector2 vector)
     {

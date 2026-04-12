@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BoxUI : MakerUI
 {
-    Item[] boxitems;
+    BoxItem[] boxitems;
     bool isMove;
     //bool []inventorySelect;
     //bool[] boxSelect;
@@ -13,7 +13,7 @@ public class BoxUI : MakerUI
     public override void Init(ItemManager itemManager)
     {
         InitBase(itemManager);
-        boxitems = new Item[buttons.Length];
+        boxitems = new BoxItem[buttons.Length];
     }
     /// <summary>
     /// ツールのUIを開く際の初期化を行うメソッド
@@ -76,21 +76,44 @@ public class BoxUI : MakerUI
         if (isMove)
         {
             var inventoryType = player.GetInventoryType(player.Bag[inventoryIndex]);
-            var boxItemType = player.GetInventoryType(boxitems[index]);
+            var boxItemType = player.GetInventoryType(boxitems[index].ItemState);
             if (inventoryType == boxItemType || inventoryType == Player.InventoryType.Null || boxItemType == Player.InventoryType.Null)
             {
-                Item item = boxitems[index];
-                boxitems[index] = player.Bag[inventoryIndex];
-                boxitems[index].transform.SetParent(transform);
-                player.ChangeItem(item, player.HaveItem);
+                var boxItem = boxitems[index];
+                if (player.Bag[inventoryIndex] != null)
+                {
+                    boxItem = new BoxItem
+                    {
+                        ItemState = player.Bag[inventoryIndex].ItemState,
+                        Num = player.Bag[inventoryIndex].Num
+                    };
+                }
+                else
+                {
+                    boxitems[index] = null;
+                }
+                if (boxItem == null)
+                {
+                    player.BagReduce(player.Bag[inventoryIndex].Num, inventoryIndex);
+                }
+                else
+                {
+                    player.BagUpdate(boxItem);
+                }
                 isMove = false;
                 UpdateAction();
             }
         }
         else
         {
-            var item = isInventory ? player.Bag[inventoryIndex] : boxitems[index];
-            if (item == null) return;
+            if (isInventory)
+            {
+                if (player.Bag[inventoryIndex] == null) return;
+            }
+            else
+            {
+                if (boxitems[index] == null) return;
+            }
             isMove = true;
             isInventory = !isInventory;
             if (!isInventory)
@@ -170,9 +193,9 @@ public class BoxUI : MakerUI
             buttons[i].color = Color.white;
         }
     }
-    bool EqualItemType(Item item)
+    bool EqualItemType(BoxItem boxItem)
     {
-        var inventoryType = player.GetInventoryType(item);
+        var inventoryType = player.GetInventoryType(boxItem.ItemState);
         var inventoryPlayerType = (Player.InventoryType)inventoryIndex;
         return inventoryType == inventoryPlayerType;
     }

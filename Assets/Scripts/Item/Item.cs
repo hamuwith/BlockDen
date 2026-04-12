@@ -110,3 +110,8 @@ public class ItemState
     public int UnitNum;
     public int MaxNum;
 }
+public class BoxItem
+{
+    public ItemState ItemState;
+    public int Num;
+}

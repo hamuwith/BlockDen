@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using static Food;
 using System.Threading;
 using UnityEditorInternal.Profiling.Memory.Experimental;
+using UnityEditor.Search;
+using static UnityEditor.Progress;
 
 public class Player : Character
 {
@@ -18,6 +20,8 @@ public class Player : Character
     [SerializeField] Inventory inventory;
     [SerializeField] PlayerUI playerUI;
     [SerializeField] Transform HideTransform;
+    [SerializeField] float jumpForce;
+    [SerializeField] float breakMoveSpeed;
     Item[] toolItems;
     public Item HaveItem
     {
@@ -35,6 +39,7 @@ public class Player : Character
     public Item[] Bag { get; set; }
     public int[] MaterialBag { get; set; }
     bool isMove;
+    bool isBreak;
     Vector3 playerDirection;
     Vector3 gravityDirection;
     Transform moveTarget;
@@ -42,6 +47,7 @@ public class Player : Character
     new Rigidbody rigidbody;
     int bagIndex;
     Block.BlockTypeEnum currentToolType;
+    Vector3 prevPosition;
     public int BagIndex
     {
         get
@@ -86,23 +92,27 @@ public class Player : Character
     }
     public InventoryType GetInventoryType(Item item)
     {
-        if(item == null)
+        return GetInventoryType(item?.ItemState);
+    }
+    public InventoryType GetInventoryType(ItemState itemState)
+    {
+        if (itemState == null)
         {
             return InventoryType.Null;
         }
-        else if (item.ItemState.ItemType == ItemCategory.BreakTool)
+        else if (itemState.ItemType == ItemCategory.BreakTool)
         {
             return InventoryType.Tool;
         }
-        else if (item.ItemState.ItemType == ItemCategory.Food)
+        else if (itemState.ItemType == ItemCategory.Food)
         {
             return InventoryType.Food;
         }
-        else if(item.ItemState.ItemType == ItemCategory.Material)
+        else if (itemState.ItemType == ItemCategory.Material)
         {
             return InventoryType.Material;
         }
-        else if (item.ItemState.ItemType == ItemCategory.Bag)
+        else if (itemState.ItemType == ItemCategory.Bag)
         {
             return InventoryType.Bag;
         }
@@ -134,12 +144,12 @@ public class Player : Character
         toolItems = new Item[firstItems.Length];
         foreach (var firstItem in firstItems)
         {
-            var bagState = GetBagState(firstItem);
+            var bagState = GetBagState(firstItem.ItemState);
             BagUpdate(bagState, firstItem);
             firstItem.transform.SetParent(hand);
         }
         var firstBag = itemManager.InstantiateFirstBag(Vector3.zero, null);
-        var bagItemState = GetBagState(firstBag);
+        var bagItemState = GetBagState(firstBag.ItemState);
         BagUpdate(bagItemState, firstBag);
         BagIndex = 0;
     }
@@ -224,7 +234,8 @@ public class Player : Character
     private void ActionStop()
     {
         animator.SetBool("isBreaking", false);
-        if(targetPosition.HasValue)
+        isBreak = false;
+        if (targetPosition.HasValue)
         {
             var block = mapManager.GetBlock(targetPosition.Value);
             block.ResetHardness();
@@ -233,6 +244,7 @@ public class Player : Character
     private void Break()
     {
         animator.SetBool("isBreaking", true);
+        isBreak = true;
     }
     public void BreakAction()
     {
@@ -300,7 +312,7 @@ public class Player : Character
             toolItems[i].transform.localPosition = Vector3.zero;
         }
     }
-    private void BagUpdate(BagStatus bagStatus, Item item, Item prev = null)
+    private void BagUpdate(BagStatus bagStatus, Item item)
     {
         var intentoryType = GetInventoryType(item);
         if (bagStatus == BagStatus.Success)
@@ -326,18 +338,15 @@ public class Player : Character
         }
         else
         {
-            intentoryType = GetInventoryType(prev);
-            Bag[(int)intentoryType] = null;
-            InventoryUpdate();
+            Debug.LogError($"BagUpdate Error: {bagStatus}, Item: {item.ItemState.ItemType}, Num: {item.Num}");
         }
-        Debug.Log($"BagUpdate: {bagStatus}, InventoryType: {intentoryType}, Item: {item.ItemState.ItemType}, Num: {item.Num}");
     }
-    private BagStatus GetBagState(Item item)
+    private BagStatus GetBagState(ItemState itemState)
     {
-        var intentoryType = GetInventoryType(item);
+        var intentoryType = GetInventoryType(itemState);
         if (intentoryType == InventoryType.Food || intentoryType == InventoryType.Carry || intentoryType == InventoryType.Bag)
         {
-            if (Bag[(int)intentoryType] == null || item.ItemState.Id != Bag[(int)intentoryType].ItemState.Id)
+            if (Bag[(int)intentoryType] == null || itemState.Id != Bag[(int)intentoryType].ItemState.Id)
             {
                 return BagStatus.Success;
             }
@@ -356,10 +365,43 @@ public class Player : Character
             return BagStatus.ToolSuccess;
         }
     }
-    private BagStatus BagReduce(int num, int index)
+    public void BagUpdate(BoxItem boxItem)
+    {
+        var bagStatus = GetBagState(boxItem.ItemState);
+        var itemState = boxItem.ItemState;
+        var intentoryType = GetInventoryType(itemState);
+        if (bagStatus == BagStatus.Success)
+        {
+            var item = itemManager.InstantiateItem(itemState.ItemType, itemState.Id, Vector3.zero);
+            Bag[(int)intentoryType] = item;
+            InventoryUpdate();
+        }
+        else if (bagStatus == BagStatus.Add)
+        {
+            Bag[(int)intentoryType].Num += boxItem.Num;
+            InventoryUpdate();
+        }
+        else if (bagStatus == BagStatus.MaterialAdd)
+        {
+            MaterialBag[itemState.Id] += boxItem.Num;
+        }
+        else if (bagStatus == BagStatus.ToolSuccess)
+        {
+            var item = itemManager.InstantiateItem(itemState.ItemType, itemState.Id, Vector3.zero);
+            var breakToolType = (item as BreakTool).BlockType;
+            if (toolItems[(int)breakToolType] != null) Destroy(toolItems[(int)breakToolType].gameObject);
+            toolItems[(int)breakToolType] = item;
+            ChangeTool(breakToolType, true);
+        }
+        else
+        {
+            Debug.LogError($"BagUpdate Error: {bagStatus}, Item: {itemState.ItemType}, Num: {boxItem.Num}");
+        }
+    }
+    public BagStatus BagReduce(int num, int index)
     {
         Bag[index].Num -= num;
-        if (Bag[index].Num == 0)
+        if (Bag[index].Num <= 0)
         {
             Destroy(Bag[index].gameObject);
             Bag[index] = null;
@@ -370,36 +412,6 @@ public class Player : Character
         }
         InventoryUpdate();
         return BagStatus.Success;
-    }
-    public BagStatus BagAttach(int index)
-    {
-        Bag[index].Num--;
-        if (Bag[index].Num <= 0)
-        {
-            Bag[index] = null;
-            BagIndex = 0;
-            InventoryUpdate();
-            return BagStatus.Empty;
-
-        }
-        InventoryUpdate();
-        return BagStatus.Success;
-    }
-    public BagStatus BagUnattach(int index, Item item)
-    {
-        Debug.Log(Bag[index]?.Num);
-        if (Bag[index] == null)
-        {
-            Bag[index] = item;
-            InBag(Bag[index]);
-            BagIndex = index;
-            InventoryUpdate();
-            return BagStatus.Success;
-
-        }
-        Bag[index].Num++;
-        InventoryUpdate();
-        return BagStatus.Add;
     }
     void InventoryUpdate()
     {
@@ -433,7 +445,7 @@ public class Player : Character
         {
             if ((transform.position - item.transform.position).sqrMagnitude <= sqrRange)
             {
-                var status = GetBagState(item);
+                var status = GetBagState(item.ItemState);
                 BagUpdate(status, item);
                 if (status == BagStatus.Filled) continue;
                 else if (status == BagStatus.Add || status == BagStatus.MaterialAdd)
@@ -459,7 +471,7 @@ public class Player : Character
     /// <returns></returns>
     public void Make(Item item)
     {
-        var status = GetBagState(item);
+        var status = GetBagState(item.ItemState);
         var makeItem = item;
         if (status == BagStatus.Success || status == BagStatus.ToolSuccess)
         {
@@ -472,19 +484,6 @@ public class Player : Character
         Debug.Log($"Make: {status}, Item: {makeItem.ItemState.ItemType}, Num: {makeItem.Num}");
         BagUpdate(status, makeItem);
         Debug.Log("Make1");
-    }
-    /// <summary>
-    /// アイテムを変更するメソッド
-    /// </summary>
-    /// <param name="item"></param>
-    public void ChangeItem(Item item, Item previous)
-    {
-        var status = GetBagState(item);
-        BagUpdate(status, item, previous);
-        if (status == BagStatus.Success || status == BagStatus.ToolSuccess)
-        {
-            InBag(item);
-        }
     }
     private void InBag(Item item)
     {
@@ -540,13 +539,50 @@ public class Player : Character
     private void FixedUpdate()
     {
         var gravityDirection = Vector3.down;
-        bool isHorizon = animator.GetBool("isBreaking");
-        if (moveTarget != null && !isHorizon)
+        MovePlayer();
+        if (moveTarget != null)
         {
             gravityDirection = -(transform.position - moveTarget.position).normalized;
         }
-        MovePlayer(isHorizon);
         rigidbody.AddForce(gravityDirection * 8f, ForceMode.Acceleration);
+        prevPosition = transform.position;
+    }
+    private void MovePlayer()
+    {
+        if (moveTarget == null)
+        {
+            return;
+        }
+        var gravityDirectionForward = GetClosestFaceNormal(transform.position, moveTarget.position);
+        if(isBreak && gravityDirectionForward != gravityDirection)
+        {
+            return;
+        }
+        gravityDirection = gravityDirectionForward;
+        if (gravityDirection == Vector3.up) gravityDirection = Vector3.down;
+        Vector3 moveDirection = MoveDirection(gravityDirection);
+        if (Vector3.Dot(moveDirection, Vector3.down) > 0.001f)
+        {
+            jump = true;
+            gravityDirection = Vector3.down;
+            moveDirection = MoveDirection(gravityDirection);
+            transform.rotation = Quaternion.LookRotation(moveDirection, -gravityDirection);
+            var forceDirection = moveDirection - gravityDirection;
+            rigidbody.AddForce(forceDirection * jumpForce, ForceMode.Impulse);
+            moveTarget = null;
+        }
+        else
+        {
+            if (!isMove) return;
+            transform.rotation = Quaternion.LookRotation(moveDirection, -gravityDirection);
+            rigidbody.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime * foodStatus.MoveSpeed * (isBreak ? breakMoveSpeed : 1f));
+        }
+    }
+    Vector3 MoveDirection(Vector3 gravityDirection)
+    {
+        Vector3 moveDirection = playerDirection;
+        moveDirection = Quaternion.Euler(-gravityDirection.z * 90f, 0f, gravityDirection.x * 90f) * playerDirection;
+        return moveDirection;
     }
     void SetTarget(Vector3Int playerPos, Vector3 playerDirection)
     {
@@ -572,25 +608,6 @@ public class Player : Character
         }
         TargetHighlight(targetBlock);
     }
-    Vector3 MoveDirection()
-    {
-        Vector3 moveDirection = playerDirection;
-        moveDirection = Quaternion.Euler(-gravityDirection.z * 90f, 0f, gravityDirection.x * 90f) * playerDirection;
-        return moveDirection;
-    }
-    private void MovePlayer(bool isHorizon)
-    {
-        if (!isMove) return;
-        if (moveTarget == null)
-        {
-            return;
-        }
-        if(isHorizon) gravityDirection = Vector3.down;
-        else gravityDirection = GetClosestFaceNormal(transform.position, moveTarget.position);
-        Vector3 moveDirection = MoveDirection();
-        transform.rotation = Quaternion.LookRotation(moveDirection, -gravityDirection);
-        rigidbody.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime * foodStatus.MoveSpeed);
-    }
     private void TargetHighlight(Vector3Int? targetBlock)
     {
         if (targetBlock == targetPosition)
@@ -615,13 +632,13 @@ public class Player : Character
         {
             return targetPosition;
         }
-        Vector3 targetForward = Quaternion.AngleAxis(-45f, transform.right) * playerDirection;
+        Vector3 targetForward = Quaternion.AngleAxis(45f, transform.right) * playerDirection;
         targetPosition = Vector3Int.RoundToInt(playerPos + targetForward);
         if (mapManager.IsBlock(targetPosition))
         {
             return targetPosition;
         }
-        targetForward = Quaternion.AngleAxis(45f, transform.right) * playerDirection;
+        targetForward = Quaternion.AngleAxis(-45f, transform.right) * playerDirection;
         targetPosition = Vector3Int.RoundToInt(playerPos + targetForward);
         Vector3Int ridePosition = Vector3Int.RoundToInt(transform.position - transform.up);
         if (mapManager.IsBlock(targetPosition) && ridePosition != targetPosition)
@@ -660,13 +677,13 @@ public class Player : Character
         {
             return targetPosition;
         }
-        Vector3 targetForward = Quaternion.AngleAxis(-45f, transform.right) * playerDirection;
+        Vector3 targetForward = Quaternion.AngleAxis(45f, transform.right) * playerDirection;
         targetPosition = Vector3Int.RoundToInt(playerPos + targetForward);
         if (mapManager.IsTool(targetPosition))
         {
             return targetPosition;
         }
-        targetForward = Quaternion.AngleAxis(45f, transform.right) * playerDirection;
+        targetForward = Quaternion.AngleAxis(-45f, transform.right) * playerDirection;
         targetPosition = Vector3Int.RoundToInt(playerPos + targetForward);
         Vector3Int ridePosition = Vector3Int.RoundToInt(transform.position - transform.up);
         if (mapManager.IsTool(targetPosition) && ridePosition != targetPosition)
@@ -685,7 +702,7 @@ public class Player : Character
 
         if (ax >= ay && ax >= az)
             return dir.x >= 0 ? Vector3.right : Vector3.left;
-        else if (ay >= ax && ay >= az)
+        else if (ay > ax && ay > az)
             return dir.y >= 0 ? Vector3.up : Vector3.down;
         else
             return dir.z >= 0 ? Vector3.forward : Vector3.back;
@@ -694,8 +711,12 @@ public class Player : Character
     {
         if (collision.collider.CompareTag("Block"))
         {
-            moveTarget = collision.transform;
-            jump = Vector3.Dot(collision.contacts[0].point - transform.position, Vector3.down) > 0f;
+            var gravityDirection = GetClosestFaceNormal(transform.position, collision.transform.position);
+            if (gravityDirection == Vector3.down) jump = false;
+            if (!jump)
+            {
+                moveTarget = collision.transform;
+            }
         }
     }
     void OnDestroy()

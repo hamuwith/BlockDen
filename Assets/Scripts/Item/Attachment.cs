@@ -28,28 +28,15 @@ public class Attachment : Item
     public int MaxNum => maxNum;
     public bool IsUsed => isUsed;
 
-    static public void SumAttachment(ref Attachment result, List<Attachment> list)
+    static public void SumAttachment(ref Attachment result, ref Queue<Attachment> consumables, Attachment attachment)
     {
-        bool isItem = false;
-        foreach (var attachment in list)
+        result.damage += attachment.Damage;
+        result.attackSpeed += attachment.AttackSpeed;
+        result.attackRange += attachment.AttackRange;
+        result.effection += attachment.Effection;
+        if (attachment.ice > 0 || attachment.poison > 0 || attachment.lightning > 0 || attachment.shining > 0 || attachment.dark > 0 || attachment.strong > 0)
         {
-            result.damage += attachment.Damage;
-            result.attackSpeed += attachment.AttackSpeed;
-            result.attackRange += attachment.AttackRange;
-            result.effection += attachment.Effection;
-            if (!isItem)
-            {
-                result.ice += attachment.Ice;
-                result.poison += attachment.Poison;
-                result.lightning += attachment.Lightning;
-                result.shining += attachment.Shining;
-                result.dark += attachment.Dark;
-                result.strong += attachment.Strong;
-                if (result.ice > 0 || result.poison > 0 || result.lightning > 0 || result.shining > 0 || result.dark > 0 || result.strong > 0)
-                {
-                    isItem = true;
-                }
-            }
+            consumables.Enqueue(attachment);
         }
     }
 }

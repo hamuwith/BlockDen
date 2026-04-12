@@ -1973,7 +1973,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3371159609432252604
 MonoBehaviour:
@@ -1987,7 +1987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73538321084acfb409598c9f61192a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  moveSpeed: 3
+  moveSpeed: 4.5
   inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   itemRange: 1
   hand: {fileID: 2059120296667105628}
@@ -1996,6 +1996,8 @@ MonoBehaviour:
   inventory: {fileID: 6702810572111071827}
   playerUI: {fileID: 3072156335598699163}
   HideTransform: {fileID: 8953295685078466233}
+  jumpForce: 2
+  breakMoveSpeed: 1
 --- !u!95 &-7535496821631984726
 Animator:
   serializedVersion: 7

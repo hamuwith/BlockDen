@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6099215892290959085}
   - component: {fileID: 3295509453625154372}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: Touseki
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20bf5ac0a1a634e4c8c70c6d100426f5, type: 2}
+  - {fileID: 2100000, guid: 073aff00a4f58ef4db3e5894629c51d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -103,4 +103,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196913e37d37b0c41875faef3b4aa510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrow
-  speed: 5
+  speed: 3

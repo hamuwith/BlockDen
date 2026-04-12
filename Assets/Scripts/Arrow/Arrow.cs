@@ -31,10 +31,12 @@ public class Arrow : MonoBehaviour
     }
     private async UniTaskVoid Attack(Enemy target, int damage, Attachment attachment, CancellationToken cancellationToken)
     {
-        Vector3 direction = (target.transform.position - transform.position).normalized;
+        Vector3 direction = Vector3.zero;
         while (true)
         {
-            if(target.IsDead())
+            direction = (target.transform.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward, direction);
+            if (target.IsDead())
             {
                 pool.Release(this);
                 return;

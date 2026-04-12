@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 public class AttachUI : MakerUI
 {
-    protected List<Item> attachmentItems;
+    protected List<BoxItem> attachmentItems;
     protected bool isMove;
     protected int attachmentIndex;
     protected virtual Item.ItemCategory ItemCategory => Item.ItemCategory.Status;
     public override void Init(ItemManager itemManager)
     {
         InitBase(itemManager);
-        attachmentItems = new List<Item>();
+        attachmentItems = new List<BoxItem>();
     }
     public override void OpenUI(Player player)
     {
@@ -37,6 +37,17 @@ public class AttachUI : MakerUI
         player.CloseToolUI();
         player = null;
     }
+    public BoxItem GetAttachedItem()
+    {
+        if (attachmentIndex == attachmentItems.Count)
+        {
+            return null;
+        }
+        else
+        {
+            return attachmentItems[attachmentIndex];
+        }
+    }
     public override void Select(Vector2 vector)
     {
     }
@@ -46,8 +57,13 @@ public class AttachUI : MakerUI
         {
             if(isMove)
             {
-                attachmentItems.Add(player.Bag[inventoryIndex]);
-                player.BagAttach(inventoryIndex);
+                BoxItem boxItem = new BoxItem
+                {
+                    ItemState = player.Bag[inventoryIndex].ItemState,
+                    Num = player.Bag[inventoryIndex].Num
+                };
+                attachmentItems.Add(boxItem);
+                player.BagReduce(1, inventoryIndex);
                 if (player.Bag[inventoryIndex] != null)
                 {
                     isInventory = true;
@@ -76,7 +92,7 @@ public class AttachUI : MakerUI
             }
             else
             {
-                player.BagUnattach(inventoryIndex, attachmentItems[attachmentItems.Count - 1]);
+                player.BagUpdate(attachmentItems[attachmentIndex]);
                 attachmentItems.RemoveAt(attachmentItems.Count - 1);
                 UpdateAction();
                 isMove = false;
