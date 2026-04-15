@@ -52,12 +52,16 @@ public class MapManager : MonoBehaviour
         Blocks = new Block[x, y, z];
         for (int i = 0; i < x; i++)
         {
-            for (int j = 0; j < y; j++)
+            for (int j = 0; j < y - 1; j++)
             {
                 for (int k = 0; k < z; k++)
                 {
                     if (maps[i, j, k] < 0) continue;
                     Blocks[i, j, k] = itemManager.InstantiateBlock(ItemCategory.NatureBlock, maps[i, j, k], new Vector3Int(i, j, k), transform);
+                    if(maps[i, j + 1, k] >= 0)
+                    {
+                        Blocks[i, j, k].gameObject.SetActive(false);
+                    }
                 }
             }
         }
@@ -109,10 +113,25 @@ public class MapManager : MonoBehaviour
         {
             Destroy(Blocks[pos.x, pos.y, pos.z].gameObject);
             Blocks[pos.x, pos.y, pos.z] = null;
+            if (pos.y > 0)
+            {
+                Vector3Int vector3Int = new Vector3Int(pos.x, pos.y - 1, pos.z);
+                if (vector3Int.y >= 0) RemoveSetActive(vector3Int);
+                vector3Int = new Vector3Int(pos.x - 1, pos.y, pos.z);
+                if (vector3Int.x >= 0) RemoveSetActive(vector3Int);
+                vector3Int = new Vector3Int(pos.x + 1, pos.y, pos.z);
+                if (vector3Int.x < Width) RemoveSetActive(vector3Int);
+                vector3Int = new Vector3Int(pos.x, pos.y, pos.z - 1);
+                if (vector3Int.z >= 0) RemoveSetActive(vector3Int);
+                vector3Int = new Vector3Int(pos.x, pos.y, pos.z + 1);
+                if (vector3Int.z < Depth) RemoveSetActive(vector3Int);
+            }
         }
         else
         {
             MapUpdate(pos, (Block)itemManager.GetItem(category, id));
+            Vector3Int vector3Int = new Vector3Int(pos.x, pos.y - 1, pos.z);
+            if(vector3Int.y >= 0) AddSetActive(vector3Int);
         }
         return Blocks[pos.x, pos.y, pos.z];
     }
@@ -127,6 +146,27 @@ public class MapManager : MonoBehaviour
         if (hp <= 0)
         {
             Debug.Log("Game Over");
+        }
+    }
+    private void RemoveSetActive(Vector3Int pos)
+    {
+        Block block = Blocks[pos.x, pos.y, pos.z];
+        if (block != null && block.gameObject.activeSelf == false)
+        {
+            block.gameObject.SetActive(true);
+        }
+    }
+    private void AddSetActive(Vector3Int pos)
+    {
+        Block block = Blocks[pos.x, pos.y, pos.z];
+        bool isActive = false;
+        if (pos.x > 0) isActive |= Blocks[pos.x - 1, pos.y, pos.z] == null;
+        if (pos.x < Width - 1) isActive |= Blocks[pos.x + 1, pos.y, pos.z] == null;
+        if (pos.z > 0) isActive |= Blocks[pos.x, pos.y, pos.z - 1] == null;
+        if (pos.z < Depth - 1) isActive |= Blocks[pos.x, pos.y, pos.z + 1] == null;
+        if (!isActive)
+        {
+            block.gameObject.SetActive(false);
         }
     }
 }

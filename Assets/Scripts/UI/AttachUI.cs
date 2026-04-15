@@ -92,7 +92,7 @@ public class AttachUI : MakerUI
             }
             else
             {
-                player.BagUpdate(attachmentItems[attachmentIndex]);
+                player.BagUpdate(attachmentItems[attachmentIndex], false);
                 attachmentItems.RemoveAt(attachmentItems.Count - 1);
                 UpdateAction();
                 isMove = false;

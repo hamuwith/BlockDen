@@ -104,3 +104,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrow
   speed: 5
+  height: 0.3
+  heightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.3209949
+      outSlope: 2.3209949
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.20395932
+    - serializedVersion: 3
+      time: 1.0000005
+      value: 0.000001525972
+      inSlope: -4.7457895
+      outSlope: -4.7457895
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07514521
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

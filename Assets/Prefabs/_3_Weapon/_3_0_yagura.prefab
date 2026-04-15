@@ -719,7 +719,7 @@ MonoBehaviour:
   - {fileID: 4231321864543101165}
   - {fileID: 356414655212115887}
   inventoryHighlight: {fileID: 3809949340531145701}
-  makableItems: []
+  makableCategorys: 
   menu: {fileID: 0}
   canvas: {fileID: 7594567806826378933}
 --- !u!223 &7594567806826378933
@@ -2578,7 +2578,9 @@ MonoBehaviour:
     - Category: 8
       Id: 0
       Num: 3
-    MaxStack: 1
+    UnitNum: 0
+    MaxNum: 0
+    Material: {fileID: 2100000, guid: 9c04cd647834ac24a901db1d6fcfbfb6, type: 2}
   hardness: 10000
   itemPercents: []
   dropItem100: {fileID: 0}

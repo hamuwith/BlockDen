@@ -805,6 +805,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1587056742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1587056743}
+  - component: {fileID: 1587056744}
+  m_Layer: 0
+  m_Name: DropItemPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1587056743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1587056742}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1942017571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1587056744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1587056742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3a1994f156a414093372f81c581625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DropItemPool
+  itemPrefab: {fileID: 4825336347412532106, guid: 1a41afba53eadd2489bd8ed36d9ac153, type: 3}
+  defaultCapacity: 300
+  maxSize: 2000
 --- !u!1 &1749889451
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,6 +947,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1981094479}
+  - {fileID: 1587056743}
   - {fileID: 1329032746}
   - {fileID: 1749889453}
   m_Father: {fileID: 0}
@@ -937,6 +985,7 @@ MonoBehaviour:
     - {fileID: 1920032253522617535, guid: c2e656c7c37ca41449320ca95500c13b, type: 3}
   - Items:
     - {fileID: 2108070430345632071, guid: 2547a171242982345945dbae2ac301e2, type: 3}
+    - {fileID: 2108070430345632071, guid: afe9cd0a270b5664db76502659e715d9, type: 3}
   - Items:
     - {fileID: -8440485178977658288, guid: f98115d16f5fc374e83c733b11cee680, type: 3}
   - Items:
@@ -980,6 +1029,7 @@ MonoBehaviour:
     - {fileID: -307707886456804880, guid: ebad47889d58f5d419c24119168da2e4, type: 3}
     - {fileID: -307707886456804880, guid: c94dde20b97e68144a5004ac202848de, type: 3}
   highlightMaterial: {fileID: 2100000, guid: 9bfac0f6bf1bf8d4c921c235d7959fa6, type: 2}
+  dropItemPool: {fileID: 1587056744}
 --- !u!114 &1942017573
 MonoBehaviour:
   m_ObjectHideFlags: 0

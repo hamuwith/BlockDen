@@ -161,7 +161,9 @@ MonoBehaviour:
     - Category: 8
       Id: 2
       Num: 4
-    MaxStack: 1
+    UnitNum: 0
+    MaxNum: 0
+    Material: {fileID: 2100000, guid: 52c53e3fc2670064fb77ca71b3bbcb72, type: 2}
   blockType: 1
   lv: 1
   breakPower: 10

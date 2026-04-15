@@ -158,7 +158,9 @@ MonoBehaviour:
     ItemType: 0
     Icon: {fileID: 21300000, guid: 250c2cb64fea43343a49cbfc4463ca24, type: 3}
     Materials: []
-    MaxStack: 1000
+    UnitNum: 0
+    MaxNum: 0
+    Material: {fileID: 2100000, guid: 4d62755f7c54db84fa0ea553561b1fc1, type: 2}
   hardness: 3
   itemPercents: []
   dropItem100: {fileID: -2730271846464685325, guid: 3415822710947514db95de7469197d62, type: 3}

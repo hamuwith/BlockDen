@@ -2573,13 +2573,14 @@ MonoBehaviour:
   itemState:
     Id: 0
     ItemType: 3
-    Icon: {fileID: 21300000, guid: 07fd47c839923c94eb4ab3e17afd014b, type: 3}
+    Icon: {fileID: 21300000, guid: 61d0269183d6f1742ac1d9a850de0b73, type: 3}
     Materials:
     - Category: 8
       Id: 0
       Num: 3
     UnitNum: 0
     MaxNum: 0
+    Material: {fileID: 2100000, guid: 2af7dd44c53805e46a5fb73ad942de7a, type: 2}
   hardness: 10000
   itemPercents: []
   dropItem100: {fileID: 0}

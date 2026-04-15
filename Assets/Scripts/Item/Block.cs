@@ -10,7 +10,6 @@ public class Block : Item
     int currentHardness;
     Material[] highlightMaterials;
     Material[] normalmaterials;
-    MeshRenderer meshRenderer;
     private MaterialPropertyBlock materialBlock;
     public BlockTypeEnum BlockType => blockType;
     readonly float HideRate = 0.35f;
@@ -34,7 +33,6 @@ public class Block : Item
     public override void Init(ItemManager itemManager)
     {
         base.Init(itemManager);
-        meshRenderer = GetComponent<MeshRenderer>();
         highlightMaterials = new Material[2];
         highlightMaterials[0] = meshRenderer.material;
         highlightMaterials[1] = itemManager.HighlightMaterial;
@@ -65,7 +63,7 @@ public class Block : Item
                 currentHardness = hardness;
                 life--;
                 itemManager.DropItem(this, pos);
-                if (life <= 0)
+                if (life == 0)
                 {
                     itemManager.BreakBlock(pos);
                     return true;
@@ -96,27 +94,16 @@ public class Block : Item
         return null;
     }
     /// <summary>
-    /// ブロックを設置する際の挙動を定義するメソッド
-    /// </summary>
-    /// <param name="pos"></param>
-    public virtual void SetBlock(Vector3Int pos)
-    {
-        transform.position = pos;
-        GetComponent<Rigidbody>().isKinematic = true;
-        gameObject.layer = LayerMask.NameToLayer("Block");
-        transform.localScale = Vector3.one;
-    }
-    /// <summary>
     /// ブロックをアイテムとして設置する際の挙動を定義するメソッド
     /// </summary>
     /// <param name="isKinematic"></param>
-    public override void SetItem(bool isKinematic = false)
-    {
-        base.SetItem(isKinematic);
-        GetComponent<Rigidbody>().isKinematic = isKinematic;
-        gameObject.layer = LayerMask.NameToLayer("Item");
-        transform.localScale = Vector3.one * 0.3f;
-    }
+    //public override void SetItem(bool isKinematic = false)
+    //{
+    //    base.SetItem(isKinematic);
+    //    GetComponent<Rigidbody>().isKinematic = isKinematic;
+    //    gameObject.layer = LayerMask.NameToLayer("Item");
+    //    transform.localScale = Vector3.one * 0.3f;
+    //}
     /// <summary>
     /// ブロックが壊れたときの落とすブロックを定義するメソッド
     /// </summary>
@@ -139,11 +126,6 @@ public class Block : Item
         {
             meshRenderer.sharedMaterials = normalmaterials;
         }
-    }
-    public override void Drop()
-    {
-        Highlight(false);
-        base.Drop();
     }
     private void OnTriggerEnter(Collider other)
     {

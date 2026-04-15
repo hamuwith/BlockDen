@@ -161,7 +161,9 @@ MonoBehaviour:
     - Category: 8
       Id: 19
       Num: 1
-    MaxStack: 1000
+    UnitNum: 0
+    MaxNum: 0
+    Material: {fileID: 2100000, guid: 24e760ce7bbe59a43a8d653f3f22f5d3, type: 2}
   foodStatus:
     Duration: 30000
     MoveSpeed: 1.2

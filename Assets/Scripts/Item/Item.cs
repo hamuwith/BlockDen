@@ -2,12 +2,14 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using static Item;
+using UnityEngine.Pool;
 
 public class Item : MonoBehaviour
 {
     [SerializeField] ItemState itemState;
     protected ItemManager itemManager;
     BoxCollider boxCollider;
+    protected MeshRenderer meshRenderer;
     CancellationTokenSource cancellationTokenSource;
     public int Num { get; set; }
     public ItemState ItemState => itemState;
@@ -49,6 +51,19 @@ public class Item : MonoBehaviour
         public int Id;
         public int Num;
     }
+    private ObjectPool<Item> pool;
+    /// <summary>
+    /// ObjectPoolをセットします。
+    /// </summary>
+    /// <param name="pool"></param>
+    public void SetPool(ObjectPool<Item> pool)
+    {
+        this.pool = pool;
+    }
+    public void Release()
+    {
+        pool.Release(this);
+    }
     /// <summary>
     /// アイテムの初期化を行う
     /// </summary>
@@ -58,11 +73,25 @@ public class Item : MonoBehaviour
         this.itemManager = itemManager;
         boxCollider = GetComponent<BoxCollider>();
         Num = 1;
+        meshRenderer = GetComponent<MeshRenderer>();
+        if(meshRenderer != null) meshRenderer.sharedMaterial = itemState.Material;
+    }
+    /// <summary>
+    /// アイテムの状態をセットするメソッド
+    /// </summary>
+    /// <param name="itemState"></param>
+    /// <param name="num"></param>
+    public void SetItemState(ItemState itemState, int num, Vector3 vector3)
+    {
+        this.itemState = itemState;
+        Num = num;
+        meshRenderer.sharedMaterial = itemState.Material;
+        transform.position = vector3;
     }
     /// <summary>
     /// アイテムをドロップする際の挙動を定義するメソッド
     /// </summary>
-    public virtual void Drop()
+    public void Drop()
     {
         Vector3 angle = new Vector3(Random.Range(-1f, 1f), 1, Random.Range(-1f, 1f));
         DropForce(angle);
@@ -85,9 +114,9 @@ public class Item : MonoBehaviour
     /// アイテムをセットする際の挙動を定義するメソッド
     /// </summary>
     /// <param name="isKinematic"></param>
-    public virtual void SetItem(bool isKinematic = false)
+    public virtual void SetItem(bool isHit = false)
     {
-        boxCollider.enabled = !isKinematic;
+        boxCollider.enabled = isHit;
     }
     async UniTaskVoid CanGetItem(CancellationToken cancellationToken)
     {
@@ -109,6 +138,7 @@ public class ItemState
     public ItemMaterial[] Materials;
     public int UnitNum;
     public int MaxNum;
+    public Material Material;
 }
 public class BoxItem
 {

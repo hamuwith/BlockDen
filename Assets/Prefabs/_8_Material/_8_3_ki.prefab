@@ -158,4 +158,6 @@ MonoBehaviour:
     ItemType: 8
     Icon: {fileID: 21300000, guid: 22cf13217b951ff42b9007fc6145ed41, type: 3}
     Materials: []
-    MaxStack: 1000
+    UnitNum: 0
+    MaxNum: 0
+    Material: {fileID: 2100000, guid: 6349c57426c7b5044b5dbeecbbfdc478, type: 2}

@@ -1,12 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 using static Item;
+using static UnityEngine.Splines.SplineInstantiate;
+using static UnityEditor.Progress;
 
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] Item[] startItems;
     [SerializeField] ItemList[] itemLists;
     [SerializeField] Material highlightMaterial;
+    [SerializeField] DropItemPool dropItemPool;
     public List<Item> Items { get; set; }
     public Material HighlightMaterial => highlightMaterial;
     MapManager mapManager;
@@ -30,6 +33,7 @@ public class ItemManager : MonoBehaviour
                 itemsNum[i] = new int[itemLists[i].Items.Length];
             }
         }
+        dropItemPool.Init(this);
     }
     public int GetItemNum(ItemCategory category)
     {
@@ -49,45 +53,57 @@ public class ItemManager : MonoBehaviour
     /// <param name="pos"></param>
     /// <param name="parent"></param>
     /// <returns></returns>
-    public Item[] InstantiateFirstItems(Vector3 pos, Transform parent = null)
+    public Item[] InstantiateFirstItems(Vector3 pos)
     {
         var items = new Item[startItems.Length];
         for (int i = 0; i < startItems.Length; i++)
         {
-            items[i] = InstantiateItem(startItems[i], pos, parent);
+            items[i] = Instantiate(startItems[i], pos, Quaternion.identity);
+            items[i].Init(this);
+            items[i].SetItem(false);
         }
         return items;
     }
-    public Item InstantiateFirstBag(Vector3 pos, Transform parent = null)
+    public Item InstantiateBag(Vector3 pos)
     {
-        var bag = InstantiateItem(itemLists[(int)ItemCategory.Bag].Items[0], pos, parent);
+        var bag = Instantiate(itemLists[(int)ItemCategory.Bag].Items[0], pos, Quaternion.identity);
+        bag.Init(this);
+        bag.SetItem(false);
         return bag;
+    }
+    public Item InstantiateItem(ItemState itemState, Vector3 pos)
+    {
+        var item = Instantiate(itemLists[(int)itemState.ItemType].Items[itemState.Id], pos, Quaternion.identity);
+        item.Init(this);
+        item.SetItem(false);
+        return item;
     }
     /// <summary>
     /// アイテムIDからアイテムを生成するメソッド
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="pos"></param>
-    /// <param name="parent"></param>
-    /// <returns></returns>
-    public Item InstantiateItem(ItemCategory category, int id, Vector3 pos, Transform parent = null)
+    public Item GetPoolItem(ItemState itemState, int num, Vector3 pos)
     {
-       var  item = InstantiateItem(itemLists[(int)category].Items[id], pos, parent);
-        return item;
+        var instantiateItem = dropItemPool.GetItem();
+        instantiateItem.SetItemState(itemState, 1, pos);
+        instantiateItem.SetItem(true);
+        return instantiateItem;
     }
     /// <summary>
     /// アイテムを生成するメソッド
     /// </summary>
-    /// <param name="item"></param>
-    /// <param name="pos"></param>
-    /// <param name="parent"></param>
     /// <returns></returns>
-    public Item InstantiateItem(Item item, Vector3 pos, Transform parent = null)
+    public Item GetPoolItem(Item item, int num, Vector3 pos)
     {
-        var instantiateItem = Instantiate(item, pos, Quaternion.identity, parent);
-        instantiateItem.Init(this);
-        var isKinematic = parent != null;
-        instantiateItem.SetItem(isKinematic);
+        var instantiateItem = GetPoolItem(item.ItemState, num, pos);
+        return instantiateItem;
+    }
+    /// <summary>
+    /// アイテムを生成するメソッド
+    /// </summary>
+    /// <returns></returns>
+    public Item GetPoolItem(ItemCategory itemCategory, int id, int num, Vector3 pos)
+    {
+        var instantiateItem = GetPoolItem(itemLists[(int)itemCategory].Items[id], num, pos);
         return instantiateItem;
     }
     /// <summary>
@@ -112,7 +128,6 @@ public class ItemManager : MonoBehaviour
     {
         var item = Instantiate(block, pos, Quaternion.identity, parent);
         item.Init(this);
-        item.SetBlock(pos);
         return item;
     }
     /// <summary>
@@ -140,13 +155,14 @@ public class ItemManager : MonoBehaviour
     {
         var item = block.GetDropItem();
         var dropPos = pos + Vector3Int.up;
+        int num = 1;
         if (item.HasValue)
         {
-            var dropItem = InstantiateItem(item.Value.Category, item.Value.Id, dropPos);
+            var dropItem = GetPoolItem(item.Value.Category, item.Value.Id, num, dropPos);
             dropItem.Drop();
         }
         var dropItem100 = block.DropItem100();
-        if(dropItem100 != null) InstantiateItem(dropItem100, dropPos).Drop();
+        if(dropItem100 != null) GetPoolItem(dropItem100, num, dropPos).Drop();
     }
     /// <summary>
     /// ブロックが壊れたときのマップの更新を行うメソッド

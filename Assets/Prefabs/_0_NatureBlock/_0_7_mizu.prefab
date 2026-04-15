@@ -131,11 +131,13 @@ MonoBehaviour:
     ItemType: 0
     Icon: {fileID: 21300000, guid: c45282dcf21016b41bf49ebfdeba3aef, type: 3}
     Materials: []
-    MaxStack: 0
+    UnitNum: 0
+    MaxNum: 0
+    Material: {fileID: 2100000, guid: 7fd96f8255bb9c641bb61d5b31345384, type: 2}
   hardness: 1
   itemPercents: []
   dropItem100: {fileID: 0}
-  life: 5
+  life: -1
   blockType: 3
 --- !u!54 &916359242653036030
 Rigidbody:

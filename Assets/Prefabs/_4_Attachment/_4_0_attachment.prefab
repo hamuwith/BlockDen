@@ -161,7 +161,9 @@ MonoBehaviour:
     - Category: 8
       Id: 0
       Num: 2
-    MaxStack: 1000
+    UnitNum: 0
+    MaxNum: 0
+    Material: {fileID: 2100000, guid: ca7075c2ea654bd4990294a90e744280, type: 2}
   damage: 0
   attackSpeed: 10
   attackRange: 0

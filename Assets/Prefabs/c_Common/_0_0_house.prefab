@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 16}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,11 +133,10 @@ MonoBehaviour:
     Materials: []
     UnitNum: 0
     MaxNum: 0
-    Material: {fileID: 2100000, guid: fffd544af0cb094458ffb5be582567a9, type: 2}
   hardness: 10000
   itemPercents: []
   dropItem100: {fileID: 0}
-  life: -1
+  life: 10000
   blockType: 2
 --- !u!54 &916359242653036030
 Rigidbody:

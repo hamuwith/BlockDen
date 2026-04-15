@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Item;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.NCalc;
 
 public class MakerUI : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class MakerUI : MonoBehaviour
     readonly protected int sliceWidthId = Shader.PropertyToID("_SliceWidth");
     readonly int rawSize = 8;
     ItemManager itemManager;
-    public bool IsMakable => makableItems?.Length > 0;
+    public virtual bool IsMakable => makableItems?.Length > 0;
     /// <summary>
     /// ƒxƒNƒgƒ‹‚Ì•ûŒü‚ð8•ûŒü‚É•ÏŠ·‚·‚é‚½‚ß‚Ì—ñ‹“‘Ì
     /// </summary>
@@ -88,6 +89,7 @@ public class MakerUI : MonoBehaviour
     public virtual void OpenUI(Player player)
     {
         makable = new bool[makableItems.Length];
+        SetEnabled();
         for (int i = 0; i < makableItems.Length; i++)
         {
             buttons[i].sprite = makableItems[i].ItemState.Icon;
@@ -149,7 +151,7 @@ public class MakerUI : MonoBehaviour
         else
         {
             itemManager.RemoveBoxItem(makeItem.ItemState.Materials);
-            player.Make(makeItem);
+            player.Make(makeItem, makeItem.ItemState.UnitNum);
             makeItem = null;
             isInventory = false;
             UpdateAction();
@@ -171,9 +173,10 @@ public class MakerUI : MonoBehaviour
             return false;
         }
     }
-    public virtual void UpdateAction()
+    public virtual bool SetEnabled()
     {
         var haveItems = itemManager.GetBoxItemNum();
+        var isEnabled = false;
         for (int i = 0; i < makableItems.Length; i++)
         {
             makable[i] = true;
@@ -181,6 +184,14 @@ public class MakerUI : MonoBehaviour
             {
                 makable[i] &= (haveItems[(int)material.Category][material.Id]) >= material.Num;
             }
+            isEnabled |= makable[i];
+        }
+        return isEnabled;
+    }
+    public virtual void UpdateAction()
+    {
+        for (int i = 0; i < makableItems.Length; i++)
+        {
             if (makable[i])
             {
                 buttons[i].color = Color.white;
@@ -259,12 +270,14 @@ public class MakerUI : MonoBehaviour
     }
     protected virtual void _Select(Vector2 vector)
     {
-        int index = isInventory ? inventoryIndex : this.index;
-        int MaxIndex = isInventory ? InventoryMaxIndex : this.MaxIndex;
+        var index = isInventory ? inventoryIndex : this.index;
+        var MaxIndex = isInventory ? InventoryMaxIndex : this.MaxIndex;
         if (vector.sqrMagnitude > 0.7f)
         {
             var derection = ToDirection8(vector);
             int preIndex = index;
+            bool up = derection == Direction8.Up || derection == Direction8.UpRight || derection == Direction8.UpLeft;
+            bool down = derection == Direction8.Down || derection == Direction8.DownRight || derection == Direction8.DownLeft;
             if (derection == Direction8.Right || derection == Direction8.UpRight || derection == Direction8.DownRight)
             {
                 if ((index + 1) / rawSize > index / rawSize || index + 1 >= MaxIndex)
@@ -287,14 +300,14 @@ public class MakerUI : MonoBehaviour
                     preIndex--;
                 }
             }
-            if (derection == Direction8.Up || derection == Direction8.UpRight || derection == Direction8.UpLeft)
+            if (up)
             {
                 if (preIndex + rawSize < MaxIndex)
                 {
                     preIndex += rawSize;
                 }
             }
-            else if (derection == Direction8.Down || derection == Direction8.DownRight || derection == Direction8.DownLeft)
+            else if (down)
             {
                 if (preIndex - rawSize >= 0)
                 {

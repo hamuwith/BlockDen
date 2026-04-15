@@ -161,7 +161,9 @@ MonoBehaviour:
     - Category: 8
       Id: 29
       Num: 1
-    MaxStack: 1000
+    UnitNum: 1
+    MaxNum: 100
+    Material: {fileID: 2100000, guid: f1be29843d085394b82f0ab77fd10749, type: 2}
   rate: 5
   plusNum: 0
   speed: 0

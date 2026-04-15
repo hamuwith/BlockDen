@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
     SplineContainer splineContainer;
     CancellationTokenSource cancellationTokenSource;
     public MainManager MainManager { get; private set; }
-    bool clear;
+    //bool clear;
     public int EnemyNum => enemies.Count;
     public float[] SplineLengths { get; private set; }
     /// <summary>
@@ -65,7 +65,7 @@ public class EnemyManager : MonoBehaviour
         {
             enemyPools[i].Init(this);
         }
-        clear = false;
+        //clear = false;
         cancellationTokenSource = new CancellationTokenSource();
         SpawnEnemy(cancellationTokenSource.Token).Forget();
     }
@@ -94,7 +94,7 @@ public class EnemyManager : MonoBehaviour
         {
             await UniTask.Yield(cancellationToken);
         }
-        clear = true;
+        //clear = true;
     }
     /// <summary>
     /// Enemy‚ğŠÇ—ƒŠƒXƒg‚É’Ç‰Á‚µ‚Ü‚·B

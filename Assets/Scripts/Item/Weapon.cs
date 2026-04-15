@@ -23,22 +23,12 @@ public class Weapon : PlayerUI
     public override void Init(ItemManager itemManager)
     {
         BaseInit(itemManager);
-        isAttack = false;
+        isAttack = true;
         cancellationTokenSource = new CancellationTokenSource();
         arrowPool = itemManager.MainManager.WeaponManager.ArrowPool;
         enemyManager = itemManager.MainManager.EnemyManager;
         attachUI.Init(itemManager);
         Attack(cancellationTokenSource.Token).Forget();
-    }
-    public override void SetBlock(Vector3Int pos)
-    {
-        base.SetBlock(pos);
-        isAttack = true;
-    }
-    public override void SetItem(bool isKinematic = false)
-    {
-        base.SetItem(isKinematic);
-        isAttack = false;
     }
     public override void OpenUI(Player player)
     {

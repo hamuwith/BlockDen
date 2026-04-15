@@ -6,9 +6,6 @@ using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using static Food;
 using System.Threading;
-using UnityEditorInternal.Profiling.Memory.Experimental;
-using UnityEditor.Search;
-using static UnityEditor.Progress;
 
 public class Player : Character
 {
@@ -148,7 +145,7 @@ public class Player : Character
             BagUpdate(bagState, firstItem);
             firstItem.transform.SetParent(hand);
         }
-        var firstBag = itemManager.InstantiateFirstBag(Vector3.zero, null);
+        var firstBag = itemManager.InstantiateBag(Vector3.zero);
         var bagItemState = GetBagState(firstBag.ItemState);
         BagUpdate(bagItemState, firstBag);
         BagIndex = 0;
@@ -312,8 +309,9 @@ public class Player : Character
             toolItems[i].transform.localPosition = Vector3.zero;
         }
     }
-    private void BagUpdate(BagStatus bagStatus, Item item)
+    private int BagUpdate(BagStatus bagStatus, Item item, bool isUnit = true)
     {
+        var num = isUnit ? item.ItemState.UnitNum : item.Num;
         var intentoryType = GetInventoryType(item);
         if (bagStatus == BagStatus.Success)
         {
@@ -322,12 +320,13 @@ public class Player : Character
         }
         else if(bagStatus == BagStatus.Add)
         {
-            Bag[(int)intentoryType].Num += item.Num;
+            Bag[(int)intentoryType].Num += num;
+            Debug.Log($"Bag Add: {item.ItemState.ItemType}, Num: {num}, Total Num: {Bag[(int)intentoryType].Num}");
             InventoryUpdate();
         }
         else if (bagStatus == BagStatus.MaterialAdd)
         {
-            MaterialBag[item.ItemState.Id] += item.Num;
+            MaterialBag[item.ItemState.Id] += num;
         }
         else if (bagStatus == BagStatus.ToolSuccess)
         {
@@ -335,11 +334,14 @@ public class Player : Character
             if (toolItems[(int)breakToolType] != null) Destroy(toolItems[(int)breakToolType].gameObject);
             toolItems[(int)breakToolType] = item;
             ChangeTool(breakToolType, true);
+            return 1;
         }
         else
         {
             Debug.LogError($"BagUpdate Error: {bagStatus}, Item: {item.ItemState.ItemType}, Num: {item.Num}");
+            return -1;
         }
+        return num;
     }
     private BagStatus GetBagState(ItemState itemState)
     {
@@ -365,45 +367,59 @@ public class Player : Character
             return BagStatus.ToolSuccess;
         }
     }
-    public void BagUpdate(BoxItem boxItem)
+    public int BagUpdate(BoxItem boxItem, bool isUnit = true)
     {
         var bagStatus = GetBagState(boxItem.ItemState);
         var itemState = boxItem.ItemState;
+        var num = isUnit ? Mathf.Min(boxItem.Num, itemState.UnitNum) : boxItem.Num;
         var intentoryType = GetInventoryType(itemState);
         if (bagStatus == BagStatus.Success)
         {
-            var item = itemManager.InstantiateItem(itemState.ItemType, itemState.Id, Vector3.zero);
+            var item = itemManager.GetPoolItem(itemState, num, Vector3.zero);
             Bag[(int)intentoryType] = item;
             InventoryUpdate();
         }
         else if (bagStatus == BagStatus.Add)
         {
-            Bag[(int)intentoryType].Num += boxItem.Num;
+            Bag[(int)intentoryType].Num += num;
+            if(boxItem.ItemState.MaxNum < Bag[(int)intentoryType].Num)
+            {
+                num -= Bag[(int)intentoryType].Num - boxItem.ItemState.MaxNum;
+                Bag[(int)intentoryType].Num = boxItem.ItemState.MaxNum;
+            }
             InventoryUpdate();
         }
         else if (bagStatus == BagStatus.MaterialAdd)
         {
-            MaterialBag[itemState.Id] += boxItem.Num;
+            MaterialBag[itemState.Id] += num;
+            if (boxItem.ItemState.MaxNum < Bag[(int)intentoryType].Num)
+            {
+                num -= MaterialBag[itemState.Id] - boxItem.ItemState.MaxNum;
+                MaterialBag[itemState.Id] = boxItem.ItemState.MaxNum;
+            }
         }
         else if (bagStatus == BagStatus.ToolSuccess)
         {
-            var item = itemManager.InstantiateItem(itemState.ItemType, itemState.Id, Vector3.zero);
+            var item = itemManager.InstantiateItem(itemState, Vector3.zero);
             var breakToolType = (item as BreakTool).BlockType;
             if (toolItems[(int)breakToolType] != null) Destroy(toolItems[(int)breakToolType].gameObject);
             toolItems[(int)breakToolType] = item;
             ChangeTool(breakToolType, true);
+            return 1;
         }
         else
         {
             Debug.LogError($"BagUpdate Error: {bagStatus}, Item: {itemState.ItemType}, Num: {boxItem.Num}");
+            return -1;
         }
+        return num;
     }
     public BagStatus BagReduce(int num, int index)
     {
         Bag[index].Num -= num;
         if (Bag[index].Num <= 0)
         {
-            Destroy(Bag[index].gameObject);
+            Bag[index].Release();
             Bag[index] = null;
             BagIndex = 0;
             InventoryUpdate();
@@ -432,7 +448,7 @@ public class Player : Character
         if (HaveItem == null) return;
         if (HaveItem.ItemState.ItemType == ItemCategory.BreakTool || HaveItem.ItemState.ItemType == ItemCategory.Bag) return;
         HaveItem.transform.SetParent(null);
-        HaveItem.SetItem(false);
+        HaveItem.SetItem(true);
         HaveItem.PlayerDrop(transform.forward + transform.up);
         Bag[BagIndex] = null;
         BagIndex = 0;
@@ -446,11 +462,11 @@ public class Player : Character
             if ((transform.position - item.transform.position).sqrMagnitude <= sqrRange)
             {
                 var status = GetBagState(item.ItemState);
-                BagUpdate(status, item);
+                BagUpdate(status, item, false);
                 if (status == BagStatus.Filled) continue;
                 else if (status == BagStatus.Add || status == BagStatus.MaterialAdd)
                 {
-                    Destroy(item.gameObject);
+                    item.Release();
                 }
                 else if (status == BagStatus.Success || status == BagStatus.ToolSuccess)
                 {
@@ -469,21 +485,22 @@ public class Player : Character
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public void Make(Item item)
+    public void Make(Item item, int num)
     {
         var status = GetBagState(item.ItemState);
+        Debug.Log($"Make Item: {item.ItemState.ItemType}, Status: {status}");
         var makeItem = item;
-        if (status == BagStatus.Success || status == BagStatus.ToolSuccess)
+        if (status == BagStatus.Success)
         {
-            makeItem = itemManager.InstantiateItem(item, Vector3.zero);
-            BagUpdate(status, makeItem);
+            makeItem = itemManager.GetPoolItem(item, num, Vector3.zero);
             InBag(makeItem);
-            Debug.Log("Make0");
-            return;
         }
-        Debug.Log($"Make: {status}, Item: {makeItem.ItemState.ItemType}, Num: {makeItem.Num}");
+        else if (status == BagStatus.ToolSuccess)
+        {
+            makeItem = itemManager.InstantiateItem(item.ItemState, Vector3.zero);
+            InBag(makeItem);
+        }
         BagUpdate(status, makeItem);
-        Debug.Log("Make1");
     }
     private void InBag(Item item)
     {
@@ -497,7 +514,7 @@ public class Player : Character
             var intentoryType = GetInventoryType(item);
             BagIndex = (int)intentoryType;
         }
-        item.SetItem(true);
+        item.SetItem(false);
     }
     private void SelectBagItem(bool left)
     {
