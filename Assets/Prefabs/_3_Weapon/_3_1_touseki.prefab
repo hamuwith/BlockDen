@@ -2571,7 +2571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   itemState:
-    Id: 0
+    Id: 1
     ItemType: 3
     Icon: {fileID: 21300000, guid: 61d0269183d6f1742ac1d9a850de0b73, type: 3}
     Materials:
@@ -2588,9 +2588,10 @@ MonoBehaviour:
   blockType: 4
   uis: []
   status:
+    arrowId: 1
     damage: 1
-    attackSpeed: 1000
-    range: 100
+    attackSpeed: 2000
+    range: 120
   attachUI: {fileID: 4994856228249922701}
 --- !u!1 &8023624248877115960
 GameObject:

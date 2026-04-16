@@ -177,11 +177,12 @@ public class ItemManager : MonoBehaviour
     /// ボックスのアイテム数を更新するメソッド（追加）
     /// </summary>
     /// <param name="items"></param>
-    public void BoxAdd(int[] itemNums)
+    public void BoxAdd(ItemMaterial[] itemNums)
     {
         for (int i = 0; i < itemNums.Length; i++)
         {
-            itemsNum[(int)ItemCategory.Material][i] += itemNums[i];
+            if (itemNums[i].Id == -1) continue;
+            itemsNum[(int)ItemCategory.Material][itemNums[i].Id] += itemNums[i].Num;
         }
     }
     /// <summary>

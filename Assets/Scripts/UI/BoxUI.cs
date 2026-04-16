@@ -197,8 +197,6 @@ public class BoxUI : MakerUI
         this.player = player;
         inventoryIndex = (int)InventoryType;
         var item = player.Bag[(int)InventoryType];
-        Debug.Log(inventoryIndex);
-        Debug.Log(item);
         isInventory = item != null;
         index = -1;
         if (item != null)

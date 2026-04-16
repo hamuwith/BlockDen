@@ -30,7 +30,7 @@ public class Arrow : MonoBehaviour
     {
         cancellationTokenSource = new CancellationTokenSource();
         transform.position = weapon.position;
-        distance = Vector3.Distance(weapon.transform.position, target.transform.position);
+        distance = Vector3.Distance(weapon.position, target.transform.position);
         Attack(target, damage, attachment, cancellationTokenSource.Token).Forget();
     }
     private async UniTaskVoid Attack(Enemy target, int damage, Attachment attachment, CancellationToken cancellationToken)

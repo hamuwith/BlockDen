@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {     
-    [SerializeField] ArrowPool arrowPool;
-    public ArrowPool ArrowPool => arrowPool;
+    [SerializeField] ArrowPool[] arrowPools;
+    public ArrowPool[] ArrowPool => arrowPools;
     public void Init(MainManager mainManager)
     {
-        ArrowPool.Init();
+        foreach (var pool in arrowPools)
+        {
+            pool.Init();
+        }
     }
 }

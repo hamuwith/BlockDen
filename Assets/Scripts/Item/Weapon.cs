@@ -8,7 +8,6 @@ public class Weapon : PlayerUI
     [SerializeField] Status status;
     [SerializeField] AttachUI attachUI;
     Attachment attachment;
-    bool isAttack;
     CancellationTokenSource cancellationTokenSource;
     ArrowPool arrowPool;
     EnemyManager enemyManager;
@@ -16,6 +15,7 @@ public class Weapon : PlayerUI
     [System.Serializable]
     struct Status
     {
+        public int arrowId;
         public int damage;
         public int attackSpeed;
         public float range;
@@ -23,9 +23,8 @@ public class Weapon : PlayerUI
     public override void Init(ItemManager itemManager)
     {
         BaseInit(itemManager);
-        isAttack = true;
         cancellationTokenSource = new CancellationTokenSource();
-        arrowPool = itemManager.MainManager.WeaponManager.ArrowPool;
+        arrowPool = itemManager.MainManager.WeaponManager.ArrowPool[status.arrowId];
         enemyManager = itemManager.MainManager.EnemyManager;
         attachUI.Init(itemManager);
         Attack(cancellationTokenSource.Token).Forget();
@@ -64,7 +63,6 @@ public class Weapon : PlayerUI
         while (true)
         {
             await UniTask.Delay(status.attackSpeed, cancellationToken: cancellationToken);
-            await UniTask.WaitUntil(() => isAttack, cancellationToken: cancellationToken);
             Enemy enemy = null;
             while (enemy == null)
             {

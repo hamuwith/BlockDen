@@ -34,7 +34,7 @@ public class Player : Character
     Vector3Int? toolTargetPosition;
     float sqrRange;
     public Item[] Bag { get; set; }
-    public int[] MaterialBag { get; set; }
+    public ItemMaterial[] MaterialBag { get; set; }
     bool isMove;
     bool isBreak;
     Vector3 playerDirection;
@@ -44,7 +44,6 @@ public class Player : Character
     new Rigidbody rigidbody;
     int bagIndex;
     Block.BlockTypeEnum currentToolType;
-    Vector3 prevPosition;
     public int BagIndex
     {
         get
@@ -55,7 +54,6 @@ public class Player : Character
         {
 
             bagIndex = value;
-            if (Bag[bagIndex] == null) bagIndex = 0;
             for (int i = 0; i < Bag.Length - 1; i++)
             {
                 if (Bag[i] == null) continue;
@@ -126,7 +124,7 @@ public class Player : Character
     {
         base.Init(mainManager);
         HideTransform.parent = null;
-        Inventory.Init(this);
+        Inventory.Init(this, itemManager);
         playerUI.Init(mainManager.ItemManager);
         SetInputEvent();
         sqrRange = itemRange * itemRange;
@@ -135,7 +133,11 @@ public class Player : Character
         transform.rotation = Quaternion.LookRotation(Vector3.right, -gravityDirection);
         foodStatus = new FoodStatus {Duration = 0, MoveSpeed = 1f, Power = 0};
         Bag = new Item[Inventory.InventorySize];
-        MaterialBag = new int[itemManager.GetItemNum(ItemCategory.Material)];
+        MaterialBag = new ItemMaterial[Inventory.BagSize];
+        for (int i = 0; i < MaterialBag.Length; i++)
+        {
+            MaterialBag[i].Id = -1;
+        }
         var firstItems = itemManager.InstantiateFirstItems(Vector3.zero);
         currentToolType = Block.BlockTypeEnum.Dirt;
         toolItems = new Item[firstItems.Length];
@@ -196,6 +198,7 @@ public class Player : Character
                 currentTool = mapManager.GetBlock(toolTargetPosition.Value) as PlayerUI;
             }
             currentTool.OpenUI(this);
+            isMove = false;
             return;
         }
         var haveItemCategory = HaveItem.ItemState.ItemType;
@@ -321,12 +324,48 @@ public class Player : Character
         else if(bagStatus == BagStatus.Add)
         {
             Bag[(int)intentoryType].Num += num;
-            Debug.Log($"Bag Add: {item.ItemState.ItemType}, Num: {num}, Total Num: {Bag[(int)intentoryType].Num}");
             InventoryUpdate();
         }
         else if (bagStatus == BagStatus.MaterialAdd)
         {
-            MaterialBag[item.ItemState.Id] += num;
+            var nullNum = -1;
+            for (int i = 0; i < MaterialBag.Length; i++)
+            {
+                if (MaterialBag[i].Id != -1)
+                {
+                    if (MaterialBag[i].Id == item.ItemState.Id)
+                    {
+                        MaterialBag[i].Num += num;
+                        return num;
+                    }
+                    if (item.ItemState.Id == MaterialBag[i].Id)
+                    {
+                        MaterialBag[i].Num += num;
+                        if (item.ItemState.MaxNum < Bag[(int)intentoryType].Num)
+                        {
+                            num -= MaterialBag[i].Num - item.ItemState.MaxNum;
+                            MaterialBag[i].Num = item.ItemState.MaxNum;
+                            return num;
+                        }
+                        else
+                        {
+                            return num;
+                        }
+                    }
+                }
+                else if (nullNum == -1)
+                {
+                    nullNum = i;
+                }
+            }
+            if (nullNum != -1)
+            {
+                MaterialBag[nullNum].Num = num;
+                MaterialBag[nullNum].Id = item.ItemState.Id;
+                MaterialBag[nullNum].Category = item.ItemState.ItemType;
+                return num;
+            }
+            return 0;
         }
         else if (bagStatus == BagStatus.ToolSuccess)
         {
@@ -391,11 +430,37 @@ public class Player : Character
         }
         else if (bagStatus == BagStatus.MaterialAdd)
         {
-            MaterialBag[itemState.Id] += num;
-            if (boxItem.ItemState.MaxNum < Bag[(int)intentoryType].Num)
+            var nullNum = -1;
+            for (int i = 0; i < MaterialBag.Length; i++)
             {
-                num -= MaterialBag[itemState.Id] - boxItem.ItemState.MaxNum;
-                MaterialBag[itemState.Id] = boxItem.ItemState.MaxNum;
+                if (MaterialBag[i].Id != -1)
+                {
+                    if (itemState.Id == MaterialBag[i].Id)
+                    {
+                        MaterialBag[i].Num += num;
+                        if (itemState.MaxNum < Bag[(int)intentoryType].Num)
+                        {
+                            num -= MaterialBag[i].Num - itemState.MaxNum;
+                            MaterialBag[i].Num = itemState.MaxNum;
+                            return num;
+                        }
+                        else
+                        {
+                            return num;
+                        }
+                    }
+                }
+                else if (nullNum == -1)
+                {
+                    nullNum = i;
+                }
+            }
+            if(nullNum != -1)
+            {
+                MaterialBag[nullNum].Num = num;
+                MaterialBag[nullNum].Id = itemState.Id;
+                MaterialBag[nullNum].Category = itemState.ItemType;
+                return num;
             }
         }
         else if (bagStatus == BagStatus.ToolSuccess)
@@ -462,9 +527,13 @@ public class Player : Character
             if ((transform.position - item.transform.position).sqrMagnitude <= sqrRange)
             {
                 var status = GetBagState(item.ItemState);
-                BagUpdate(status, item, false);
+                var num = BagUpdate(status, item, false);
                 if (status == BagStatus.Filled) continue;
-                else if (status == BagStatus.Add || status == BagStatus.MaterialAdd)
+                else if (status == BagStatus.Add)
+                {
+                    item.Release();
+                }
+                else if(status == BagStatus.MaterialAdd && num >= item.Num)
                 {
                     item.Release();
                 }
@@ -488,7 +557,6 @@ public class Player : Character
     public void Make(Item item, int num)
     {
         var status = GetBagState(item.ItemState);
-        Debug.Log($"Make Item: {item.ItemState.ItemType}, Status: {status}");
         var makeItem = item;
         if (status == BagStatus.Success)
         {
@@ -562,7 +630,6 @@ public class Player : Character
             gravityDirection = -(transform.position - moveTarget.position).normalized;
         }
         rigidbody.AddForce(gravityDirection * 8f, ForceMode.Acceleration);
-        prevPosition = transform.position;
     }
     private void MovePlayer()
     {
@@ -604,6 +671,7 @@ public class Player : Character
     void SetTarget(Vector3Int playerPos, Vector3 playerDirection)
     {
         toolTargetPosition = ToolTarget(playerPos, playerDirection);
+        if(HaveItem == null) BagIndex = 0;
         ItemCategory haveItemCategory = HaveItem.ItemState.ItemType;
         Vector3Int? targetBlock = null;
         putTargetPosition = null;
