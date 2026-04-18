@@ -6,17 +6,13 @@ public class PlayerUI : Block
     [SerializeField] MakerUI[] uis;
     int tabIndex;
     protected Player player;
-    public override void Init(ItemManager itemManager)
+    public void Init(ItemManager itemManager)
     {
         transform.parent = null;
         foreach (var ui in uis)
         {
             ui.Init(itemManager);
         }
-    }
-    protected void BaseInit(ItemManager itemManager)
-    {
-        base.Init(itemManager);
     }
     public virtual void OpenUI(Player player)
     {

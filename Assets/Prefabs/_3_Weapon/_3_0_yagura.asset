@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec7d3321ded072e4186f23f421030cab, type: 3}
+  m_Name: _3_0_yagura
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  itemAccess:
+    Category: 3
+    Id: 0
+    Num: 1
+  itemMaterials:
+  - Category: 8
+    Id: 1
+    Num: 3
+  unitNum: 1
+  maxNum: 1
+  texture2D: {fileID: 2800000, guid: 256d5c3031e5a6640b8401739d008001, type: 3}
+  sprite: {fileID: 21300000, guid: 07fd47c839923c94eb4ab3e17afd014b, type: 3}
+  arrowId: 0
+  damage: 1
+  attackSpeed: 1000
+  range: 100

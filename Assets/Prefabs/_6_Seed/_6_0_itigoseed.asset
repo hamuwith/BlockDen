@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d771804c41f1cee46953d874897e2b99, type: 3}
+  m_Name: _6_0_itigoseed
+  m_EditorClassIdentifier: Assembly-CSharp::SeedData
+  itemAccess:
+    Category: 6
+    Id: 0
+    Num: 4
+  itemMaterials:
+  - Category: 8
+    Id: 1
+    Num: 3
+  unitNum: 4
+  maxNum: 100
+  texture2D: {fileID: 2800000, guid: 03a129181fbb8c44397757c47d83e008, type: 3}
+  sprite: {fileID: 21300000, guid: 26ccc88c5cb76c545a85369e477a300d, type: 3}
+  growNum: 5
+  growBlock: {fileID: 11400000, guid: 4aa517bef2dca5a458c44899839eb812, type: 2}

@@ -6,8 +6,6 @@ using UnityEngine;
 public class Seed : PlayerUI
 {
     [SerializeField] FertilizerUI fertilizerUI;
-    [SerializeField] int growNum;
-    [SerializeField] Block growBlock;
     int growCount;
     bool isWater;
     CancellationTokenSource cancellationTokenSource;
@@ -23,9 +21,9 @@ public class Seed : PlayerUI
         cancellationTokenSource?.Cancel();
         cancellationTokenSource?.Dispose();
     }
-    public override void Init(ItemManager itemManager)
+    public override void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
-        BaseInit(itemManager);
+        Init(itemManager, material, itemAccess);
         fertilizerUI.Init(itemManager);
         growCount = 0;
         isWater = true;
@@ -64,10 +62,11 @@ public class Seed : PlayerUI
         if (power > 0 && isWater)
         {
             growCount++;
-            if (growCount >= growNum)
+            var seedData = itemManager.GetItem(itemAccess) as SeedData;
+            if (growCount >= seedData.GrowNum)
             {
                 itemManager.BreakBlock(pos);
-                itemManager.MainManager.MapManager.MapUpdate(pos, growBlock);
+                itemManager.MainManager.MapManager.MapUpdate(pos, seedData.GrowBlock.ItemAccess);
                 WaterWait(cancellationTokenSource.Token).Forget();
                 return true;
             }

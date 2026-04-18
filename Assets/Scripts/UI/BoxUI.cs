@@ -5,7 +5,7 @@ using static Player;
 
 public class BoxUI : MakerUI
 {
-    BoxItem[] boxitems;
+    ItemAccess[] boxitems;
     bool isMove;
     public override bool IsMakable => true;
     protected override int MaxIndex => buttons.Length;
@@ -13,7 +13,11 @@ public class BoxUI : MakerUI
     public override void Init(ItemManager itemManager)
     {
         InitBase(itemManager);
-        boxitems = new BoxItem[buttons.Length];
+        boxitems = new ItemAccess[buttons.Length];
+        for (int i = 0; i < boxitems.Length; i++)
+        {
+            boxitems[i].Id = -1;
+        }
     }
     /// <summary>
     /// ツールのUIを開く際の初期化を行うメソッド
@@ -63,29 +67,21 @@ public class BoxUI : MakerUI
             var boxItem = boxitems[index];
             if (player.Bag[inventoryIndex] != null)
             {
-                boxitems[index] = new BoxItem
-                {
-                    ItemState = player.Bag[inventoryIndex].ItemState,
-                    Num = player.Bag[inventoryIndex].Num
-                };
+                boxitems[index] = player.Bag[inventoryIndex].ItemAccess;
             }
-            if (boxItem == null)
+            if (boxItem.Id == -1)
             {
-                boxitems[index] = new BoxItem
-                {
-                    ItemState = player.Bag[inventoryIndex].ItemState,
-                    Num = player.Bag[inventoryIndex].Num
-                };
+                boxitems[index] = player.Bag[inventoryIndex].ItemAccess;
                 player.BagReduce(player.Bag[inventoryIndex].Num, inventoryIndex);
             }
             else if(player.Bag[inventoryIndex] == null)
             {
-                boxitems[index] = null;
+                boxitems[index].Id = -1;
                 player.BagUpdate(boxItem, false);
             }
             else
             {
-                if(boxItem.ItemState.ItemType == player.Bag[inventoryIndex].ItemState.ItemType && boxItem.ItemState.Id == player.Bag[inventoryIndex].ItemState.Id)
+                if(boxItem.Category == player.Bag[inventoryIndex].ItemAccess.Category && boxItem.Id == player.Bag[inventoryIndex].ItemAccess.Id)
                 {
                     if (isInventory)
                     {
@@ -93,26 +89,24 @@ public class BoxUI : MakerUI
                         boxitems[index].Num -= num;
                         if(boxitems[index].Num <= 0)
                         {
-                            boxitems[index] = null;
+                            boxitems[index].Id = -1;
                         }
                     }
                     else
                     {
+                        var maxNum = itemManager.GetItem(boxitems[index]).MaxNum;
                         boxitems[index].Num += player.Bag[inventoryIndex].Num;
-                        if(boxitems[index].Num > boxitems[index].ItemState.MaxNum)
+                        if(boxitems[index].Num > maxNum)
                         {
-                            var num = boxitems[index].Num - boxitems[index].ItemState.MaxNum;
-                            boxitems[index].Num = boxitems[index].ItemState.MaxNum;
+                            var num = boxitems[index].Num - maxNum;
+                            boxitems[index].Num = maxNum;
                             bool filled = true;
                             for (int i = 0; i < boxitems.Length; i++)
                             {
-                                if(boxitems[i] == null)
+                                if(boxitems[i].Id == -1)
                                 {
-                                    boxitems[i] = new BoxItem
-                                    {
-                                        ItemState = player.Bag[inventoryIndex].ItemState,
-                                        Num = num
-                                    };
+                                    boxitems[i] = player.Bag[inventoryIndex].ItemAccess;
+                                    boxitems[i].Num = num;
                                     player.BagReduce(player.Bag[inventoryIndex].Num, inventoryIndex);
                                     filled = false;
                                     break;
@@ -142,7 +136,7 @@ public class BoxUI : MakerUI
             }
             else
             {
-                if (boxitems[index] == null) return;
+                if (boxitems[index].Id == -1) return;
             }
             isMove = true;
             isInventory = !isInventory;
@@ -167,9 +161,9 @@ public class BoxUI : MakerUI
     {
         for (int i = 0; i < buttons.Length; i++)
         {
-            if (boxitems[i] != null)
+            if (boxitems[i].Id >= 0)
             {
-                buttons[i].sprite = boxitems[i].ItemState.Icon;
+                buttons[i].sprite = itemManager.GetItemIcon(boxitems[i]);
                 itemTexts[i].text = boxitems[i].Num > 1 ? boxitems[i].Num.ToString() : "";
             }
             else
@@ -182,7 +176,7 @@ public class BoxUI : MakerUI
         {
             if (player.Bag[i] != null)
             {
-                inventoryButtons[i].sprite = player.Bag[i].ItemState.Icon;
+                inventoryButtons[i].sprite = itemManager.GetItemIcon(player.Bag[i].ItemAccess);
                 inventoryItemTexts[i].text = player.Bag[i].Num > 1 ? player.Bag[i].Num.ToString() : "";
             }
             else
@@ -201,20 +195,21 @@ public class BoxUI : MakerUI
         index = -1;
         if (item != null)
         {
+            var maxNum = itemManager.GetItem(item.ItemAccess).MaxNum;
             for (int i = 0; i < boxitems.Length; i++)
             {
                 var boxItem = boxitems[i];
-                if (boxItem != null)
+                if (boxItem.Id != -1)
                 {
-                    if (item.ItemState.ItemType == boxItem.ItemState.ItemType && item.ItemState.Id == boxItem.ItemState.Id)
+                    if (item.ItemAccess.Category == boxItem.Category && item.ItemAccess.Id == boxItem.Id)
                     {
-                        if (item.Num < boxItem.ItemState.MaxNum)
+                        if (item.Num < maxNum)
                         {
                             index = i;
                             isInventory = false;
                             break;
                         }
-                        else if (boxItem.Num < boxItem.ItemState.MaxNum)
+                        else if (boxItem.Num < maxNum)
                         {
                             index = i;
                             break;

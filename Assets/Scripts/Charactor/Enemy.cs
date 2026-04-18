@@ -69,7 +69,7 @@ public class Enemy : Character
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="attachments"></param>
-    public void TakeDamage(int damage, bool trueDamage = false, Attachment attachments = null)
+    public void TakeDamage(int damage, bool trueDamage = false, AttachmentStatus? attachments = null)
     {
         damage = attachments?.Strong > 0 ? (int)(damage * enemyManager.StrongEffectMultiplier) : damage;
         if (isArmorBroken)
@@ -84,25 +84,25 @@ public class Enemy : Character
         {
             Died();
         }
-        else if(attachments != null)
+        else if(attachments.HasValue)
         {
-            if (attachments.Ice > 0)
+            if (attachments.Value.Ice > 0)
             {
                 Ice();
             }
-            else if (attachments.Lightning > 0)
+            else if (attachments.Value.Lightning > 0)
             {
                 // —‹‚ÌŒø‰Ê‚ğˆ—
             }
-            else if (attachments.Shining > 0)
+            else if (attachments.Value.Shining > 0)
             {
                 Shining();
             }
-            if (attachments.Poison > 0)
+            if (attachments.Value.Poison > 0)
             {
                 Poison();
             }
-            else if (attachments.Dark > 0)
+            else if (attachments.Value.Dark > 0)
             {
                 Dark();
             }

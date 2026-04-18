@@ -20,14 +20,14 @@ public class Menu : MonoBehaviour
         }
         menuCanvas.enabled = false;
     }
-    public void ShowMenu(Transform transform, ItemMaterial[] itemMaterials)
+    public void ShowMenu(Transform transform, ItemAccess[] itemAccesses)
     {
         menuCanvas.enabled = true;
         this.transform.position = transform.position;
-        for (int i = 0; i < itemMaterials.Length; i++)
+        for (int i = 0; i < itemAccesses.Length; i++)
         {
-            menuTexts[i].text = itemMaterials[i].Num.ToString();
-            menuImages[i].sprite = itemManager.GetItemIcon(itemMaterials[i].Category, itemMaterials[i].Id);
+            menuTexts[i].text = itemAccesses[i].Num.ToString();
+            menuImages[i].sprite = itemManager.GetItemIcon(itemAccesses[i]);
         }
     }
     public void HideMenu()

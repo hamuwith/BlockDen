@@ -26,14 +26,14 @@ public class Arrow : MonoBehaviour
     /// <param name="target"></param>
     /// <param name="damage"></param>
     /// <param name="attachment"></param>
-    public void Fire(Enemy target, int damage, Attachment attachment, Transform weapon)
+    public void Fire(Enemy target, int damage, AttachmentStatus attachment, Transform weapon)
     {
         cancellationTokenSource = new CancellationTokenSource();
         transform.position = weapon.position;
         distance = Vector3.Distance(weapon.position, target.transform.position);
         Attack(target, damage, attachment, cancellationTokenSource.Token).Forget();
     }
-    private async UniTaskVoid Attack(Enemy target, int damage, Attachment attachment, CancellationToken cancellationToken)
+    private async UniTaskVoid Attack(Enemy target, int damage, AttachmentStatus attachment, CancellationToken cancellationToken)
     {
         Vector3 direction = Vector3.zero;
         root = transform.position;

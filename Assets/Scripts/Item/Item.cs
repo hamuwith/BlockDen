@@ -6,13 +6,13 @@ using UnityEngine.Pool;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] ItemState itemState;
     protected ItemManager itemManager;
     BoxCollider boxCollider;
     protected MeshRenderer meshRenderer;
     CancellationTokenSource cancellationTokenSource;
     public int Num { get; set; }
-    public ItemState ItemState => itemState;
+    protected ItemAccess itemAccess;
+    public ItemAccess ItemAccess => itemAccess;
     /// <summary>
     /// アイテムのカテゴリを表す列挙型
     /// </summary>
@@ -37,19 +37,8 @@ public class Item : MonoBehaviour
     [System.Serializable]
     public struct ItemPercent
     {
-        public ItemCategory Category;
-        public int Id;
+        public ItemAccess ItemAccess;
         public int Percent;
-    }
-    /// <summary>
-    /// アイテムの素材を表す構造体
-    /// </summary>
-    [System.Serializable]
-    public struct ItemMaterial
-    {
-        public ItemCategory Category;
-        public int Id;
-        public int Num;
     }
     private ObjectPool<Item> pool;
     /// <summary>
@@ -68,24 +57,36 @@ public class Item : MonoBehaviour
     /// アイテムの初期化を行う
     /// </summary>
     /// <param name="itemManager"></param>
-    public virtual void Init(ItemManager itemManager)
+    public virtual void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
         this.itemManager = itemManager;
+        this.itemAccess = itemAccess;
         boxCollider = GetComponent<BoxCollider>();
         Num = 1;
         meshRenderer = GetComponent<MeshRenderer>();
-        if(meshRenderer != null) meshRenderer.sharedMaterial = itemState.Material;
+        if (material == null) Destroy(meshRenderer);
+        else meshRenderer.sharedMaterial = material;
+    }
+    /// <summary>
+    /// アイテムマネージャーをセットするメソッド
+    /// </summary>
+    /// <param name="itemManager"></param>
+    public void SetItemManager(ItemManager itemManager)
+    {
+        this.itemManager = itemManager;
+        meshRenderer = GetComponent<MeshRenderer>();
+        boxCollider = GetComponent<BoxCollider>();
     }
     /// <summary>
     /// アイテムの状態をセットするメソッド
     /// </summary>
     /// <param name="itemState"></param>
     /// <param name="num"></param>
-    public void SetItemState(ItemState itemState, int num, Vector3 vector3)
+    public void SetItemAccess(ItemAccess itemAccess, int num, Vector3 vector3, Material material)
     {
-        this.itemState = itemState;
-        Num = num;
-        meshRenderer.sharedMaterial = itemState.Material;
+        this.itemAccess = itemAccess;
+        this.itemAccess.Num = num;
+        meshRenderer.sharedMaterial = material;
         transform.position = vector3;
     }
     /// <summary>
@@ -129,19 +130,13 @@ public class Item : MonoBehaviour
         cancellationTokenSource?.Dispose();
     }
 }
+/// <summary>
+/// アイテムの素材を表す構造体
+/// </summary>
 [System.Serializable]
-public class ItemState
+public struct ItemAccess
 {
+    public ItemCategory Category;
     public int Id;
-    public ItemCategory ItemType;
-    public Sprite Icon;
-    public ItemMaterial[] Materials;
-    public int UnitNum;
-    public int MaxNum;
-    public Material Material;
-}
-public class BoxItem
-{
-    public ItemState ItemState;
     public int Num;
 }

@@ -1,20 +1,24 @@
 using UnityEngine;
 using System.Collections.Generic;
 using static Item;
-using static UnityEngine.Splines.SplineInstantiate;
-using static UnityEditor.Progress;
 
 public class ItemManager : MonoBehaviour
 {
-    [SerializeField] Item[] startItems;
     [SerializeField] ItemList[] itemLists;
+    [SerializeField] Item itemPrefab;
+    [SerializeField] Block blockPrefab;
+    [SerializeField] Seed seedPrefab;
+    [SerializeField] Weapon weaponPrefab;
+    [SerializeField] BreakTool breakToolPrefab;
     [SerializeField] Material highlightMaterial;
     [SerializeField] DropItemPool dropItemPool;
+    [SerializeField] Material baseMaterial;
     public List<Item> Items { get; set; }
-    public Material HighlightMaterial => highlightMaterial;
     MapManager mapManager;
     public MainManager MainManager { get; private set; }
     int[][] itemsNum;
+    Sprite[][] itemIcons;
+    Material[][] itemMaterials;
     /// <summary>
     /// アイテムマネージャーの初期化を行う
     /// </summary>
@@ -33,7 +37,55 @@ public class ItemManager : MonoBehaviour
                 itemsNum[i] = new int[itemLists[i].Items.Length];
             }
         }
+        SetSprite();
+        SetMaterial();
         dropItemPool.Init(this);
+    }
+    void SetSprite()
+    {
+        itemIcons = new Sprite[itemLists.Length][];
+        for (int i = 0; i < itemLists.Length; i++)
+        {
+            itemIcons[i] = new Sprite[itemLists[i].Items.Length];
+            for (int j = 0; j < itemLists[i].Items.Length; j++)
+            {
+                itemIcons[i][j] = itemLists[i].Items[j]?.Icon;
+            }
+        }
+    }
+    void SetMaterial()
+    {
+        itemMaterials = new Material[itemLists.Length][];
+        for (int i = 0; i < itemLists.Length; i++)
+        {
+            itemMaterials[i] = new Material[itemLists[i].Items.Length];
+            for (int j = 0; j < itemLists[i].Items.Length; j++)
+            {
+                if(itemLists[i].Items[j] == null) continue;
+                Material material = new Material(baseMaterial);
+                material.SetTexture("_BaseMap", itemLists[i].Items[j].Texture2D);
+                itemMaterials[i][j] = material;
+            }
+        }
+    }
+    /// <summary>
+    /// アイテムのアイコンを取得するメソッド
+    /// </summary>
+    /// <param name="itemAccess"></param>
+    /// <returns></returns>
+    public Sprite GetSprite(ItemAccess itemAccess)
+    {
+        return itemIcons[(int)itemAccess.Category][itemAccess.Id];
+    }
+    /// <summary>
+    /// アイテムのマテリアルを取得するメソッド
+    /// </summary>
+    /// <param name="itemAccess"></param>
+    /// <returns></returns>
+    public Material GetMaterial(ItemAccess itemAccess)
+    {
+        if(itemAccess.Id < 0) return null;
+        return itemMaterials[(int)itemAccess.Category][itemAccess.Id];
     }
     public int GetItemNum(ItemCategory category)
     {
@@ -47,63 +99,31 @@ public class ItemManager : MonoBehaviour
         }
         return itemsNum[(int)category].Length;
     }
-    /// <summary>
-    /// 最初のアイテムを生成するメソッド
-    /// </summary>
-    /// <param name="pos"></param>
-    /// <param name="parent"></param>
-    /// <returns></returns>
-    public Item[] InstantiateFirstItems(Vector3 pos)
+    public Item InstantiateItem(ItemAccess itemAccess, Vector3 pos)
     {
-        var items = new Item[startItems.Length];
-        for (int i = 0; i < startItems.Length; i++)
-        {
-            items[i] = Instantiate(startItems[i], pos, Quaternion.identity);
-            items[i].Init(this);
-            items[i].SetItem(false);
-        }
-        return items;
+        var item = Instantiate(itemPrefab, pos, Quaternion.identity);
+        var material = GetMaterial(itemAccess);
+        item.Init(this, material, itemAccess);
+        item.SetItem(false);
+        return item;
     }
-    public Item InstantiateBag(Vector3 pos)
+    public Item InstantiateBreakTool(ItemAccess itemAccess, Vector3 pos)
     {
-        var bag = Instantiate(itemLists[(int)ItemCategory.Bag].Items[0], pos, Quaternion.identity);
-        bag.Init(this);
-        bag.SetItem(false);
-        return bag;
-    }
-    public Item InstantiateItem(ItemState itemState, Vector3 pos)
-    {
-        var item = Instantiate(itemLists[(int)itemState.ItemType].Items[itemState.Id], pos, Quaternion.identity);
-        item.Init(this);
+        var item = Instantiate(breakToolPrefab, pos, Quaternion.identity);
+        var material = GetMaterial(itemAccess);
+        item.Init(this, material, itemAccess);
         item.SetItem(false);
         return item;
     }
     /// <summary>
     /// アイテムIDからアイテムを生成するメソッド
     /// </summary>
-    public Item GetPoolItem(ItemState itemState, int num, Vector3 pos)
+    public Item GetPoolItem(ItemAccess itemAccess, int num, Vector3 pos)
     {
         var instantiateItem = dropItemPool.GetItem();
-        instantiateItem.SetItemState(itemState, 1, pos);
+        var material = GetMaterial(itemAccess);
+        instantiateItem.SetItemAccess(itemAccess, 1, pos, material);
         instantiateItem.SetItem(true);
-        return instantiateItem;
-    }
-    /// <summary>
-    /// アイテムを生成するメソッド
-    /// </summary>
-    /// <returns></returns>
-    public Item GetPoolItem(Item item, int num, Vector3 pos)
-    {
-        var instantiateItem = GetPoolItem(item.ItemState, num, pos);
-        return instantiateItem;
-    }
-    /// <summary>
-    /// アイテムを生成するメソッド
-    /// </summary>
-    /// <returns></returns>
-    public Item GetPoolItem(ItemCategory itemCategory, int id, int num, Vector3 pos)
-    {
-        var instantiateItem = GetPoolItem(itemLists[(int)itemCategory].Items[id], num, pos);
         return instantiateItem;
     }
     /// <summary>
@@ -115,19 +135,34 @@ public class ItemManager : MonoBehaviour
     /// <returns></returns>
     public Block InstantiateBlock(ItemCategory category, int id, Vector3Int pos, Transform parent = null)
     {
-        var item = InstantiateBlock(itemLists[(int)category].Items[id] as Block, pos, parent);
+        var itemAccess = itemLists[(int)category].Items[id].ItemAccess;
+        var item = InstantiateBlock(itemAccess, pos, parent);
         return item;
-    }    /// <summary>
-         /// アイテムIDからブロックを生成するメソッド
-         /// </summary>
-         /// <param name="id"></param>
-         /// <param name="pos"></param>
-         /// <param name="parent"></param>
-         /// <returns></returns>
-    public Block InstantiateBlock(Block block, Vector3Int pos, Transform parent = null)
+    }    
+    /// <summary>
+    /// アイテムIDからブロックを生成するメソッド
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="pos"></param>
+    /// <param name="parent"></param>
+    /// <returns></returns>
+    public Block InstantiateBlock(ItemAccess blockAccess, Vector3Int pos, Transform parent = null)
     {
-        var item = Instantiate(block, pos, Quaternion.identity, parent);
-        item.Init(this);
+        Block item = null;
+        if (blockAccess.Category == ItemCategory.NatureBlock || blockAccess.Category == ItemCategory.UnnatureBlock)
+        {
+            item = Instantiate(blockPrefab, pos, Quaternion.identity, parent);
+        }
+        else if (blockAccess.Category == ItemCategory.Seed)
+        {
+            item = Instantiate(seedPrefab, pos, Quaternion.identity, parent);
+        }
+        else if(blockAccess.Category == ItemCategory.Weapon)
+        {
+            item = Instantiate(weaponPrefab, pos, Quaternion.identity, parent);
+        }
+        var material = GetMaterial(blockAccess);
+        item.Init(this, material, blockAccess);
         return item;
     }
     /// <summary>
@@ -158,11 +193,11 @@ public class ItemManager : MonoBehaviour
         int num = 1;
         if (item.HasValue)
         {
-            var dropItem = GetPoolItem(item.Value.Category, item.Value.Id, num, dropPos);
+            var dropItem = GetPoolItem(item.Value.ItemAccess, num, dropPos);
             dropItem.Drop();
         }
         var dropItem100 = block.DropItem100();
-        if(dropItem100 != null) GetPoolItem(dropItem100, num, dropPos).Drop();
+        if(dropItem100.Id != -1) GetPoolItem(dropItem100, num, dropPos).Drop();
     }
     /// <summary>
     /// ブロックが壊れたときのマップの更新を行うメソッド
@@ -170,14 +205,14 @@ public class ItemManager : MonoBehaviour
     /// <param name="pos"></param>
     public void BreakBlock(Vector3Int pos)
     {
-        mapManager.MapUpdate(pos, ItemCategory.Length, -1);
+        mapManager.MapUpdate(pos);
     }
 
     /// <summary>
     /// ボックスのアイテム数を更新するメソッド（追加）
     /// </summary>
     /// <param name="items"></param>
-    public void BoxAdd(ItemMaterial[] itemNums)
+    public void BoxAdd(ItemAccess[] itemNums)
     {
         for (int i = 0; i < itemNums.Length; i++)
         {
@@ -189,9 +224,9 @@ public class ItemManager : MonoBehaviour
     /// ボックスのアイテム数を更新するメソッド（削除）
     /// </summary>
     /// <param name="materials"></param>
-    public void RemoveBoxItem(ItemMaterial[] materials)
+    public void RemoveBoxItem(ItemAccess[] materials)
     {
-        foreach (ItemMaterial material in materials)
+        foreach (ItemAccess material in materials)
         {
             itemsNum[(int)ItemCategory.Material][material.Id] -= material.Num;
         }
@@ -200,22 +235,22 @@ public class ItemManager : MonoBehaviour
     {
         return itemsNum;
     }
-    public Sprite GetItemIcon(ItemCategory category, int id)
+    public Sprite GetItemIcon(ItemAccess itemAccess)
     {
-        return itemLists[(int)category].Items[id].ItemState.Icon;
+        return itemIcons[(int)itemAccess.Category][itemAccess.Id];
     }
-    public Item[] GetMakableItems(ItemCategory category)
+    public ItemData[] GetMakableItems(ItemCategory category)
     {
         ItemList itemList = itemLists[(int)category];
         return itemList.Items;
     }
-    public Item GetItem(ItemCategory category, int id)
+    public ItemData GetItem(ItemAccess itemAccess)
     {
-        return itemLists[(int)category].Items[id];
+        return itemLists[(int)itemAccess.Category].Items[itemAccess.Id];
     }
 }
 [System.Serializable]
 public class ItemList
 {
-    public Item[] Items;
+    public ItemData[] Items;
 }

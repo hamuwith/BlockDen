@@ -75,8 +75,8 @@ public class MapManager : MonoBehaviour
         {
             return false;
         }
-        bool isHouse = Blocks[pos.x, pos.y, pos.z]?.ItemState.ItemType == ItemCategory.NatureBlock;
-        isHouse &= Blocks[pos.x, pos.y, pos.z]?.ItemState.Id == 0;
+        bool isHouse = Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.NatureBlock;
+        isHouse &= Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Id == 0;
         return isHouse;
     }
     public bool IsTool(Vector3Int pos)
@@ -85,7 +85,7 @@ public class MapManager : MonoBehaviour
         {
             return false;
         }
-        return Blocks[pos.x, pos.y, pos.z]?.ItemState.ItemType == ItemCategory.Weapon || IsHouse(pos)  || Blocks[pos.x, pos.y, pos.z]?.ItemState.ItemType == ItemCategory.Seed;
+        return Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Weapon || IsHouse(pos)  || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Seed;
     }
     public bool IsBlock(Vector3Int pos)
     {
@@ -93,7 +93,7 @@ public class MapManager : MonoBehaviour
         {
             return false;
         }
-        return Blocks[pos.x, pos.y, pos.z]?.ItemState.ItemType == ItemCategory.NatureBlock || Blocks[pos.x, pos.y, pos.z]?.ItemState.ItemType == ItemCategory.UnnatureBlock || Blocks[pos.x, pos.y, pos.z]?.ItemState.ItemType == ItemCategory.Seed;
+        return Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.NatureBlock || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.UnnatureBlock || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Seed;
     }
     public bool IsSeed(Vector3Int pos)
     {
@@ -101,15 +101,15 @@ public class MapManager : MonoBehaviour
         {
             return false;
         }
-        return Blocks[pos.x, pos.y, pos.z]?.ItemState.ItemType == ItemCategory.Seed;
+        return Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Seed;
     }
     public Block GetBlock(Vector3Int pos)
     {
         return Blocks[pos.x, pos.y, pos.z];
     }
-    public Item MapUpdate(Vector3Int pos, ItemCategory category, int id)
+    public Item MapUpdate(Vector3Int pos, ItemAccess? itemAccess = null)
     {
-        if (id < 0)
+        if (itemAccess == null)
         {
             Destroy(Blocks[pos.x, pos.y, pos.z].gameObject);
             Blocks[pos.x, pos.y, pos.z] = null;
@@ -129,15 +129,10 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            MapUpdate(pos, (Block)itemManager.GetItem(category, id));
+            Blocks[pos.x, pos.y, pos.z] = itemManager.InstantiateBlock(itemAccess.Value, new Vector3Int(pos.x, pos.y, pos.z), transform);
             Vector3Int vector3Int = new Vector3Int(pos.x, pos.y - 1, pos.z);
             if(vector3Int.y >= 0) AddSetActive(vector3Int);
         }
-        return Blocks[pos.x, pos.y, pos.z];
-    }
-    public Item MapUpdate(Vector3Int pos, Block block)
-    {
-        Blocks[pos.x, pos.y, pos.z] = itemManager.InstantiateBlock(block, new Vector3Int(pos.x, pos.y, pos.z), transform);
         return Blocks[pos.x, pos.y, pos.z];
     }
     public void TakeHouseDamage(int damage)

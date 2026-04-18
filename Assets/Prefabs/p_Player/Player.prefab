@@ -3858,6 +3858,26 @@ MonoBehaviour:
   HideTransform: {fileID: 8953295685078466233}
   jumpForce: 2
   breakMoveSpeed: 1
+  highlightPrefab: {fileID: 7845834766657059244, guid: 0937325a9122540458cffab6f4b7b465, type: 3}
+  firstItems:
+  - Category: 2
+    Id: 30
+    Num: 1
+  - Category: 2
+    Id: 31
+    Num: 1
+  - Category: 2
+    Id: 32
+    Num: 1
+  - Category: 2
+    Id: 33
+    Num: 1
+  - Category: 0
+    Id: 0
+    Num: 0
+  - Category: 9
+    Id: 30
+    Num: 1
 --- !u!95 &-7535496821631984726
 Animator:
   serializedVersion: 7

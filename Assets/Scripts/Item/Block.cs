@@ -2,18 +2,14 @@ using UnityEngine;
 
 public class Block : Item
 {
-    [SerializeField] int hardness;
-    [SerializeField] ItemPercent[] itemPercents;
-    [SerializeField] Item dropItem100;
-    [SerializeField] int life;
-    [SerializeField] BlockTypeEnum blockType;
+    int currentLife;
     int currentHardness;
-    Material[] highlightMaterials;
-    Material[] normalmaterials;
     private MaterialPropertyBlock materialBlock;
-    public BlockTypeEnum BlockType => blockType;
     readonly float HideRate = 0.35f;
     Color color;
+    BlockData blockData;
+    public BlockTypeEnum BlockType => blockData.BlockType;
+
     public enum BlockTypeEnum
     {
         Dirt,
@@ -28,19 +24,16 @@ public class Block : Item
     /// </summary>
     public void ResetHardness()
     {
-        currentHardness = hardness;
+        currentHardness = blockData.Hardness;
     }
-    public override void Init(ItemManager itemManager)
+    public override void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
-        base.Init(itemManager);
-        highlightMaterials = new Material[2];
-        highlightMaterials[0] = meshRenderer.material;
-        highlightMaterials[1] = itemManager.HighlightMaterial;
-        normalmaterials = new Material[1];
-        normalmaterials[0] = highlightMaterials[0];
+        base.Init(itemManager, material, itemAccess);
+        blockData = itemManager.GetItem(itemAccess) as BlockData;
         materialBlock = new MaterialPropertyBlock();
         meshRenderer.GetPropertyBlock(materialBlock);
         color = Color.white;
+        currentLife = blockData.Life;
     }
     /// <summary>
     /// ブロックを壊す際の挙動を定義するメソッド
@@ -60,10 +53,10 @@ public class Block : Item
             else
             {
                 power -= currentHardness;
-                currentHardness = hardness;
-                life--;
+                currentHardness = blockData.Hardness;
+                currentLife--;
                 itemManager.DropItem(this, pos);
-                if (life == 0)
+                if (currentLife == 0)
                 {
                     itemManager.BreakBlock(pos);
                     return true;
@@ -77,13 +70,13 @@ public class Block : Item
     /// <returns></returns>
     public ItemPercent? GetDropItem()
     {
-        if (itemPercents == null)
+        if (blockData.ItemPercents == null)
         {
             return null;
         }
         var rand = Random.Range(0, 100);
         var sum = 0;
-        foreach (var itemPercent in itemPercents)
+        foreach (var itemPercent in blockData.ItemPercents)
         {
             sum += itemPercent.Percent;
             if (rand < sum)
@@ -94,38 +87,12 @@ public class Block : Item
         return null;
     }
     /// <summary>
-    /// ブロックをアイテムとして設置する際の挙動を定義するメソッド
-    /// </summary>
-    /// <param name="isKinematic"></param>
-    //public override void SetItem(bool isKinematic = false)
-    //{
-    //    base.SetItem(isKinematic);
-    //    GetComponent<Rigidbody>().isKinematic = isKinematic;
-    //    gameObject.layer = LayerMask.NameToLayer("Item");
-    //    transform.localScale = Vector3.one * 0.3f;
-    //}
-    /// <summary>
     /// ブロックが壊れたときの落とすブロックを定義するメソッド
     /// </summary>
     /// <returns></returns>
-    public Item DropItem100()
+    public ItemAccess DropItem100()
     {
-        return dropItem100;
-    }
-    /// <summary>
-    /// ブロックをハイライトする際の挙動を定義するメソッド
-    /// </summary>
-    /// <param name="isHighlight"></param>
-    public void Highlight(bool isHighlight)
-    {
-        if (isHighlight)
-        {
-            meshRenderer.sharedMaterials = highlightMaterials;
-        }
-        else
-        {
-            meshRenderer.sharedMaterials = normalmaterials;
-        }
+        return blockData.DropItem100;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -133,7 +100,7 @@ public class Block : Item
         {
             color.a = Mathf.Max(1f - HideRate * (Vector3.SqrMagnitude(transform.position - other.transform.position) - 1f), 0.1f);
             materialBlock.SetColor("_BaseColor", color);
-            meshRenderer.SetPropertyBlock(materialBlock, 0);
+            meshRenderer.SetPropertyBlock(materialBlock);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -141,7 +108,7 @@ public class Block : Item
         if (other.CompareTag("Gaze"))
         {
             materialBlock.SetColor("_BaseColor", Color.white);
-            meshRenderer.SetPropertyBlock(materialBlock, 0);
+            meshRenderer.SetPropertyBlock(materialBlock);
         }
     }
 }

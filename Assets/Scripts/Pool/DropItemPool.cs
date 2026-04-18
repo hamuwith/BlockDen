@@ -28,7 +28,7 @@ public class DropItemPool : MonoBehaviour
     private Item CreateItem()
     {
         Item item = Instantiate(itemPrefab, transform);
-        item.Init(itemManager);
+        item.SetItemManager(itemManager);
         item.SetPool(pool);
         return item;
     }

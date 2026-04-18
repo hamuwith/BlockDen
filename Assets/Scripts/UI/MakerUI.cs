@@ -14,7 +14,7 @@ public class MakerUI : MonoBehaviour
     [SerializeField] ItemCategory[] makableCategorys;
     [SerializeField] Menu menu;
     [SerializeField] protected Canvas canvas;
-    Item[] makableItems;
+    ItemData[] makableItems;
     Material highlightMaterial;
     Material inventoryHighlightMaterial;
     protected TextMeshProUGUI[] itemTexts;
@@ -24,12 +24,12 @@ public class MakerUI : MonoBehaviour
     protected int inventoryIndex;
     bool[] makable;
     protected bool isInventory;
-    Item makeItem;
-    protected virtual int MaxIndex => makableItems.Length;
+    ItemData makeItem;
+    protected virtual int MaxIndex => Mathf.Min(makableItems.Length, buttons.Length);
     protected int InventoryMaxIndex => inventoryButtons.Length;
     readonly protected int sliceWidthId = Shader.PropertyToID("_SliceWidth");
     readonly int rawSize = 8;
-    ItemManager itemManager;
+    protected ItemManager itemManager;
     public virtual bool IsMakable => makableItems?.Length > 0;
     /// <summary>
     /// ƒxƒNƒgƒ‹‚Ì•ûŒü‚ð8•ûŒü‚É•ÏŠ·‚·‚é‚½‚ß‚Ì—ñ‹“‘Ì
@@ -70,7 +70,7 @@ public class MakerUI : MonoBehaviour
     }
     public virtual void Init(ItemManager itemManager)
     {
-        var makableItemList = new List<Item>();
+        var makableItemList = new List<ItemData>();
         foreach (var category in makableCategorys)
         {
             makableItemList.AddRange(itemManager.GetMakableItems(category));
@@ -79,7 +79,8 @@ public class MakerUI : MonoBehaviour
         InitBase(itemManager);
         for (int i = 0; i < makableItems.Length; i++)
         {
-            buttons[i].sprite = makableItems[i].ItemState.Icon;
+            if(i >= buttons.Length) break;
+            buttons[i].sprite = makableItems[i].Icon;
         }
     }
     /// <summary>
@@ -92,7 +93,8 @@ public class MakerUI : MonoBehaviour
         SetEnabled();
         for (int i = 0; i < makableItems.Length; i++)
         {
-            buttons[i].sprite = makableItems[i].ItemState.Icon;
+            if (i >= buttons.Length) break;
+            buttons[i].sprite = makableItems[i].Icon;
         }
         menu.Init(itemManager);
         _Menu(true);
@@ -150,8 +152,8 @@ public class MakerUI : MonoBehaviour
         }
         else
         {
-            itemManager.RemoveBoxItem(makeItem.ItemState.Materials);
-            player.Make(makeItem, makeItem.ItemState.UnitNum);
+            itemManager.RemoveBoxItem(makeItem.ItemMaterials);
+            player.Make(makeItem, makeItem.UnitNum);
             makeItem = null;
             isInventory = false;
             UpdateAction();
@@ -180,7 +182,7 @@ public class MakerUI : MonoBehaviour
         for (int i = 0; i < makableItems.Length; i++)
         {
             makable[i] = true;
-            foreach (var material in makableItems[i].ItemState.Materials)
+            foreach (var material in makableItems[i].ItemMaterials)
             {
                 makable[i] &= (haveItems[(int)material.Category][material.Id]) >= material.Num;
             }
@@ -192,6 +194,7 @@ public class MakerUI : MonoBehaviour
     {
         for (int i = 0; i < makableItems.Length; i++)
         {
+            if (i >= buttons.Length) break;
             if (makable[i])
             {
                 buttons[i].color = Color.white;
@@ -205,7 +208,7 @@ public class MakerUI : MonoBehaviour
         {
             if (player.Bag[i] != null)
             {
-                inventoryButtons[i].sprite = player.Bag[i].ItemState.Icon;
+                inventoryButtons[i].sprite = itemManager.GetItemIcon(player.Bag[i].ItemAccess);
                 inventoryItemTexts[i].text = player.Bag[i].Num > 1 ? player.Bag[i].Num.ToString() : "";
             }
             else
@@ -215,9 +218,9 @@ public class MakerUI : MonoBehaviour
             }
         }
     }
-    protected void _SelectIn(Item item = null)
+    protected void _SelectIn(ItemData item = null)
     {
-        var type = player.GetInventoryType(item);
+        var type = player.GetInventoryType(item.ItemAccess);
         Debug.Log(type);
         inventoryIndex = (int)type;
         if (type == Player.InventoryType.Null)
@@ -226,7 +229,7 @@ public class MakerUI : MonoBehaviour
         }
         else if (type == Player.InventoryType.Tool)
         {
-            player.ChangeTool((item as BreakTool).BlockType);
+            player.ChangeTool((item as BreakToolData).BlockType);
         }
     }
     protected void _Cursor()
@@ -328,7 +331,7 @@ public class MakerUI : MonoBehaviour
     {
         if (isShow)
         {
-            menu.ShowMenu(buttons[index].transform, makableItems[index].ItemState.Materials);
+            menu.ShowMenu(buttons[index].transform, makableItems[index].ItemMaterials);
         }
         else
         {

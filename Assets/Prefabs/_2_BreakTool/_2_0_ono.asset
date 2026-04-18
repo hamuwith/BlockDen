@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4752d696b72e52d439b61cffcd4d666f, type: 3}
+  m_Name: _2_0_ono
+  m_EditorClassIdentifier: Assembly-CSharp::BreakToolData
+  itemAccess:
+    Category: 2
+    Id: 0
+    Num: 1
+  itemMaterials:
+  - Category: 8
+    Id: 1
+    Num: 3
+  unitNum: 1
+  maxNum: 1
+  texture2D: {fileID: 2800000, guid: ded7228925396bc4bbce50653cc58a16, type: 3}
+  sprite: {fileID: 21300000, guid: ded7228925396bc4bbce50653cc58a16, type: 3}
+  blockType: 2
+  lv: 0
+  breakPower: 2

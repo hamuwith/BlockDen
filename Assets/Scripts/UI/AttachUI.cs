@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 public class AttachUI : MakerUI
 {
-    protected List<BoxItem> attachmentItems;
+    protected List<ItemAccess> attachmentItems;
     protected bool isMove;
     protected int attachmentIndex;
     protected virtual Item.ItemCategory ItemCategory => Item.ItemCategory.Status;
     public override void Init(ItemManager itemManager)
     {
         InitBase(itemManager);
-        attachmentItems = new List<BoxItem>();
+        attachmentItems = new List<ItemAccess>();
     }
     public override void OpenUI(Player player)
     {
@@ -20,9 +20,9 @@ public class AttachUI : MakerUI
         {
             if (i == inventoryIndex)
             {
-                if (player.Bag[i]?.ItemState.ItemType == ItemCategory)
+                if (player.Bag[i]?.ItemAccess.Category == ItemCategory)
                 {
-                    inventoryButtons[i].color = player.Bag[inventoryIndex].ItemState.ItemType != ItemCategory ? Color.gray : Color.white;
+                    inventoryButtons[i].color = player.Bag[inventoryIndex].ItemAccess.Category != ItemCategory ? Color.gray : Color.white;
                 }
             }
             else
@@ -37,7 +37,7 @@ public class AttachUI : MakerUI
         player.CloseToolUI();
         player = null;
     }
-    public BoxItem GetAttachedItem()
+    public ItemAccess? GetAttachedItem()
     {
         if (attachmentIndex == attachmentItems.Count)
         {
@@ -57,11 +57,7 @@ public class AttachUI : MakerUI
         {
             if(isMove)
             {
-                BoxItem boxItem = new BoxItem
-                {
-                    ItemState = player.Bag[inventoryIndex].ItemState,
-                    Num = player.Bag[inventoryIndex].Num
-                };
+                ItemAccess boxItem = player.Bag[inventoryIndex].ItemAccess;
                 attachmentItems.Add(boxItem);
                 player.BagReduce(1, inventoryIndex);
                 if (player.Bag[inventoryIndex] != null)
@@ -83,7 +79,7 @@ public class AttachUI : MakerUI
         {
             if (!isMove)
             {
-                if (player.Bag[inventoryIndex]?.ItemState.ItemType == ItemCategory)
+                if (player.Bag[inventoryIndex]?.ItemAccess.Category == ItemCategory)
                 {
                     isInventory = false;
                     _HighLight();
@@ -119,7 +115,7 @@ public class AttachUI : MakerUI
         {
             if (i < attachmentItems.Count)
             {
-                buttons[i].sprite = attachmentItems[i].ItemState.Icon;
+                buttons[i].sprite = itemManager.GetItemIcon(attachmentItems[i]);
                 itemTexts[i].text = attachmentItems[i].Num > 1 ? attachmentItems[i].Num.ToString() : "";
                 buttons[i].color = i < attachmentIndex ? Color.gray : Color.white;
             }
@@ -133,7 +129,7 @@ public class AttachUI : MakerUI
         {
             if (player.Bag[i] != null)
             {
-                inventoryButtons[i].sprite = player.Bag[i].ItemState.Icon;
+                inventoryButtons[i].sprite = itemManager.GetItemIcon(player.Bag[i].ItemAccess);
                 inventoryItemTexts[i].text = player.Bag[i].Num > 1 ? player.Bag[i].Num.ToString() : "";
             }
             else
@@ -141,7 +137,7 @@ public class AttachUI : MakerUI
                 inventoryButtons[i].sprite = null;
                 inventoryItemTexts[i].text = "";
             }
-            inventoryButtons[i].color = player.Bag[i]?.ItemState.ItemType == ItemCategory ? Color.white : Color.gray;
+            inventoryButtons[i].color = player.Bag[i]?.ItemAccess.Category == ItemCategory ? Color.white : Color.gray;
         }
     }
     protected override void OpenUIBase(Player player)

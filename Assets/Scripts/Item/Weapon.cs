@@ -5,26 +5,19 @@ using System.Threading;
 
 public class Weapon : PlayerUI
 {
-    [SerializeField] Status status;
     [SerializeField] AttachUI attachUI;
-    Attachment attachment;
+    AttachmentStatus attachment;
     CancellationTokenSource cancellationTokenSource;
     ArrowPool arrowPool;
     EnemyManager enemyManager;
-    public Attachment Attachment { get; set; }
-    [System.Serializable]
-    struct Status
+    WeaponData weaponData;
+    public AttachmentStatus Attachment { get; set; }
+    public override void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
-        public int arrowId;
-        public int damage;
-        public int attackSpeed;
-        public float range;
-    }
-    public override void Init(ItemManager itemManager)
-    {
-        BaseInit(itemManager);
+        Init(itemManager, material, itemAccess);
         cancellationTokenSource = new CancellationTokenSource();
-        arrowPool = itemManager.MainManager.WeaponManager.ArrowPool[status.arrowId];
+        weaponData = itemManager.GetItem(itemAccess) as WeaponData;
+        arrowPool = itemManager.MainManager.WeaponManager.ArrowPool[weaponData.ArrowId];
         enemyManager = itemManager.MainManager.EnemyManager;
         attachUI.Init(itemManager);
         Attack(cancellationTokenSource.Token).Forget();
@@ -62,7 +55,7 @@ public class Weapon : PlayerUI
     {
         while (true)
         {
-            await UniTask.Delay(status.attackSpeed, cancellationToken: cancellationToken);
+            await UniTask.Delay(weaponData.AttackSpeed, cancellationToken: cancellationToken);
             Enemy enemy = null;
             while (enemy == null)
             {
@@ -72,7 +65,7 @@ public class Weapon : PlayerUI
             if (enemy != null)
             {
                 var arrow = arrowPool.GetArrow();
-                arrow.Fire(enemy, status.damage, attachment, transform);
+                arrow.Fire(enemy, weaponData.Damage, Attachment, transform);
             }
         }
     }

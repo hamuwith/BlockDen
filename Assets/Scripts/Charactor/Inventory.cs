@@ -78,7 +78,8 @@ public class Inventory : MonoBehaviour
         {
             if (player.Bag[i] != null)
             {
-                inventoryButtons[i].sprite = player.Bag[i].ItemState.Icon;
+                var itemAccess = player.Bag[i].ItemAccess;
+                inventoryButtons[i].sprite = itemManager.GetSprite(itemAccess);
                 itemTexts[i].text = player.Bag[i].Num > 1 ? player.Bag[i].Num.ToString() : "";
             }
             else
@@ -91,7 +92,7 @@ public class Inventory : MonoBehaviour
         {
             if (player.MaterialBag[i].Id != -1)
             {
-                bagButtons[i].sprite = itemManager.GetItem(player.MaterialBag[i].Category, player.MaterialBag[i].Id).ItemState.Icon;
+                bagButtons[i].sprite = itemManager.GetItemIcon(player.MaterialBag[i]);
                 bagItemTexts[i].text = player.MaterialBag[i].Num > 1 ? player.MaterialBag[i].Num.ToString() : "";
             }
             else

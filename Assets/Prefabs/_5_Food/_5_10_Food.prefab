@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7528032464249859226}
   - component: {fileID: 3094954838979268697}
   - component: {fileID: 916359242653036030}
-  - component: {fileID: 6872646553056864779}
+  - component: {fileID: 5790107851720858469}
   m_Layer: 7
   m_Name: _5_10_Food
   m_TagString: Untagged
@@ -141,7 +141,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6872646553056864779
+--- !u!114 &5790107851720858469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,21 +150,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7845834766657059244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f37fbc760565eb48b565e36482b1076, type: 3}
+  m_Script: {fileID: 11500000, guid: c8cdb197823fa1e4487b7cb41973cc41, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Food
-  itemState:
-    Id: 0
-    ItemType: 5
-    Icon: {fileID: 21300000, guid: a709a2191d8326f49ac47571611567f3, type: 3}
-    Materials:
-    - Category: 8
-      Id: 19
-      Num: 1
-    UnitNum: 0
-    MaxNum: 0
-    Material: {fileID: 2100000, guid: 24e760ce7bbe59a43a8d653f3f22f5d3, type: 2}
-  foodStatus:
-    Duration: 30000
-    MoveSpeed: 1.2
-    Power: 2
+  m_EditorClassIdentifier: Assembly-CSharp::Item
