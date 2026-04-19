@@ -1,9 +1,7 @@
-using TMPro;
-using UnityEditor.Build;
 using UnityEngine;
 using static Player;
 
-public class BoxUI : MakerUI
+public class BoxUI : BaseUI
 {
     ItemAccess[] boxitems;
     bool isMove;
@@ -19,10 +17,6 @@ public class BoxUI : MakerUI
             boxitems[i].Id = -1;
         }
     }
-    /// <summary>
-    /// ツールのUIを開く際の初期化を行うメソッド
-    /// </summary>
-    /// <param name="player"></param>
     public override void OpenUI(Player player)
     {
         OpenUIBase(player);
@@ -32,10 +26,6 @@ public class BoxUI : MakerUI
         canvas.enabled = false;
         player = null;
     }
-    /// <summary>
-    /// ツールのUIでボタンを選択するメソッド
-    /// </summary>
-    /// <param name="vector"></param>
     public override void Select(Vector2 vector)
     {
         var change = _GetSelect(vector);
@@ -46,7 +36,7 @@ public class BoxUI : MakerUI
             if (!isInventory)
             {
                 _Select(vector);
-                _HighLight();                
+                _HighLight();
             }
         }
         else
@@ -57,9 +47,6 @@ public class BoxUI : MakerUI
         }
         _Cursor();
     }
-    /// <summary>
-    /// ツールのアクションを実行するメソッド
-    /// </summary>
     public override void Action()
     {
         if (isMove)
@@ -74,20 +61,20 @@ public class BoxUI : MakerUI
                 boxitems[index] = player.Bag[inventoryIndex].ItemAccess;
                 player.BagReduce(player.Bag[inventoryIndex].Num, inventoryIndex);
             }
-            else if(player.Bag[inventoryIndex] == null)
+            else if (player.Bag[inventoryIndex] == null)
             {
                 boxitems[index].Id = -1;
                 player.BagUpdate(boxItem, false);
             }
             else
             {
-                if(boxItem.Category == player.Bag[inventoryIndex].ItemAccess.Category && boxItem.Id == player.Bag[inventoryIndex].ItemAccess.Id)
+                if (boxItem.Category == player.Bag[inventoryIndex].ItemAccess.Category && boxItem.Id == player.Bag[inventoryIndex].ItemAccess.Id)
                 {
                     if (isInventory)
                     {
                         var num = player.BagUpdate(boxItem, false);
                         boxitems[index].Num -= num;
-                        if(boxitems[index].Num <= 0)
+                        if (boxitems[index].Num <= 0)
                         {
                             boxitems[index].Id = -1;
                         }
@@ -96,14 +83,14 @@ public class BoxUI : MakerUI
                     {
                         var maxNum = itemManager.GetItem(boxitems[index]).MaxNum;
                         boxitems[index].Num += player.Bag[inventoryIndex].Num;
-                        if(boxitems[index].Num > maxNum)
+                        if (boxitems[index].Num > maxNum)
                         {
                             var num = boxitems[index].Num - maxNum;
                             boxitems[index].Num = maxNum;
                             bool filled = true;
                             for (int i = 0; i < boxitems.Length; i++)
                             {
-                                if(boxitems[i].Id == -1)
+                                if (boxitems[i].Id == -1)
                                 {
                                     boxitems[i] = player.Bag[inventoryIndex].ItemAccess;
                                     boxitems[i].Num = num;
@@ -222,7 +209,7 @@ public class BoxUI : MakerUI
                 }
             }
         }
-        if(index == -1)
+        if (index == -1)
         {
             index = 0;
         }
@@ -232,4 +219,3 @@ public class BoxUI : MakerUI
         canvas.enabled = true;
     }
 }
-

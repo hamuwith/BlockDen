@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class AttachUI : MakerUI
+public class AttachUI : BaseUI
 {
     protected List<ItemAccess> attachmentItems;
     protected bool isMove;

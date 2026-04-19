@@ -1,74 +1,18 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using static Item;
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.NCalc;
 
-public class MakerUI : MonoBehaviour
+public class MakerUI : BaseUI
 {
-    [SerializeField] protected Image[] buttons;
-    [SerializeField] protected Image highlight;
-    [SerializeField] protected Image[] inventoryButtons;
-    [SerializeField] protected Image inventoryHighlight;
     [SerializeField] ItemCategory[] makableCategorys;
     [SerializeField] Menu menu;
-    [SerializeField] protected Canvas canvas;
     ItemData[] makableItems;
-    Material highlightMaterial;
-    Material inventoryHighlightMaterial;
-    protected TextMeshProUGUI[] itemTexts;
-    protected TextMeshProUGUI[] inventoryItemTexts;
-    protected Player player;
-    protected int index;
-    protected int inventoryIndex;
     bool[] makable;
-    protected bool isInventory;
     ItemData makeItem;
-    protected virtual int MaxIndex => Mathf.Min(makableItems.Length, buttons.Length);
-    protected int InventoryMaxIndex => inventoryButtons.Length;
-    readonly protected int sliceWidthId = Shader.PropertyToID("_SliceWidth");
-    readonly int rawSize = 8;
-    protected ItemManager itemManager;
-    public virtual bool IsMakable => makableItems?.Length > 0;
-    /// <summary>
-    /// �x�N�g���̕�����8�����ɕϊ����邽�߂̗񋓑�
-    /// </summary>
-    public enum Direction8
-    {
-        Right,
-        UpRight,
-        Up,
-        UpLeft,
-        Left,
-        DownLeft,
-        Down,
-        DownRight
-    }
-    /// <summary>
-    /// �c�[����UI�őI�����ς��������\���񋓑�
-    /// </summary>
-    public enum SelectState
-    {
-        NoChange,
-        UpOuterChange,
-        DownOuterChange,
-    }
-    /// <summary>
-    /// �x�N�g������8�����̂ǂ�ɋ߂�����Ԃ����\�b�h
-    /// </summary>
-    /// <param name="input"></param>
-    /// <returns></returns>
-    public static Direction8 ToDirection8(Vector2 input)
-    {
-        float angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
-        if (angle < 0) angle += 360f;
+    protected override int MaxIndex => Mathf.Min(makableItems.Length, buttons.Length);
+    public override bool IsMakable => makableItems?.Length > 0;
 
-        int index = Mathf.RoundToInt(angle / 45f) % 8;
-
-        return (Direction8)index;
-    }
-    public virtual void Init(ItemManager itemManager)
+    public override void Init(ItemManager itemManager)
     {
         var makableItemList = new List<ItemData>();
         foreach (var category in makableCategorys)
@@ -83,11 +27,7 @@ public class MakerUI : MonoBehaviour
             buttons[i].sprite = makableItems[i].Icon;
         }
     }
-    /// <summary>
-    /// �c�[����UI���J���ۂ̏��������s�����\�b�h
-    /// </summary>
-    /// <param name="player"></param>
-    public virtual void OpenUI(Player player)
+    public override void OpenUI(Player player)
     {
         makable = new bool[makableItems.Length];
         SetEnabled();
@@ -102,17 +42,13 @@ public class MakerUI : MonoBehaviour
         _SelectIn(makableItems[index]);
         _Cursor();
     }
-    public virtual void CloseUI()
+    public override void CloseUI()
     {
         canvas.enabled = false;
         if (player != null) player.BagIndex = inventoryIndex;
         player = null;
     }
-    /// <summary>
-    /// �c�[����UI�Ń{�^����I�����郁�\�b�h
-    /// </summary>
-    /// <param name="vector"></param>
-    public virtual void Select(Vector2 vector)
+    public override void Select(Vector2 vector)
     {
         var change = _GetSelect(vector);
         //change = change == SelectState.DownOuterChange && isInventory || change == SelectState.UpOuterChange && !isInventory ? SelectState.NoChange : change;
@@ -135,10 +71,7 @@ public class MakerUI : MonoBehaviour
         }
         _Cursor();
     }
-    /// <summary>
-    /// �c�[���̃A�N�V���������s���郁�\�b�h
-    /// </summary>
-    public virtual void Action()
+    public override void Action()
     {
         if (!isInventory)
         {
@@ -160,7 +93,7 @@ public class MakerUI : MonoBehaviour
             _HighLight();
         }
     }
-    public virtual bool Cancel()
+    public override bool Cancel()
     {
         if (!isInventory)
         {
@@ -190,7 +123,7 @@ public class MakerUI : MonoBehaviour
         }
         return isEnabled;
     }
-    public virtual void UpdateAction()
+    public override void UpdateAction()
     {
         for (int i = 0; i < makableItems.Length; i++)
         {
@@ -231,101 +164,6 @@ public class MakerUI : MonoBehaviour
             player.ChangeTool((item as BreakToolData).BlockType);
         }
     }
-    protected void _Cursor()
-    {
-        inventoryHighlight.transform.position = inventoryButtons[inventoryIndex].transform.position;
-        highlight.transform.position = buttons[index].transform.position;
-    }
-    protected void _HighLight()
-    {
-        Material stopMaterial = isInventory ? highlightMaterial : inventoryHighlightMaterial;
-        Material startMaterial = isInventory ? inventoryHighlightMaterial : highlightMaterial;
-        stopMaterial.SetFloat(sliceWidthId, 0.0f);
-        startMaterial.SetFloat(sliceWidthId, 0.1f);
-    }
-    protected SelectState _GetSelect(Vector2 vector)
-    {
-        if (vector.sqrMagnitude <= 0.7f) return SelectState.NoChange;
-        var index = isInventory ? inventoryIndex : this.index;
-        Image[] buttons = isInventory ? inventoryButtons : this.buttons;
-        var derection = ToDirection8(vector);
-        if (derection == Direction8.Right || derection == Direction8.Left)
-        {
-            return SelectState.NoChange;
-        }
-        else if (derection == Direction8.DownRight || derection == Direction8.Down || derection == Direction8.DownLeft)
-        {
-            if (index - rawSize >= 0)
-            {
-                return SelectState.NoChange;
-            }
-            return SelectState.DownOuterChange;
-        }
-        else
-        {
-            if (index + rawSize < buttons.Length)
-            {
-                return SelectState.NoChange;
-            }
-            return SelectState.UpOuterChange;
-        }
-    }
-    protected virtual void _Select(Vector2 vector)
-    {
-        var index = isInventory ? inventoryIndex : this.index;
-        var MaxIndex = isInventory ? InventoryMaxIndex : this.MaxIndex;
-        if (vector.sqrMagnitude > 0.7f)
-        {
-            var derection = ToDirection8(vector);
-            int preIndex = index;
-            bool up = derection == Direction8.Up || derection == Direction8.UpRight || derection == Direction8.UpLeft;
-            bool down = derection == Direction8.Down || derection == Direction8.DownRight || derection == Direction8.DownLeft;
-            if (derection == Direction8.Right || derection == Direction8.UpRight || derection == Direction8.DownRight)
-            {
-                if ((index + 1) / rawSize > index / rawSize || index + 1 >= MaxIndex)
-                {
-                    preIndex = (index / rawSize) * rawSize;
-                }
-                else
-                {
-                    preIndex++;
-                }
-            }
-            else if (derection == Direction8.Left || derection == Direction8.UpLeft || derection == Direction8.DownLeft)
-            {
-                if ((index - 1) / rawSize < index / rawSize || index <= 0)
-                {
-                    preIndex = index / rawSize + Mathf.Min(rawSize, MaxIndex) - 1;
-                }
-                else
-                {
-                    preIndex--;
-                }
-            }
-            if (up)
-            {
-                if (preIndex + rawSize < MaxIndex)
-                {
-                    preIndex += rawSize;
-                }
-            }
-            else if (down)
-            {
-                if (preIndex - rawSize >= 0)
-                {
-                    preIndex -= rawSize;
-                }
-            }
-            if (isInventory)
-            {
-                inventoryIndex = preIndex;
-            }
-            else
-            {
-                this.index = preIndex;
-            }
-        }
-    }
     void _Menu(bool isShow)
     {
         if (isShow)
@@ -336,37 +174,5 @@ public class MakerUI : MonoBehaviour
         {
             menu.HideMenu();
         }
-    }
-    protected void InitBase(ItemManager itemManager)
-    {
-        canvas.enabled = false;
-        this.itemManager = itemManager;
-        highlightMaterial = new Material(highlight.material);
-        highlight.material = highlightMaterial;
-        inventoryHighlightMaterial = new Material(inventoryHighlight.material);
-        inventoryHighlight.material = inventoryHighlightMaterial;
-        itemTexts = new TextMeshProUGUI[buttons.Length];
-        inventoryItemTexts = new TextMeshProUGUI[inventoryButtons.Length];
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            itemTexts[i] = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
-            itemTexts[i].text = "";
-        }
-        for (int i = 0; i < inventoryButtons.Length; i++)
-        {
-            inventoryItemTexts[i] = inventoryButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            inventoryItemTexts[i].text = "";
-        }
-    }
-    protected virtual void OpenUIBase(Player player)
-    {
-        this.player = player;
-        index = 0;
-        inventoryIndex = 0;
-        isInventory = false;
-        UpdateAction();
-        _HighLight();
-        _Cursor();
-        canvas.enabled = true;
     }
 }

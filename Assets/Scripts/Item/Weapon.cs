@@ -6,7 +6,6 @@ using System.Threading;
 public class Weapon : PlayerUI
 {
     [SerializeField] AttachUI attachUI;
-    AttachmentStatus attachment;
     CancellationTokenSource cancellationTokenSource;
     ArrowPool arrowPool;
     EnemyManager enemyManager;

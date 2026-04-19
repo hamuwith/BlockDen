@@ -18,12 +18,20 @@ MonoBehaviour:
     Num: 1
   itemMaterials:
   - Category: 8
-    Id: 1
+    Id: 2
     Num: 3
   unitNum: 1
   maxNum: 1
   texture2D: {fileID: 2800000, guid: 61d0269183d6f1742ac1d9a850de0b73, type: 3}
   sprite: {fileID: 21300000, guid: 61d0269183d6f1742ac1d9a850de0b73, type: 3}
+  hardness: 0
+  itemPercents: []
+  dropItem100:
+    Category: 0
+    Id: 0
+    Num: 0
+  life: 0
+  blockType: 0
   arrowId: 1
   damage: 2
   attackSpeed: 1500

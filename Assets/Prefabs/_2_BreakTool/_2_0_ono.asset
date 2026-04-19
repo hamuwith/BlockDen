@@ -18,7 +18,7 @@ MonoBehaviour:
     Num: 1
   itemMaterials:
   - Category: 8
-    Id: 1
+    Id: 2
     Num: 3
   unitNum: 1
   maxNum: 1

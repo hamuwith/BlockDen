@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerUI : Block
 {
-    [SerializeField] MakerUI[] uis;
+    [SerializeField] BaseUI[] uis;
     int tabIndex;
     protected Player player;
     public void Init(ItemManager itemManager)

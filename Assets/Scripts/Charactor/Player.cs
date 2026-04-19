@@ -5,7 +5,6 @@ using static Item;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
-using UnityEditor;
 
 public class Player : Character
 {
@@ -78,9 +77,6 @@ public class Player : Character
         Add,
         MaterialAdd,
     }
-    /// <summary>
-    /// �v���C���[�̃C���x���g���̎�ނ�\���񋓌^
-    /// </summary>
     public enum InventoryType
     {
         Tool,
@@ -121,10 +117,6 @@ public class Player : Character
             return InventoryType.Carry;
         }
     }
-    /// <summary>
-    /// �v���C���[�̏��������s�����\�b�h
-    /// </summary>
-    /// <param name="mainManager"></param>
     public override void Init(MainManager mainManager)
     {
         base.Init(mainManager);
@@ -206,7 +198,7 @@ public class Player : Character
         {
             Break();
         }
-        else if (haveItemCategory == ItemCategory.UnnatureBlock || haveItemCategory == ItemCategory.Weapon || haveItemCategory == ItemCategory.Seed)
+        else if (PutType(haveItemCategory))
         {
             Put();
         }
@@ -287,7 +279,7 @@ public class Player : Character
         {
             return;
         }
-        if (HaveItem.ItemAccess.Category != ItemCategory.UnnatureBlock && HaveItem.ItemAccess.Category != ItemCategory.Weapon && HaveItem.ItemAccess.Category != ItemCategory.Seed)
+        if (!PutType(HaveItem.ItemAccess.Category))
         {
             return;
         }
@@ -492,11 +484,6 @@ public class Player : Character
             itemManager.RemoveFieldItem(getItem);
         }
     }
-    /// <summary>
-    /// �A�C�e�����쐬���郁�\�b�h
-    /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
     public void Make(ItemData item, int num)
     {
         var itemAccess = item.ItemAccess;
@@ -611,7 +598,7 @@ public class Player : Character
         if (toolTargetPosition.HasValue && !(mapManager.GetBlock(toolTargetPosition.Value).BlockType == Block.BlockTypeEnum.Water))
         {
         }
-        else if (haveItemCategory == ItemCategory.UnnatureBlock || haveItemCategory == ItemCategory.Weapon || haveItemCategory == ItemCategory.Seed)
+        else if (PutType(haveItemCategory))
         {
             putTargetPosition = PutTarget(playerPos, transform.forward);
         }
@@ -701,7 +688,7 @@ public class Player : Character
     }
     Vector3 GetClosestFaceNormal(Vector3 spherePos, Vector3 cubePos)
     {
-        Vector3 dir = cubePos - spherePos; // �����̒��S -> �����S
+        Vector3 dir = cubePos - spherePos;
 
         float ax = Mathf.Abs(dir.x);
         float ay = Mathf.Abs(dir.y);
@@ -725,6 +712,10 @@ public class Player : Character
                 moveTarget = collision.transform;
             }
         }
+    }
+    private bool PutType(ItemCategory category)
+    {
+        return category == ItemCategory.UnnatureBlock || category == ItemCategory.Weapon || category == ItemCategory.Seed || category == ItemCategory.WeaponBase;
     }
     void OnDestroy()
     {

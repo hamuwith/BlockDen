@@ -1,12 +1,6 @@
-using UnityEngine;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using System.Threading;
-using Unity.VisualScripting;
-
 public class Fertilizer : Item
 {
-    
+
     public void SumFertilizer(ref FertilizerStatus fertilizerStatus, FertilizerStatus attachFertilizerStatus)
     {
         fertilizerStatus.Rate += attachFertilizerStatus.Rate;

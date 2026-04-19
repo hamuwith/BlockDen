@@ -27,6 +27,8 @@ public class Item : MonoBehaviour
         Fertilizer,
         Material,
         Bag,
+        Tool,
+        WeaponBase,
         Length,
     }
     [System.Serializable]
@@ -55,10 +57,6 @@ public class Item : MonoBehaviour
         if (material == null) Destroy(meshRenderer);
         else meshRenderer.sharedMaterial = material;
     }
-    /// <summary>
-    /// �A�C�e���}�l�[�W���[���Z�b�g���郁�\�b�h
-    /// </summary>
-    /// <param name="itemManager"></param>
     public void SetItemManager(ItemManager itemManager)
     {
         this.itemManager = itemManager;
@@ -66,11 +64,6 @@ public class Item : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         rigid = GetComponent<Rigidbody>();
     }
-    /// <summary>
-    /// �A�C�e���̏�Ԃ��Z�b�g���郁�\�b�h
-    /// </summary>
-    /// <param name="itemState"></param>
-    /// <param name="num"></param>
     public void SetItemAccess(ItemAccess itemAccess, int num, Vector3 vector3, Material material)
     {
         this.itemAccess = itemAccess;
@@ -78,9 +71,6 @@ public class Item : MonoBehaviour
         meshRenderer.sharedMaterial = material;
         transform.position = vector3;
     }
-    /// <summary>
-    /// �A�C�e�����h���b�v����ۂ̋������`���郁�\�b�h
-    /// </summary>
     public void Drop()
     {
         Vector3 angle = new Vector3(Random.Range(-1f, 1f), 1, Random.Range(-1f, 1f));

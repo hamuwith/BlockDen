@@ -9,21 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec7d3321ded072e4186f23f421030cab, type: 3}
-  m_Name: _3_0_yagura
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  m_Script: {fileID: 11500000, guid: 4f3c9487895cee4498735bcd2729280c, type: 3}
+  m_Name: dodai
+  m_EditorClassIdentifier: Assembly-CSharp::BlockData
   itemAccess:
-    Category: 3
+    Category: 0
     Id: 0
     Num: 1
   itemMaterials:
   - Category: 8
-    Id: 2
-    Num: 3
+    Id: 0
+    Num: 1
   unitNum: 1
   maxNum: 1
-  texture2D: {fileID: 2800000, guid: 256d5c3031e5a6640b8401739d008001, type: 3}
-  sprite: {fileID: 21300000, guid: 07fd47c839923c94eb4ab3e17afd014b, type: 3}
+  texture2D: {fileID: 2800000, guid: 448eafe4ee408844190445cf7ba9d545, type: 3}
+  sprite: {fileID: 21300000, guid: 448eafe4ee408844190445cf7ba9d545, type: 3}
   hardness: 0
   itemPercents: []
   dropItem100:
@@ -32,7 +32,3 @@ MonoBehaviour:
     Num: 0
   life: 0
   blockType: 0
-  arrowId: 0
-  damage: 1
-  attackSpeed: 1000
-  range: 100

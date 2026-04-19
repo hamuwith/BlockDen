@@ -1337,6 +1337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6887234125144645679}
   - component: {fileID: 4994856228249922701}
+  - component: {fileID: 4468326176087566444}
   - component: {fileID: 7594567806826378933}
   m_Layer: 0
   m_Name: AttachUI
@@ -1395,9 +1396,59 @@ MonoBehaviour:
   - {fileID: 4231321864543101165}
   - {fileID: 356414655212115887}
   inventoryHighlight: {fileID: 3809949340531145701}
-  makableCategorys: 
-  menu: {fileID: 0}
   canvas: {fileID: 7594567806826378933}
+  buttonRowSize: 8
+--- !u!114 &4468326176087566444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125804509096475829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55010842a56702246afdf01a3479328c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftUI
+  buttons:
+  - {fileID: 5607266159312536062}
+  - {fileID: 7646559322621669725}
+  - {fileID: 8153175470718438472}
+  - {fileID: 2504719142670468969}
+  - {fileID: 5765311248549437286}
+  - {fileID: 5702366379506985392}
+  - {fileID: 493475268647059877}
+  - {fileID: 8477169292086612220}
+  - {fileID: 3127950471506478617}
+  - {fileID: 707107695279229417}
+  - {fileID: 1402297170784250286}
+  - {fileID: 3667383799481187587}
+  - {fileID: 1218291210993298282}
+  - {fileID: 707336235164235160}
+  - {fileID: 7313103136783353052}
+  - {fileID: 5171463562634315611}
+  - {fileID: 6204341641054741200}
+  - {fileID: 815294329686018933}
+  - {fileID: 7921178828841373805}
+  - {fileID: 7954801959833912491}
+  - {fileID: 7272299426174571945}
+  - {fileID: 1685171061344425152}
+  - {fileID: 2029591027564335232}
+  - {fileID: 9221886878742267817}
+  - {fileID: 4043581433052835597}
+  highlight: {fileID: 9189523499015876430}
+  inventoryButtons:
+  - {fileID: 1366492980677537484}
+  - {fileID: 2377838561659501701}
+  - {fileID: 6699164864628421546}
+  - {fileID: 6756084009595307118}
+  - {fileID: 3069457738580715712}
+  - {fileID: 5733381202593816753}
+  - {fileID: 3491539669097847971}
+  - {fileID: 7332472418996772565}
+  inventoryHighlight: {fileID: 8957682270589894539}
+  canvas: {fileID: 7594567806826378933}
+  buttonRowSize: 5
 --- !u!223 &7594567806826378933
 Canvas:
   m_ObjectHideFlags: 0
@@ -3979,7 +4030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &910099202316807058
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4353,7 +4404,7 @@ GameObject:
   - component: {fileID: 7528032464249859226}
   - component: {fileID: 3094954838979268697}
   - component: {fileID: 916359242653036030}
-  - component: {fileID: 2108070430345632071}
+  - component: {fileID: -2828623510182161459}
   m_Layer: 6
   m_Name: _3_0_dodai
   m_TagString: Tool
@@ -4410,7 +4461,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9c04cd647834ac24a901db1d6fcfbfb6, type: 2}
+  - {fileID: 2100000, guid: fffd544af0cb094458ffb5be582567a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4482,7 +4533,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2108070430345632071
+--- !u!114 &-2828623510182161459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4491,32 +4542,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7845834766657059244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f173c0cf18b39364c8c5197d081be1bd, type: 3}
+  m_Script: {fileID: 11500000, guid: a434d2eab0e64734fbf9d23a30f6bc86, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  itemState:
-    Id: 0
-    ItemType: 3
-    Icon: {fileID: 21300000, guid: 07fd47c839923c94eb4ab3e17afd014b, type: 3}
-    Materials:
-    - Category: 8
-      Id: 0
-      Num: 3
-    UnitNum: 0
-    MaxNum: 0
-    Material: {fileID: 2100000, guid: 9c04cd647834ac24a901db1d6fcfbfb6, type: 2}
-  hardness: 10000
-  itemPercents: []
-  dropItem100: {fileID: 0}
-  life: 1
-  blockType: 4
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponBase
   uis: []
-  status:
-    arrowId: 0
-    damage: 1
-    attackSpeed: 1000
-    range: 100
-  attachUI: {fileID: 4994856228249922701}
+  craftUI: {fileID: 4468326176087566444}
 --- !u!1 &8023624248877115960
 GameObject:
   m_ObjectHideFlags: 0

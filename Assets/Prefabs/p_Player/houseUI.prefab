@@ -1415,9 +1415,9 @@ MonoBehaviour:
   - {fileID: 1452176317000254416}
   - {fileID: 4925883281518391764}
   inventoryHighlight: {fileID: 8717917446475354781}
+  canvas: {fileID: 4716378891526672040}
   makableCategorys: 01000000
   menu: {fileID: 1604660662518367953}
-  canvas: {fileID: 4716378891526672040}
 --- !u!1 &134829798080652538
 GameObject:
   m_ObjectHideFlags: 0
@@ -4281,9 +4281,9 @@ MonoBehaviour:
   - {fileID: 7885433705420944443}
   - {fileID: 7844847351397756549}
   inventoryHighlight: {fileID: 3397155764258589814}
-  makableCategorys: 03000000
-  menu: {fileID: 1462519741514966435}
   canvas: {fileID: 1456861479243136040}
+  makableCategorys: 030000000b000000
+  menu: {fileID: 1462519741514966435}
 --- !u!1 &629203020985495643
 GameObject:
   m_ObjectHideFlags: 0
@@ -6716,9 +6716,9 @@ MonoBehaviour:
   - {fileID: 6637873874529581200}
   - {fileID: 5644553946664092969}
   inventoryHighlight: {fileID: 107774666591934508}
+  canvas: {fileID: 7259069393633151244}
   makableCategorys: 0600000007000000
   menu: {fileID: 4763483900828720355}
-  canvas: {fileID: 7259069393633151244}
 --- !u!1 &1016256255405210286
 GameObject:
   m_ObjectHideFlags: 0
@@ -20171,8 +20171,6 @@ MonoBehaviour:
   - {fileID: 2191707352303558285}
   - {fileID: 8701419462851433499}
   inventoryHighlight: {fileID: 8381049988044285425}
-  makableCategorys: 
-  menu: {fileID: 0}
   canvas: {fileID: 4111987007724568663}
 --- !u!1 &3212539654020983195
 GameObject:
@@ -22621,9 +22619,9 @@ MonoBehaviour:
   - {fileID: 772738142573033757}
   - {fileID: 5529247129902253145}
   inventoryHighlight: {fileID: 4107631167171881281}
+  canvas: {fileID: 1391961006519596079}
   makableCategorys: 04000000
   menu: {fileID: 1549592100558451693}
-  canvas: {fileID: 1391961006519596079}
 --- !u!1 &3722149390860565595
 GameObject:
   m_ObjectHideFlags: 0
@@ -23080,9 +23078,9 @@ MonoBehaviour:
   - {fileID: 94651414122165457}
   - {fileID: 6791894811615825730}
   inventoryHighlight: {fileID: 148825383835028713}
+  canvas: {fileID: 6287252541036019566}
   makableCategorys: 0200000009000000
   menu: {fileID: 2189488515090272693}
-  canvas: {fileID: 6287252541036019566}
 --- !u!1 &3787262033045540491
 GameObject:
   m_ObjectHideFlags: 0
@@ -38344,19 +38342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aaf9c383741a1348bd2a397a20b49af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUI
-  itemState:
-    Id: 0
-    ItemType: 0
-    Icon: {fileID: 0}
-    Materials: []
-    UnitNum: 0
-    MaxNum: 0
-    Material: {fileID: 0}
-  hardness: 0
-  itemPercents: []
-  dropItem100: {fileID: 0}
-  life: 0
-  blockType: 0
   uis:
   - {fileID: 4859716244349151931}
   - {fileID: 876771110330268206}
@@ -38978,9 +38963,9 @@ MonoBehaviour:
   - {fileID: 9104538739543835121}
   - {fileID: 7592875476977665688}
   inventoryHighlight: {fileID: 3682793224235842373}
+  canvas: {fileID: 7448938106296724507}
   makableCategorys: 05000000
   menu: {fileID: 1188114420119677276}
-  canvas: {fileID: 7448938106296724507}
 --- !u!1 &6606091945848701838
 GameObject:
   m_ObjectHideFlags: 0
@@ -40873,8 +40858,6 @@ MonoBehaviour:
   - {fileID: 4742626333191895866}
   - {fileID: 7065083582459381562}
   inventoryHighlight: {fileID: 6578010500009662851}
-  makableCategorys: 
-  menu: {fileID: 0}
   canvas: {fileID: 3017150023051060708}
 --- !u!1 &6938768693112803617
 GameObject:

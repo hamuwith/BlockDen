@@ -52,6 +52,8 @@
     <Compile Include="Assets\Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Item\Weapon.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\StageData.cs" />
+    <Compile Include="Assets\Scripts\Item\WeaponBase.cs" />
+    <Compile Include="Assets\Scripts\UI\BaseUI.cs" />
     <Compile Include="Assets\Scripts\Item\Seed.cs" />
     <Compile Include="Assets\Scripts\Manager\WeaponManager.cs" />
     <Compile Include="Assets\Scripts\Item\Fertilizer.cs" />
@@ -64,7 +66,6 @@
     <Compile Include="Assets\Scripts\Arrow\Arrow.cs" />
     <Compile Include="Assets\Scripts\UI\FertilizerUI.cs" />
     <Compile Include="Assets\Scripts\UI\Menu.cs" />
-    <Compile Include="Assets\Scripts\ScriptableObject\attachmentData.cs" />
     <Compile Include="Assets\Scripts\Pool\EnemyPool.cs" />
     <Compile Include="Assets\Scripts\Support\StageSceneBinding.cs" />
     <Compile Include="Assets\Scripts\Pool\ArrowPool.cs" />
@@ -81,12 +82,14 @@
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\Manager\MapManager.cs" />
     <Compile Include="Assets\Scripts\Charactor\Character.cs" />
+    <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
     <Compile Include="Assets\Scripts\Charactor\Player.cs" />
     <Compile Include="Assets\Scripts\Manager\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\UI\BoxUI.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\Item\BreakTool.cs" />
     <Compile Include="Assets\Scripts\Charactor\Enemy.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObject\AttachmentData.cs" />
     <Compile Include="Assets\Edior\MapEditorWindow.cs" />
     <Compile Include="Assets\Scripts\Item\Item.cs" />
     <Compile Include="Assets\Scripts\Item\Block.cs" />

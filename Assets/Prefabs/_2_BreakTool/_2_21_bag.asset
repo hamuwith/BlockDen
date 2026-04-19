@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemAccess:
     Category: 9
-    Id: 21
+    Id: 4
     Num: 1
   itemMaterials:
   - Category: 8
-    Id: 1
+    Id: 2
     Num: 3
   unitNum: 1
   maxNum: 1

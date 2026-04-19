@@ -2486,7 +2486,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9c04cd647834ac24a901db1d6fcfbfb6, type: 2}
+  - {fileID: 2100000, guid: fffd544af0cb094458ffb5be582567a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2570,27 +2570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f173c0cf18b39364c8c5197d081be1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  itemState:
-    Id: 0
-    ItemType: 3
-    Icon: {fileID: 21300000, guid: 07fd47c839923c94eb4ab3e17afd014b, type: 3}
-    Materials:
-    - Category: 8
-      Id: 0
-      Num: 3
-    UnitNum: 0
-    MaxNum: 0
-    Material: {fileID: 2100000, guid: 9c04cd647834ac24a901db1d6fcfbfb6, type: 2}
-  hardness: 10000
-  itemPercents: []
-  dropItem100: {fileID: 0}
-  life: 1
-  blockType: 4
   uis: []
-  status:
-    damage: 1
-    attackSpeed: 1000
-    range: 100
   attachUI: {fileID: 4994856228249922701}
 --- !u!1 &8023624248877115960
 GameObject:

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using static Item;
+using UnityEditor;
 
 public class ItemManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] Seed seedPrefab;
     [SerializeField] Weapon weaponPrefab;
     [SerializeField] BreakTool breakToolPrefab;
+    [SerializeField] WeaponBase weaponBasePrefab;
     [SerializeField] Material highlightMaterial;
     [SerializeField] DropItemPool dropItemPool;
     [SerializeField] Material baseMaterial;
@@ -19,10 +21,6 @@ public class ItemManager : MonoBehaviour
     int[][] itemsNum;
     Sprite[][] itemIcons;
     Material[][] itemMaterials;
-    /// <summary>
-    /// アイテムマネージャーの初期化を行う
-    /// </summary>
-    /// <param name="mainManager"></param>
     public void Init(MainManager mainManager)
     {
 
@@ -61,35 +59,25 @@ public class ItemManager : MonoBehaviour
             itemMaterials[i] = new Material[itemLists[i].Items.Length];
             for (int j = 0; j < itemLists[i].Items.Length; j++)
             {
-                if(itemLists[i].Items[j] == null) continue;
+                if (itemLists[i].Items[j] == null) continue;
                 Material material = new Material(baseMaterial);
                 material.SetTexture("_BaseMap", itemLists[i].Items[j].Texture2D);
                 itemMaterials[i][j] = material;
             }
         }
     }
-    /// <summary>
-    /// アイテムのアイコンを取得するメソッド
-    /// </summary>
-    /// <param name="itemAccess"></param>
-    /// <returns></returns>
     public Sprite GetSprite(ItemAccess itemAccess)
     {
         return itemIcons[(int)itemAccess.Category][itemAccess.Id];
     }
-    /// <summary>
-    /// アイテムのマテリアルを取得するメソッド
-    /// </summary>
-    /// <param name="itemAccess"></param>
-    /// <returns></returns>
     public Material GetMaterial(ItemAccess itemAccess)
     {
-        if(itemAccess.Id < 0) return null;
+        if (itemAccess.Id < 0) return null;
         return itemMaterials[(int)itemAccess.Category][itemAccess.Id];
     }
     public int GetItemNum(ItemCategory category)
     {
-        if(itemsNum == null)
+        if (itemsNum == null)
         {
             itemsNum = new int[itemLists.Length][];
             for (int i = 0; i < itemLists.Length; i++)
@@ -115,9 +103,6 @@ public class ItemManager : MonoBehaviour
         item.SetItem(false);
         return item;
     }
-    /// <summary>
-    /// アイテムIDからアイテムを生成するメソッド
-    /// </summary>
     public Item GetPoolItem(ItemAccess itemAccess, int num, Vector3 pos)
     {
         var instantiateItem = dropItemPool.GetItem();
@@ -126,26 +111,12 @@ public class ItemManager : MonoBehaviour
         instantiateItem.SetItem(true);
         return instantiateItem;
     }
-    /// <summary>
-    /// アイテムIDからブロックを生成するメソッド
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="pos"></param>
-    /// <param name="parent"></param>
-    /// <returns></returns>
     public Block InstantiateBlock(ItemCategory category, int id, Vector3Int pos, Transform parent = null)
     {
         var itemAccess = itemLists[(int)category].Items[id].ItemAccess;
         var item = InstantiateBlock(itemAccess, pos, parent);
         return item;
-    }    
-    /// <summary>
-    /// アイテムIDからブロックを生成するメソッド
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="pos"></param>
-    /// <param name="parent"></param>
-    /// <returns></returns>
+    }
     public Block InstantiateBlock(ItemAccess blockAccess, Vector3Int pos, Transform parent = null)
     {
         Block item = null;
@@ -157,35 +128,26 @@ public class ItemManager : MonoBehaviour
         {
             item = Instantiate(seedPrefab, pos, Quaternion.identity, parent);
         }
-        else if(blockAccess.Category == ItemCategory.Weapon)
+        else if (blockAccess.Category == ItemCategory.Weapon)
         {
             item = Instantiate(weaponPrefab, pos, Quaternion.identity, parent);
+        }
+        else if (blockAccess.Category == ItemCategory.WeaponBase)
+        {
+            item = Instantiate(weaponBasePrefab, pos, Quaternion.identity, parent);
         }
         var material = GetMaterial(blockAccess);
         item.Init(this, material, blockAccess);
         return item;
     }
-    /// <summary>
-    /// フィールド上のアイテムを管理するためのメソッド（追加）
-    /// </summary>
-    /// <param name="item"></param>
     public void AddFieldItem(Item item)
     {
         Items.Add(item);
     }
-    /// <summary>
-    /// フィールド上のアイテムを管理するためのメソッド（削除）
-    /// </summary>
-    /// <param name="item"></param>
     public void RemoveFieldItem(Item item)
     {
         Items.Remove(item);
     }
-    /// <summary>
-    /// ブロックが壊れたときのアイテムドロップの挙動を定義するメソッド
-    /// </summary>
-    /// <param name="block"></param>
-    /// <param name="pos"></param>
     public void DropItem(Block block, Vector3Int pos)
     {
         var item = block.GetDropItem();
@@ -197,21 +159,12 @@ public class ItemManager : MonoBehaviour
             dropItem.Drop();
         }
         var dropItem100 = block.DropItem100();
-        if(dropItem100.Id != -1) GetPoolItem(dropItem100, num, dropPos).Drop();
+        if (dropItem100.Id != -1) GetPoolItem(dropItem100, num, dropPos).Drop();
     }
-    /// <summary>
-    /// ブロックが壊れたときのマップの更新を行うメソッド
-    /// </summary>
-    /// <param name="pos"></param>
     public void BreakBlock(Vector3Int pos)
     {
         mapManager.MapUpdate(pos);
     }
-
-    /// <summary>
-    /// ボックスのアイテム数を更新するメソッド（追加）
-    /// </summary>
-    /// <param name="items"></param>
     public void BoxAdd(ItemAccess[] itemNums)
     {
         for (int i = 0; i < itemNums.Length; i++)
@@ -220,10 +173,6 @@ public class ItemManager : MonoBehaviour
             itemsNum[(int)ItemCategory.Material][itemNums[i].Id] += itemNums[i].Num;
         }
     }
-    /// <summary>
-    /// ボックスのアイテム数を更新するメソッド（削除）
-    /// </summary>
-    /// <param name="materials"></param>
     public void RemoveBoxItem(ItemAccess[] materials)
     {
         foreach (ItemAccess material in materials)

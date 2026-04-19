@@ -19,9 +19,6 @@ public class Block : Item
         Crops,
         Length,
     }
-    /// <summary>
-    /// ブロックの耐久値をリセットする
-    /// </summary>
     public void ResetHardness()
     {
         currentHardness = blockData.Hardness;
@@ -35,15 +32,9 @@ public class Block : Item
         color = Color.white;
         currentLife = blockData.Life;
     }
-    /// <summary>
-    /// ブロックを壊す際の挙動を定義するメソッド
-    /// </summary>
-    /// <param name="power"></param>
-    /// <param name="pos"></param>
-    /// <returns></returns>
     public virtual bool Break(int power, Vector3Int pos)
     {
-        if(blockData.Hardness <= 0) return false;
+        if (blockData.Hardness <= 0) return false;
         while (true)
         {
             if (power < currentHardness)
@@ -65,10 +56,6 @@ public class Block : Item
             }
         }
     }
-    /// <summary>
-    /// ブロックが壊れたときのアイテムドロップの挙動を定義するメソッド
-    /// </summary>
-    /// <returns></returns>
     public ItemPercent? GetDropItem()
     {
         if (blockData.ItemPercents == null)
@@ -87,10 +74,6 @@ public class Block : Item
         }
         return null;
     }
-    /// <summary>
-    /// ブロックが壊れたときの落とすブロックを定義するメソッド
-    /// </summary>
-    /// <returns></returns>
     public ItemAccess DropItem100()
     {
         return blockData.DropItem100;

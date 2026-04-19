@@ -2389,7 +2389,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eebcbff24c44b1f45afa4f0017a5d429, type: 2}
+  - {fileID: 2100000, guid: fffd544af0cb094458ffb5be582567a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2446,26 +2446,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecfaf294166df3747bda927024ca2d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Seed
-  itemState:
-    Id: 0
-    ItemType: 6
-    Icon: {fileID: 21300000, guid: 26ccc88c5cb76c545a85369e477a300d, type: 3}
-    Materials:
-    - Category: 8
-      Id: 29
-      Num: 1
-    UnitNum: 0
-    MaxNum: 0
-    Material: {fileID: 2100000, guid: eebcbff24c44b1f45afa4f0017a5d429, type: 2}
-  hardness: 10000
-  itemPercents: []
-  dropItem100: {fileID: 0}
-  life: 10000
-  blockType: 3
   uis: []
   fertilizerUI: {fileID: 1609592214972470859}
-  growNum: 5
-  growBlock: {fileID: -3219531568305783641, guid: 4a3923849e968c4429263113141e4dd9, type: 3}
 --- !u!54 &916359242653036030
 Rigidbody:
   m_ObjectHideFlags: 0
