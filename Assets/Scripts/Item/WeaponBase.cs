@@ -6,7 +6,8 @@ public class WeaponBase : PlayerUI
     public override void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
         base.Init(itemManager, material, itemAccess);
-        craftUI.Init(itemManager);
+        var baseData = itemManager.GetItem(itemAccess) as WeaponBaseData;
+        craftUI.Init(itemManager, baseData.BoardSize);
     }
     public override void OpenUI(Player player)
     {

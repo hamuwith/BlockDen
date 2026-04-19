@@ -72,9 +72,9 @@ public class Weapon : PlayerUI
             }
         }
     }
-    public void SetCraftSlot(ItemAccess[] craftSlots)
+    public void SetCraftSlot(ItemAccess[] craftSlots, Vector2Int boardSize)
     {
-        attachUI.SetCraftSlot(craftSlots);
+        attachUI.SetCraftSlot(craftSlots, boardSize);
     }
     private void OnDestroy()
     {

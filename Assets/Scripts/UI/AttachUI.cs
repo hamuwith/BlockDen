@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class AttachUI : BaseUI
 {
-    private const int BoardSize = 5;
     private const int ShapeMaxSize = 3;
 
     protected List<ItemAccess> attachmentItems;
@@ -17,13 +16,13 @@ public class AttachUI : BaseUI
     private int heldFromBoardIndex;
     private List<int> heldOriginalCells;
     private bool isMove;
+    private Vector2Int boardSize;
+
 
     public override void Init(ItemManager itemManager)
     {
         InitBase(itemManager);
         attachmentItems = new List<ItemAccess>();
-        boardState = new int[BoardSize * BoardSize];
-        for (int i = 0; i < boardState.Length; i++) boardState[i] = -1;
         heldOriginalCells = new List<int>();
         highlight.gameObject.SetActive(false);
     }
@@ -78,14 +77,14 @@ public class AttachUI : BaseUI
             if (isMove)
             {
                 var shape = GetHeldShape();
-                int maxCol = BoardSize - Mathf.Clamp(shape.width, 1, ShapeMaxSize);
-                int maxRow = BoardSize - Mathf.Clamp(shape.height, 1, ShapeMaxSize);
+                int maxCol = boardSize.x - Mathf.Clamp(shape.width, 1, ShapeMaxSize);
+                int maxRow = boardSize.y - Mathf.Clamp(shape.height, 1, ShapeMaxSize);
                 SelectBoard(vector, maxCol, maxRow);
                 UpdateAction();
             }
             else
             {
-                SelectBoard(vector, BoardSize - 1, BoardSize - 1);
+                SelectBoard(vector, boardSize.x - 1, boardSize.y - 1);
             }
         }
         _Cursor();
@@ -94,8 +93,8 @@ public class AttachUI : BaseUI
     private void SelectBoard(Vector2 vector, int maxCol, int maxRow)
     {
         var dir = ToDirection8(vector);
-        int col = index % BoardSize;
-        int row = index / BoardSize;
+        int col = index % boardSize.x;
+        int row = index / boardSize.x;
 
         bool right = dir == Direction8.Right || dir == Direction8.UpRight || dir == Direction8.DownRight;
         bool left = dir == Direction8.Left || dir == Direction8.UpLeft || dir == Direction8.DownLeft;
@@ -108,7 +107,7 @@ public class AttachUI : BaseUI
         if (up && row + 1 <= maxRow) row++;
         else if (down && row - 1 >= 0) row--;
 
-        index = row * BoardSize + col;
+        index = row * boardSize.x + col;
     }
 
     public override void Action()
@@ -261,17 +260,17 @@ public class AttachUI : BaseUI
 
     private void ClampIndexToShape(AttachmentShape shape)
     {
-        int maxCol = BoardSize - Mathf.Clamp(shape.width, 1, ShapeMaxSize);
-        int maxRow = BoardSize - Mathf.Clamp(shape.height, 1, ShapeMaxSize);
-        int col = Mathf.Clamp(index % BoardSize, 0, maxCol);
-        int row = Mathf.Clamp(index / BoardSize, 0, maxRow);
-        index = row * BoardSize + col;
+        int maxCol = boardSize.x - Mathf.Clamp(shape.width, 1, ShapeMaxSize);
+        int maxRow = boardSize.y - Mathf.Clamp(shape.height, 1, ShapeMaxSize);
+        int col = Mathf.Clamp(index % boardSize.x, 0, maxCol);
+        int row = Mathf.Clamp(index / boardSize.x, 0, maxRow);
+        index = row * boardSize.x + col;
     }
 
     private (List<int> cells, bool outOfBounds) GetShapeCellsRaw(int anchorIndex, AttachmentShape shape)
     {
-        int anchorCol = anchorIndex % BoardSize;
-        int anchorRow = anchorIndex / BoardSize;
+        int anchorCol = anchorIndex % boardSize.x;
+        int anchorRow = anchorIndex / boardSize.x;
         int shapeW = Mathf.Clamp(shape.width, 1, ShapeMaxSize);
         int shapeH = Mathf.Clamp(shape.height, 1, ShapeMaxSize);
         var cells = new List<int>();
@@ -284,20 +283,24 @@ public class AttachUI : BaseUI
                 if (!shape.GetCell(col, row)) continue;
                 int bCol = anchorCol + col;
                 int bRow = anchorRow + row;
-                if (bCol >= BoardSize || bRow >= BoardSize)
+                if (bCol >= boardSize.x || bRow >= boardSize.y)
                 {
                     outOfBounds = true;
                     continue;
                 }
-                cells.Add(bRow * BoardSize + bCol);
+                cells.Add(bRow * boardSize.x + bCol);
             }
         }
         return (cells, outOfBounds);
     }
 
-    public void SetCraftSlot(ItemAccess[] craftSlots)
+    public void SetCraftSlot(ItemAccess[] craftSlots, Vector2Int boardSize)
     {
         craftSlotItems = craftSlots;
+        this.boardSize = boardSize;
+        BoardShift(boardSize);
+        boardState = new int[boardSize.x * boardSize.y];
+        for (int i = 0; i < boardState.Length; i++) boardState[i] = -1;
     }
 
     private bool IsCraftCell(int cellIndex)

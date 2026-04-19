@@ -191,4 +191,28 @@ public class BaseUI : MonoBehaviour
             return SelectState.UpOuterChange;
         }
     }
+    public void BoardShift(Vector2Int boardSize)
+    {
+        var boardDefaultSize = new Vector2Int(buttonRowSize, buttons.Length / buttonRowSize);
+        var offset = new Vector3((boardDefaultSize.x - boardSize.x) * 10f, (boardDefaultSize.y - boardSize.y) * 10f, 0f);
+        var buttonsPrev = buttons;
+        buttons = new Image[boardSize.x * boardSize.y];
+        for (int i = 0; i < boardDefaultSize.x; i++)
+        {
+            for (int j = 0; j < boardDefaultSize.y; j++)
+            {
+                int prevIndex = j * buttonRowSize + i;
+                if (i < boardSize.x && j < boardSize.y)
+                {
+                    buttons[j * boardSize.x + i] = buttonsPrev[prevIndex];
+                    buttons[j * boardSize.x + i].transform.localPosition += offset;
+                }
+                else
+                {
+                    buttonsPrev[prevIndex].gameObject.SetActive(false);
+                }
+            }
+        }
+        buttonRowSize = boardSize.x;
+    }
 }

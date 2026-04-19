@@ -7,13 +7,16 @@ public class CraftUI : BaseUI
     [SerializeField] Image makeButton;
     bool isMove;
     bool isMake;
+    Vector2Int boardSize;
 
     public override bool IsMakable => true;
     protected override int MaxIndex => buttons.Length;
 
-    public override void Init(ItemManager itemManager)
+    public void Init(ItemManager itemManager, Vector2Int boardSize)
     {
         InitBase(itemManager);
+        this.boardSize = boardSize;
+        BoardShift(boardSize);
         craftSlots = new ItemAccess[buttons.Length];
         for (int i = 0; i < craftSlots.Length; i++)
             craftSlots[i].Id = -1;
@@ -92,7 +95,7 @@ public class CraftUI : BaseUI
             Vector3Int position = Vector3Int.RoundToInt(transform.position);
             itemManager.BreakBlock(position);
             var weapon = itemManager.MainManager.MapManager.MapUpdate(position, itemAccess) as Weapon;
-            weapon.SetCraftSlot(craftSlots);
+            weapon.SetCraftSlot(craftSlots, boardSize);
             CloseUI();
             return;
         }
