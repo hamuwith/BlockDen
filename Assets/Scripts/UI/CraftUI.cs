@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CraftUI : BaseUI
 {
-    ItemAccess[] craftSlots;
+    protected ItemAccess[] craftSlots;
     [SerializeField] Image makeButton;
     bool isMove;
     bool isMake;
@@ -86,16 +86,20 @@ public class CraftUI : BaseUI
         if (isMake) return true;
         return false;
     }
+    protected virtual void Craft()
+    {
+        ItemAccess itemAccess = itemManager.CraftToWeapon(craftSlots);
+        Vector3Int position = Vector3Int.RoundToInt(transform.position);
+        itemManager.BreakBlock(position);
+        var weapon = itemManager.MainManager.MapManager.MapUpdate(position, itemAccess) as Weapon;
+        weapon.SetCraftSlot(craftSlots, boardSize);
+    }
 
     public override void Action()
     {
         if (isMake)
         {
-            ItemAccess itemAccess = itemManager.CraftToWeapon(craftSlots);
-            Vector3Int position = Vector3Int.RoundToInt(transform.position);
-            itemManager.BreakBlock(position);
-            var weapon = itemManager.MainManager.MapManager.MapUpdate(position, itemAccess) as Weapon;
-            weapon.SetCraftSlot(craftSlots, boardSize);
+            Craft();
             CloseUI();
             return;
         }

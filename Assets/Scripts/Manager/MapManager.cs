@@ -85,7 +85,7 @@ public class MapManager : MonoBehaviour
         {
             return false;
         }
-        return Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Weapon || IsHouse(pos) || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Seed || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.WeaponBase;
+        return Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Weapon || IsHouse(pos) || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Seed || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.WeaponBase || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Tool;
     }
     public bool IsBlock(Vector3Int pos)
     {
@@ -93,7 +93,7 @@ public class MapManager : MonoBehaviour
         {
             return false;
         }
-        return Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.NatureBlock || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.UnnatureBlock || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Seed || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Weapon || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.WeaponBase;
+        return Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.NatureBlock || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.UnnatureBlock || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Seed || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Weapon || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.WeaponBase || Blocks[pos.x, pos.y, pos.z]?.ItemAccess.Category == ItemCategory.Tool;
     }
     public Block GetBlock(Vector3Int pos)
     {

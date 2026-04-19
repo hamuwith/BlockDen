@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\UI\MakerUI.cs" />
     <Compile Include="Assets\Scripts\Charactor\Inventory.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\WeaponBaseData.cs" />
+    <Compile Include="Assets\Scripts\Item\Tool.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\FoodData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\BlockData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\ItemData.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\Scripts\UI\BoxUI.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\Item\BreakTool.cs" />
+    <Compile Include="Assets\Scripts\UI\BreakCraftUI.cs" />
     <Compile Include="Assets\Scripts\Charactor\Enemy.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\AttachmentData.cs" />
     <Compile Include="Assets\Edior\MapEditorWindow.cs" />

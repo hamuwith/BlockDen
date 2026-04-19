@@ -1416,6 +1416,7 @@ MonoBehaviour:
   - {fileID: 4925883281518391764}
   inventoryHighlight: {fileID: 8717917446475354781}
   canvas: {fileID: 4716378891526672040}
+  buttonRowSize: 8
   makableCategorys: 01000000
   menu: {fileID: 1604660662518367953}
 --- !u!1 &134829798080652538
@@ -4282,7 +4283,8 @@ MonoBehaviour:
   - {fileID: 7844847351397756549}
   inventoryHighlight: {fileID: 3397155764258589814}
   canvas: {fileID: 1456861479243136040}
-  makableCategorys: 030000000b000000
+  buttonRowSize: 8
+  makableCategorys: 030000000b0000000a000000
   menu: {fileID: 1462519741514966435}
 --- !u!1 &629203020985495643
 GameObject:
@@ -6717,6 +6719,7 @@ MonoBehaviour:
   - {fileID: 5644553946664092969}
   inventoryHighlight: {fileID: 107774666591934508}
   canvas: {fileID: 7259069393633151244}
+  buttonRowSize: 8
   makableCategorys: 0600000007000000
   menu: {fileID: 4763483900828720355}
 --- !u!1 &1016256255405210286
@@ -20172,6 +20175,7 @@ MonoBehaviour:
   - {fileID: 8701419462851433499}
   inventoryHighlight: {fileID: 8381049988044285425}
   canvas: {fileID: 4111987007724568663}
+  buttonRowSize: 8
 --- !u!1 &3212539654020983195
 GameObject:
   m_ObjectHideFlags: 0
@@ -22620,6 +22624,7 @@ MonoBehaviour:
   - {fileID: 5529247129902253145}
   inventoryHighlight: {fileID: 4107631167171881281}
   canvas: {fileID: 1391961006519596079}
+  buttonRowSize: 8
   makableCategorys: 04000000
   menu: {fileID: 1549592100558451693}
 --- !u!1 &3722149390860565595
@@ -23079,6 +23084,7 @@ MonoBehaviour:
   - {fileID: 6791894811615825730}
   inventoryHighlight: {fileID: 148825383835028713}
   canvas: {fileID: 6287252541036019566}
+  buttonRowSize: 8
   makableCategorys: 0200000009000000
   menu: {fileID: 2189488515090272693}
 --- !u!1 &3787262033045540491
@@ -38964,6 +38970,7 @@ MonoBehaviour:
   - {fileID: 7592875476977665688}
   inventoryHighlight: {fileID: 3682793224235842373}
   canvas: {fileID: 7448938106296724507}
+  buttonRowSize: 8
   makableCategorys: 05000000
   menu: {fileID: 1188114420119677276}
 --- !u!1 &6606091945848701838
@@ -40859,6 +40866,7 @@ MonoBehaviour:
   - {fileID: 7065083582459381562}
   inventoryHighlight: {fileID: 6578010500009662851}
   canvas: {fileID: 3017150023051060708}
+  buttonRowSize: 8
 --- !u!1 &6938768693112803617
 GameObject:
   m_ObjectHideFlags: 0

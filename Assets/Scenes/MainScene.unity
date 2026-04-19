@@ -1142,15 +1142,17 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 5b52e74751f94a549b72344b86827142, type: 2}
     - {fileID: 11400000, guid: 5b52e74751f94a549b72344b86827142, type: 2}
     - {fileID: 11400000, guid: 5b52e74751f94a549b72344b86827142, type: 2}
-  - Items: []
   - Items:
-    - {fileID: 11400000, guid: 3965c168431274949a3199b917d41d2b, type: 2}
+    - {fileID: 11400000, guid: e4fd6554ce174534d8c2353dd9a73af6, type: 2}
+  - Items:
+    - {fileID: 11400000, guid: 97859586103c7e94ea592fd230cf89f2, type: 2}
   itemPrefab: {fileID: -49428150740105974, guid: 87ad0ff216108e541bbe04bc31c63f6b, type: 3}
   blockPrefab: {fileID: 2276174998139632747, guid: 9f32e433c1a5aac4998b7b072aff857f, type: 3}
   seedPrefab: {fileID: 315099736648640108, guid: 0c326dd97bedeb749a295d4d2d991322, type: 3}
   weaponPrefab: {fileID: 2108070430345632071, guid: 827aa4619de2b384084a84b97d6573d4, type: 3}
   breakToolPrefab: {fileID: 1116795562663075916, guid: c6c8c069302d77549bc638d5fd6a80d8, type: 3}
   weaponBasePrefab: {fileID: -2828623510182161459, guid: 2547a171242982345945dbae2ac301e2, type: 3}
+  toolPrefab: {fileID: 6941636941336861399, guid: df12dc4e26a25a045bba0c4e3f18f4f5, type: 3}
   highlightMaterial: {fileID: 2100000, guid: 9bfac0f6bf1bf8d4c921c235d7959fa6, type: 2}
   dropItemPool: {fileID: 1587056744}
   baseMaterial: {fileID: 2100000, guid: fffd544af0cb094458ffb5be582567a9, type: 2}

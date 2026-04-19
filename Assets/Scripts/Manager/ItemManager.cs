@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using static Item;
-using UnityEditor;
 
 public class ItemManager : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] Weapon weaponPrefab;
     [SerializeField] BreakTool breakToolPrefab;
     [SerializeField] WeaponBase weaponBasePrefab;
+    [SerializeField] Tool toolPrefab;
     [SerializeField] Material highlightMaterial;
     [SerializeField] DropItemPool dropItemPool;
     [SerializeField] Material baseMaterial;
@@ -23,7 +23,6 @@ public class ItemManager : MonoBehaviour
     Material[][] itemMaterials;
     public void Init(MainManager mainManager)
     {
-
         Items = new List<Item>();
         MainManager = mainManager;
         mapManager = mainManager.MapManager;
@@ -136,6 +135,10 @@ public class ItemManager : MonoBehaviour
         {
             item = Instantiate(weaponBasePrefab, pos, Quaternion.identity, parent);
         }
+        else if (blockAccess.Category == ItemCategory.Tool)
+        {
+            item = Instantiate(toolPrefab, pos, Quaternion.identity, parent);
+        }
         var material = GetMaterial(blockAccess);
         item.Init(this, material, blockAccess);
         return item;
@@ -203,6 +206,15 @@ public class ItemManager : MonoBehaviour
         var item = new ItemAccess
         {
             Category = ItemCategory.Weapon,
+            Id = 0
+        };
+        return item;
+    }
+    public ItemAccess CraftToBreakTool(ItemAccess[] craftSlots)
+    {
+        var item = new ItemAccess
+        {
+            Category = ItemCategory.BreakTool,
             Id = 0
         };
         return item;

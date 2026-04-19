@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f3c9487895cee4498735bcd2729280c, type: 3}
+  m_Name: _10_0_sagyoudai
+  m_EditorClassIdentifier: Assembly-CSharp::BlockData
+  itemAccess:
+    Category: 10
+    Id: 0
+    Num: 1
+  itemMaterials:
+  - Category: 8
+    Id: 2
+    Num: 1
+  unitNum: 1
+  maxNum: 1
+  texture2D: {fileID: 2800000, guid: 1a27bcf279de66f4ea1c96e4043e98e7, type: 3}
+  sprite: {fileID: 21300000, guid: 1a27bcf279de66f4ea1c96e4043e98e7, type: 3}
+  hardness: 0
+  itemPercents: []
+  dropItem100:
+    Category: 0
+    Id: 0
+    Num: 0
+  life: 0
+  blockType: 0
