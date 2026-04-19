@@ -197,6 +197,16 @@ public class ItemManager : MonoBehaviour
     {
         return itemLists[(int)itemAccess.Category].Items[itemAccess.Id];
     }
+    public ItemAccess CraftToWeapon(ItemAccess[] craftSlots)
+    {
+        // var makableItems = GetMakableItems(ItemCategory.Weapon);
+        var item = new ItemAccess
+        {
+            Category = ItemCategory.Weapon,
+            Id = 0
+        };
+        return item;
+    }
 }
 [System.Serializable]
 public class ItemList

@@ -11,7 +11,7 @@ public class BaseUI : MonoBehaviour
     [SerializeField] protected Canvas canvas;
     [SerializeField] protected int buttonRowSize = 8;
     Material highlightMaterial;
-    Material inventoryHighlightMaterial;
+    protected Material inventoryHighlightMaterial;
     protected TextMeshProUGUI[] itemTexts;
     protected TextMeshProUGUI[] inventoryItemTexts;
     protected Player player;
@@ -151,12 +151,12 @@ public class BaseUI : MonoBehaviour
             }
         }
     }
-    protected void _Cursor()
+    protected virtual void _Cursor()
     {
         inventoryHighlight.transform.position = inventoryButtons[inventoryIndex].transform.position;
         highlight.transform.position = buttons[index].transform.position;
     }
-    protected void _HighLight()
+    protected virtual void _HighLight()
     {
         Material stopMaterial = isInventory ? highlightMaterial : inventoryHighlightMaterial;
         Material startMaterial = isInventory ? inventoryHighlightMaterial : highlightMaterial;

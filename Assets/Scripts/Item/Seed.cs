@@ -34,6 +34,9 @@ public class Seed : PlayerUI
         this.player = player;
         fertilizerUI.OpenUI(player);
     }
+    public override void SelectTab(bool left)
+    {
+    }
     public override void CloseUI()
     {
         fertilizerUI.CloseUI();
@@ -67,8 +70,11 @@ public class Seed : PlayerUI
             {
                 itemManager.BreakBlock(pos);
                 itemManager.MainManager.MapManager.MapUpdate(pos, seedData.GrowBlock.ItemAccess);
-                WaterWait(cancellationTokenSource.Token).Forget();
                 return true;
+            }
+            else
+            {
+                WaterWait(cancellationTokenSource.Token).Forget();
             }
         }
         return false;

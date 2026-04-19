@@ -48,7 +48,7 @@ public class PlayerUI : Block
     {
         uis[tabIndex].UpdateAction();
     }
-    public void SelectTab(bool left)
+    public virtual void SelectTab(bool left)
     {
         uis[tabIndex].CloseUI();
         _SelectTab(left);

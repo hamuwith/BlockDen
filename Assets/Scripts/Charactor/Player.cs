@@ -648,18 +648,33 @@ public class Player : Character
         Vector3Int targetPosition = Vector3Int.RoundToInt(playerPos + targetForward);
         if (!mapManager.IsBlock(targetPosition))
         {
-            return targetPosition;
+            targetPosition -= Vector3Int.up;
+            if (!mapManager.IsTool(targetPosition))
+            {
+                targetPosition += Vector3Int.up;
+                return targetPosition;
+            }
         }
         targetPosition = Vector3Int.RoundToInt(playerPos + playerDirection);
         if (!mapManager.IsBlock(targetPosition))
         {
-            return targetPosition;
+            targetPosition -= Vector3Int.up;
+            if (!mapManager.IsTool(targetPosition))
+            {
+                targetPosition += Vector3Int.up;
+                return targetPosition;
+            }
         }
         targetForward = Quaternion.AngleAxis(-45f, transform.right) * playerDirection;
         targetPosition = Vector3Int.RoundToInt(playerPos + targetForward);
         if (!mapManager.IsBlock(targetPosition))
         {
-            return targetPosition;
+            targetPosition -= Vector3Int.up;
+            if (!mapManager.IsTool(targetPosition))
+            {
+                targetPosition += Vector3Int.up;
+                return targetPosition;
+            }
         }
         return null;
     }

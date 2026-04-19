@@ -37,4 +37,7 @@ public class WeaponBase : PlayerUI
     {
         craftUI.UpdateAction();
     }
+    public override void SelectTab(bool left)
+    {
+    }
 }

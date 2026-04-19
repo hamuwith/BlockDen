@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\Manager\ItemManager.cs" />
     <Compile Include="Assets\Scripts\UI\MakerUI.cs" />
     <Compile Include="Assets\Scripts\Charactor\Inventory.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObject\WeaponBaseData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\FoodData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\BlockData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\ItemData.cs" />

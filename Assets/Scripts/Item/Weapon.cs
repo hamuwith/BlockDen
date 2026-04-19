@@ -33,10 +33,14 @@ public class Weapon : PlayerUI
     }
     public override void Select(Vector2 vector)
     {
+        attachUI.Select(vector);
     }
     public override void Action()
     {
         attachUI.Action();
+    }
+    public override void SelectTab(bool left)
+    {
     }
     public override void Cancel()
     {
@@ -67,6 +71,10 @@ public class Weapon : PlayerUI
                 arrow.Fire(enemy, weaponData.Damage, Attachment, transform);
             }
         }
+    }
+    public void SetCraftSlot(ItemAccess[] craftSlots)
+    {
+        attachUI.SetCraftSlot(craftSlots);
     }
     private void OnDestroy()
     {

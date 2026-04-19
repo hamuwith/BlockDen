@@ -1,9 +1,12 @@
+using UnityEngine.UI;
 using UnityEngine;
 
 public class CraftUI : BaseUI
 {
     ItemAccess[] craftSlots;
+    [SerializeField] Image makeButton;
     bool isMove;
+    bool isMake;
 
     public override bool IsMakable => true;
     protected override int MaxIndex => buttons.Length;
@@ -19,6 +22,7 @@ public class CraftUI : BaseUI
     public override void OpenUI(Player player)
     {
         OpenUIBase(player);
+        isMake = false;
     }
 
     public override void CloseUI()
@@ -30,6 +34,18 @@ public class CraftUI : BaseUI
 
     public override void Select(Vector2 vector)
     {
+        if (_GetRightCheck(vector))
+        {
+            highlight.transform.position = makeButton.transform.position;
+            isMake = true;
+            return;
+        }
+        else if (_GetLeftCheck(vector))
+        {
+            highlight.transform.position = buttons[index].transform.position;
+            isMake = false;
+            return;
+        }
         var change = _GetSelect(vector);
         change = (change == SelectState.DownOuterChange && isInventory) ||
                  (change == SelectState.UpOuterChange && !isInventory)
@@ -39,7 +55,7 @@ public class CraftUI : BaseUI
         if (change == SelectState.NoChange)
         {
             _Select(vector);
-            if (!isInventory && craftSlots[index].Id != -1)
+            if (!isInventory && craftSlots[index].Id != -1 && !isMove)
             {
                 var found = FindMaterialBagSlot(craftSlots[index]);
                 if (found != -1) inventoryIndex = found;
@@ -53,10 +69,34 @@ public class CraftUI : BaseUI
         }
         _Cursor();
     }
+    private bool _GetRightCheck(Vector2 vector)
+    {
+        var derection = ToDirection8(vector);
+        if (derection != Direction8.Right && derection != Direction8.UpRight && derection != Direction8.DownRight) return false;
+        if (!isMake && !isInventory && (index + 1) % buttonRowSize == 0) return true;
+        return false;
+    }
+    private bool _GetLeftCheck(Vector2 vector)
+    {
+        var derection = ToDirection8(vector);
+        if (derection != Direction8.Left && derection != Direction8.UpLeft && derection != Direction8.DownLeft) return false;
+        if (isMake) return true;
+        return false;
+    }
 
     public override void Action()
     {
-        if (isInventory)
+        if (isMake)
+        {
+            ItemAccess itemAccess = itemManager.CraftToWeapon(craftSlots);
+            Vector3Int position = Vector3Int.RoundToInt(transform.position);
+            itemManager.BreakBlock(position);
+            var weapon = itemManager.MainManager.MapManager.MapUpdate(position, itemAccess) as Weapon;
+            weapon.SetCraftSlot(craftSlots);
+            CloseUI();
+            return;
+        }
+        else if (isInventory)
         {
             // MaterialBag から Craft スロットへ移動開始
             if (player.MaterialBag[inventoryIndex].Id == -1) return;
@@ -103,7 +143,6 @@ public class CraftUI : BaseUI
         {
             // MaterialBag → Craft への移動をキャンセル
             isMove = false;
-            isInventory = true;
             _HighLight();
             _Cursor();
             return false;

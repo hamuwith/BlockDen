@@ -4,5 +4,7 @@ using UnityEngine;
 public class FertilizerData : ItemData
 {
     [SerializeField] FertilizerStatus fertilizerStatus;
+    [SerializeField] bool[,] shape;
+    public bool[,] Shape => shape;
     public FertilizerStatus PlusNum => fertilizerStatus;
 }

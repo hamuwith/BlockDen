@@ -1,9 +1,7 @@
-using UnityEngine;
 using System.Collections.Generic;
 
 public class Attachment : Item
 {
-
     static public void SumAttachment(ref AttachmentStatus result, ref Queue<AttachmentStatus> consumables, AttachmentStatus attachment)
     {
         result.Damage += attachment.Damage;
