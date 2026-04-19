@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Scriptable Objects/WeaponData")]
-public class WeaponData : ItemData
+public class WeaponData : BlockData
 {
     [SerializeField] int arrowId;
     [SerializeField] int damage;

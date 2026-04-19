@@ -8,14 +8,12 @@ public class Item : MonoBehaviour
 {
     protected ItemManager itemManager;
     BoxCollider boxCollider;
+    Rigidbody rigid;
     protected MeshRenderer meshRenderer;
     CancellationTokenSource cancellationTokenSource;
     public int Num { get; set; }
     protected ItemAccess itemAccess;
     public ItemAccess ItemAccess => itemAccess;
-    /// <summary>
-    /// ƒAƒCƒeƒ€‚ÌƒJƒeƒSƒŠ‚ğ•\‚·—ñ‹“Œ^
-    /// </summary>
     [System.Serializable]
     public enum ItemCategory
     {
@@ -31,9 +29,6 @@ public class Item : MonoBehaviour
         Bag,
         Length,
     }
-    /// <summary>
-    /// ƒAƒCƒeƒ€‚Ìƒhƒƒbƒv—¦‚ğ•\‚·\‘¢‘Ì
-    /// </summary>
     [System.Serializable]
     public struct ItemPercent
     {
@@ -41,10 +36,6 @@ public class Item : MonoBehaviour
         public int Percent;
     }
     private ObjectPool<Item> pool;
-    /// <summary>
-    /// ObjectPool‚ğƒZƒbƒg‚µ‚Ü‚·B
-    /// </summary>
-    /// <param name="pool"></param>
     public void SetPool(ObjectPool<Item> pool)
     {
         this.pool = pool;
@@ -53,10 +44,6 @@ public class Item : MonoBehaviour
     {
         pool.Release(this);
     }
-    /// <summary>
-    /// ƒAƒCƒeƒ€‚Ì‰Šú‰»‚ğs‚¤
-    /// </summary>
-    /// <param name="itemManager"></param>
     public virtual void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
         this.itemManager = itemManager;
@@ -64,11 +51,12 @@ public class Item : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         Num = 1;
         meshRenderer = GetComponent<MeshRenderer>();
+        rigid = GetComponent<Rigidbody>();
         if (material == null) Destroy(meshRenderer);
         else meshRenderer.sharedMaterial = material;
     }
     /// <summary>
-    /// ƒAƒCƒeƒ€ƒ}ƒl[ƒWƒƒ[‚ğƒZƒbƒg‚·‚éƒƒ\ƒbƒh
+    /// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½éƒï¿½\ï¿½bï¿½h
     /// </summary>
     /// <param name="itemManager"></param>
     public void SetItemManager(ItemManager itemManager)
@@ -76,9 +64,10 @@ public class Item : MonoBehaviour
         this.itemManager = itemManager;
         meshRenderer = GetComponent<MeshRenderer>();
         boxCollider = GetComponent<BoxCollider>();
+        rigid = GetComponent<Rigidbody>();
     }
     /// <summary>
-    /// ƒAƒCƒeƒ€‚Ìó‘Ô‚ğƒZƒbƒg‚·‚éƒƒ\ƒbƒh
+    /// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ìï¿½Ô‚ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½éƒï¿½\ï¿½bï¿½h
     /// </summary>
     /// <param name="itemState"></param>
     /// <param name="num"></param>
@@ -90,7 +79,7 @@ public class Item : MonoBehaviour
         transform.position = vector3;
     }
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğƒhƒƒbƒv‚·‚éÛ‚Ì‹““®‚ğ’è‹`‚·‚éƒƒ\ƒbƒh
+    /// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½Û‚Ì‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½éƒï¿½\ï¿½bï¿½h
     /// </summary>
     public void Drop()
     {
@@ -106,18 +95,13 @@ public class Item : MonoBehaviour
     {
         cancellationTokenSource = new CancellationTokenSource();
         CanGetItem(cancellationTokenSource.Token).Forget();
-        var rigidbody = GetComponent<Rigidbody>();
-        rigidbody.isKinematic = false;
-        rigidbody.AddForce(angle * 2f, ForceMode.Impulse);
+        rigid.isKinematic = false;
+        rigid.AddForce(angle * 2f, ForceMode.Impulse);
     }
-
-    /// <summary>
-    /// ƒAƒCƒeƒ€‚ğƒZƒbƒg‚·‚éÛ‚Ì‹““®‚ğ’è‹`‚·‚éƒƒ\ƒbƒh
-    /// </summary>
-    /// <param name="isKinematic"></param>
     public virtual void SetItem(bool isHit = false)
     {
         boxCollider.enabled = isHit;
+        rigid.isKinematic = !isHit;
     }
     async UniTaskVoid CanGetItem(CancellationToken cancellationToken)
     {
@@ -131,7 +115,7 @@ public class Item : MonoBehaviour
     }
 }
 /// <summary>
-/// ƒAƒCƒeƒ€‚Ì‘fŞ‚ğ•\‚·\‘¢‘Ì
+/// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ì‘fï¿½Ş‚ï¿½\ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 [System.Serializable]
 public struct ItemAccess

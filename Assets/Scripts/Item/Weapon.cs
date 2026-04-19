@@ -14,7 +14,7 @@ public class Weapon : PlayerUI
     public AttachmentStatus Attachment { get; set; }
     public override void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
-        Init(itemManager, material, itemAccess);
+        base.Init(itemManager, material, itemAccess);
         cancellationTokenSource = new CancellationTokenSource();
         weaponData = itemManager.GetItem(itemAccess) as WeaponData;
         arrowPool = itemManager.MainManager.WeaponManager.ArrowPool[weaponData.ArrowId];

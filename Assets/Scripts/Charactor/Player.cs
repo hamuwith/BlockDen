@@ -79,7 +79,7 @@ public class Player : Character
         MaterialAdd,
     }
     /// <summary>
-    /// ƒvƒŒƒCƒ„[‚ÌƒCƒ“ƒxƒ“ƒgƒŠ‚Ìí—Ş‚ğ•\‚·—ñ‹“Œ^
+    /// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒCï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Ìï¿½Ş‚ï¿½\ï¿½ï¿½ï¿½ñ‹“Œ^
     /// </summary>
     public enum InventoryType
     {
@@ -122,7 +122,7 @@ public class Player : Character
         }
     }
     /// <summary>
-    /// ƒvƒŒƒCƒ„[‚Ì‰Šú‰»‚ğs‚¤ƒƒ\ƒbƒh
+    /// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½bï¿½h
     /// </summary>
     /// <param name="mainManager"></param>
     public override void Init(MainManager mainManager)
@@ -176,14 +176,14 @@ public class Player : Character
     }
     private void Action()
     {
-        if(currentTool != null)
+        if (currentTool != null)
         {
             currentTool.Action();
             return;
         }
         else if (toolTargetPosition.HasValue)
         {
-            if(HaveItem?.ItemAccess.Category == ItemCategory.BreakTool && mapManager.GetBlock(toolTargetPosition.Value).BlockType == Block.BlockTypeEnum.Water)
+            if (HaveItem?.ItemAccess.Category == ItemCategory.BreakTool && mapManager.GetBlock(toolTargetPosition.Value).BlockType == Block.BlockTypeEnum.Water)
             {
                 Break();
                 return;
@@ -224,11 +224,11 @@ public class Player : Character
         upPower = foodData.Power;
         cancellationTokenSource = new CancellationTokenSource();
         var cancelToken = cancellationTokenSource.Token;
-        Eatting(foodData.Duration,cancelToken).Forget();
+        Eatting(foodData.Duration, cancelToken).Forget();
         BagReduce(1, BagIndex);
     }
     private async UniTask Eatting(int ms, CancellationToken ct)
-    {        
+    {
         await UniTask.Delay(ms, cancellationToken: ct);
         upPower = 0;
         upSpeed = 1f;
@@ -266,7 +266,7 @@ public class Player : Character
             {
                 if (block is Seed)
                 {
-                    power = (HaveItem as BreakTool).UseWater();                    
+                    power = (HaveItem as BreakTool).UseWater();
                 }
                 else
                 {
@@ -315,7 +315,7 @@ public class Player : Character
             toolItems[i].transform.localPosition = Vector3.zero;
         }
     }
-    
+
     private BagStatus GetBagState(ItemAccess itemState)
     {
         var intentoryType = GetInventoryType(itemState);
@@ -476,7 +476,7 @@ public class Player : Character
                 {
                     item.Release();
                 }
-                else if(status == BagStatus.MaterialAdd && num >= item.Num)
+                else if (status == BagStatus.MaterialAdd && num >= item.Num)
                 {
                     item.Release();
                 }
@@ -493,13 +493,12 @@ public class Player : Character
         }
     }
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğì¬‚·‚éƒƒ\ƒbƒh
+    /// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½éƒï¿½\ï¿½bï¿½h
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
     public void Make(ItemData item, int num)
     {
-        var status = GetBagState(item.ItemAccess);
         var itemAccess = item.ItemAccess;
         itemAccess.Num = num;
         BagUpdate(itemAccess);
@@ -545,7 +544,7 @@ public class Player : Character
     }
     void Update()
     {
-        if(currentTool != null)
+        if (currentTool != null)
         {
             return;
         }
@@ -572,7 +571,7 @@ public class Player : Character
             return;
         }
         var gravityDirectionForward = GetClosestFaceNormal(transform.position, moveTarget.position);
-        if(isBreak && gravityDirectionForward != gravityDirection)
+        if (isBreak && gravityDirectionForward != gravityDirection)
         {
             return;
         }
@@ -605,7 +604,7 @@ public class Player : Character
     void SetTarget(Vector3Int playerPos, Vector3 playerDirection)
     {
         toolTargetPosition = ToolTarget(playerPos, playerDirection);
-        if(HaveItem == null) BagIndex = 0;
+        if (HaveItem == null) BagIndex = 0;
         ItemCategory haveItemCategory = HaveItem.ItemAccess.Category;
         Vector3Int? targetBlock = null;
         putTargetPosition = null;
@@ -702,7 +701,7 @@ public class Player : Character
     }
     Vector3 GetClosestFaceNormal(Vector3 spherePos, Vector3 cubePos)
     {
-        Vector3 dir = cubePos - spherePos; // —§•û‘Ì’†S -> ‹…’†S
+        Vector3 dir = cubePos - spherePos; // ï¿½ï¿½ï¿½ï¿½ï¿½Ì’ï¿½ï¿½S -> ï¿½ï¿½ï¿½ï¿½ï¿½S
 
         float ax = Mathf.Abs(dir.x);
         float ay = Mathf.Abs(dir.y);

@@ -43,6 +43,7 @@ public class Block : Item
     /// <returns></returns>
     public virtual bool Break(int power, Vector3Int pos)
     {
+        if(blockData.Hardness <= 0) return false;
         while (true)
         {
             if (power < currentHardness)

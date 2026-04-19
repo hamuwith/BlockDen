@@ -23,7 +23,7 @@ public class Seed : PlayerUI
     }
     public override void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
-        Init(itemManager, material, itemAccess);
+        base.Init(itemManager, material, itemAccess);
         fertilizerUI.Init(itemManager);
         growCount = 0;
         isWater = true;

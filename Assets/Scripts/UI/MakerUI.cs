@@ -32,7 +32,7 @@ public class MakerUI : MonoBehaviour
     protected ItemManager itemManager;
     public virtual bool IsMakable => makableItems?.Length > 0;
     /// <summary>
-    /// ƒxƒNƒgƒ‹‚Ì•ûŒü‚ğ8•ûŒü‚É•ÏŠ·‚·‚é‚½‚ß‚Ì—ñ‹“‘Ì
+    /// ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½8ï¿½ï¿½ï¿½ï¿½ï¿½É•ÏŠï¿½ï¿½ï¿½ï¿½é‚½ï¿½ß‚Ì—ñ‹“‘ï¿½
     /// </summary>
     public enum Direction8
     {
@@ -46,7 +46,7 @@ public class MakerUI : MonoBehaviour
         DownRight
     }
     /// <summary>
-    /// ƒc[ƒ‹‚ÌUI‚Å‘I‘ğ‚ª•Ï‚í‚Á‚½‚©‚ğ•\‚·—ñ‹“‘Ì
+    /// ï¿½cï¿½[ï¿½ï¿½ï¿½ï¿½UIï¿½Å‘Iï¿½ï¿½ï¿½ï¿½ï¿½Ï‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ñ‹“‘ï¿½
     /// </summary>
     public enum SelectState
     {
@@ -55,7 +55,7 @@ public class MakerUI : MonoBehaviour
         DownOuterChange,
     }
     /// <summary>
-    /// ƒxƒNƒgƒ‹‚©‚ç8•ûŒü‚Ì‚Ç‚ê‚É‹ß‚¢‚©‚ğ•Ô‚·ƒƒ\ƒbƒh
+    /// ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½8ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Ç‚ï¿½É‹ß‚ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½\ï¿½bï¿½h
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -74,17 +74,17 @@ public class MakerUI : MonoBehaviour
         foreach (var category in makableCategorys)
         {
             makableItemList.AddRange(itemManager.GetMakableItems(category));
-        }            
+        }
         makableItems = makableItemList.ToArray();
         InitBase(itemManager);
         for (int i = 0; i < makableItems.Length; i++)
         {
-            if(i >= buttons.Length) break;
+            if (i >= buttons.Length) break;
             buttons[i].sprite = makableItems[i].Icon;
         }
     }
     /// <summary>
-    /// ƒc[ƒ‹‚ÌUI‚ğŠJ‚­Û‚Ì‰Šú‰»‚ğs‚¤ƒƒ\ƒbƒh
+    /// ï¿½cï¿½[ï¿½ï¿½ï¿½ï¿½UIï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½Û‚Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½bï¿½h
     /// </summary>
     /// <param name="player"></param>
     public virtual void OpenUI(Player player)
@@ -105,11 +105,11 @@ public class MakerUI : MonoBehaviour
     public virtual void CloseUI()
     {
         canvas.enabled = false;
-        if(player != null) player.BagIndex = inventoryIndex;
+        if (player != null) player.BagIndex = inventoryIndex;
         player = null;
     }
     /// <summary>
-    /// ƒc[ƒ‹‚ÌUI‚Åƒ{ƒ^ƒ“‚ğ‘I‘ğ‚·‚éƒƒ\ƒbƒh
+    /// ï¿½cï¿½[ï¿½ï¿½ï¿½ï¿½UIï¿½Åƒ{ï¿½^ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½éƒï¿½\ï¿½bï¿½h
     /// </summary>
     /// <param name="vector"></param>
     public virtual void Select(Vector2 vector)
@@ -136,7 +136,7 @@ public class MakerUI : MonoBehaviour
         _Cursor();
     }
     /// <summary>
-    /// ƒc[ƒ‹‚ÌƒAƒNƒVƒ‡ƒ“‚ğÀs‚·‚éƒƒ\ƒbƒh
+    /// ï¿½cï¿½[ï¿½ï¿½ï¿½ÌƒAï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½éƒï¿½\ï¿½bï¿½h
     /// </summary>
     public virtual void Action()
     {
@@ -221,7 +221,6 @@ public class MakerUI : MonoBehaviour
     protected void _SelectIn(ItemData item = null)
     {
         var type = player.GetInventoryType(item.ItemAccess);
-        Debug.Log(type);
         inventoryIndex = (int)type;
         if (type == Player.InventoryType.Null)
         {
