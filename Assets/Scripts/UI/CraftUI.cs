@@ -8,6 +8,7 @@ public class CraftUI : BaseUI
     bool isMove;
     bool isMake;
     Vector2Int boardSize;
+    protected ItemAccess craftResult;
 
     public override bool IsMakable => true;
     protected override int MaxIndex => buttons.Length;
@@ -17,9 +18,9 @@ public class CraftUI : BaseUI
         InitBase(itemManager);
         this.boardSize = boardSize;
         BoardShift(boardSize);
+        craftResult.Id = -1;
         craftSlots = new ItemAccess[buttons.Length];
-        for (int i = 0; i < craftSlots.Length; i++)
-            craftSlots[i].Id = -1;
+        for (int i = 0; i < craftSlots.Length; i++) craftSlots[i].Id = -1;
     }
 
     public override void OpenUI(Player player)
@@ -88,11 +89,15 @@ public class CraftUI : BaseUI
     }
     protected virtual void Craft()
     {
-        ItemAccess itemAccess = itemManager.CraftToWeapon(craftSlots);
         Vector3Int position = Vector3Int.RoundToInt(transform.position);
         itemManager.BreakBlock(position);
-        var weapon = itemManager.MainManager.MapManager.MapUpdate(position, itemAccess) as Weapon;
+        var weapon = itemManager.MainManager.MapManager.MapUpdate(position, craftResult) as Weapon;
         weapon.SetCraftSlot(craftSlots, boardSize);
+        craftResult.Id = -1;
+    }
+    protected virtual void CheckCraft()
+    {
+        craftResult = itemManager.CraftToWeapon(craftSlots);
     }
 
     public override void Action()
@@ -127,6 +132,7 @@ public class CraftUI : BaseUI
                 isMove = false;
                 isInventory = true;
             }
+            CheckCraft();
             UpdateAction();
             _HighLight();
             _Cursor();
@@ -139,6 +145,7 @@ public class CraftUI : BaseUI
             if (bagSlot == -1) return;
             inventoryIndex = bagSlot;
             ReturnSlotToBag(index);
+            CheckCraft();
             UpdateAction();
             _Cursor();
         }
@@ -196,6 +203,7 @@ public class CraftUI : BaseUI
                 inventoryItemTexts[i].text = "";
             }
         }
+        makeButton.sprite = craftResult.Id != -1 ? itemManager.GetItemIcon(craftResult) : null;
     }
 
     protected override void OpenUIBase(Player player)

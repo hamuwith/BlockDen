@@ -9,7 +9,6 @@ public class ItemDataSO : ScriptableObject
 [System.Serializable]
 public class ItemData
 {
-    public string Name;
     public ItemAccess ItemAccess;
     public ItemAccess[] ItemMaterials;
     public int UnitNum;

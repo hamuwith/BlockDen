@@ -1,4 +1,3 @@
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -40,6 +39,7 @@ public class DropItemPool : MonoBehaviour
 
     private void OnReleaseItem(Item item)
     {
+        item.transform.SetParent(transform);
         item.gameObject.SetActive(false);
     }
 

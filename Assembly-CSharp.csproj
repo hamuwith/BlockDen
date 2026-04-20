@@ -64,7 +64,6 @@
     <Compile Include="Assets\Scripts\Item\Tool.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\FoodData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\BlockData.cs" />
-    <Compile Include="Assets\Scripts\ScriptableObject\ItemData.cs" />
     <Compile Include="Assets\Scripts\Arrow\Arrow.cs" />
     <Compile Include="Assets\Scripts\UI\FertilizerUI.cs" />
     <Compile Include="Assets\Scripts\UI\Menu.cs" />
@@ -87,6 +86,7 @@
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
     <Compile Include="Assets\Scripts\Charactor\Player.cs" />
     <Compile Include="Assets\Scripts\Manager\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObject\ItemDataSO.cs" />
     <Compile Include="Assets\Scripts\UI\BoxUI.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\Item\BreakTool.cs" />
