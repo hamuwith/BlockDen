@@ -69,7 +69,7 @@ public class Seed : PlayerUI
             if (growCount >= seedData.GrowNum)
             {
                 itemManager.BreakBlock(pos);
-                itemManager.MainManager.MapManager.MapUpdate(pos, seedData.GrowBlock.ItemAccess);
+                itemManager.MainManager.MapManager.MapUpdate(pos, seedData.GrowBlock);
                 return true;
             }
             else

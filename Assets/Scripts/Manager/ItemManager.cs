@@ -176,7 +176,7 @@ public class ItemManager : MonoBehaviour
             itemsNum[(int)ItemCategory.Material][itemNums[i].Id] += itemNums[i].Num;
         }
     }
-    public void RemoveBoxItem(ItemAccess[] materials)
+    public void RemoveBoxItem(List<ItemAccess> materials)
     {
         foreach (ItemAccess material in materials)
         {
@@ -191,12 +191,12 @@ public class ItemManager : MonoBehaviour
     {
         return itemIcons[(int)itemAccess.Category][itemAccess.Id];
     }
-    public ItemData[] GetMakableItems(ItemCategory category)
+    public ItemDataBase[] GetMakableItems(ItemCategory category)
     {
         ItemList itemList = itemLists[(int)category];
         return itemList.Items;
     }
-    public ItemData GetItem(ItemAccess itemAccess)
+    public ItemDataBase GetItem(ItemAccess itemAccess)
     {
         return itemLists[(int)itemAccess.Category].Items[itemAccess.Id];
     }
@@ -223,5 +223,5 @@ public class ItemManager : MonoBehaviour
 [System.Serializable]
 public class ItemList
 {
-    public ItemData[] Items;
+    public ItemDataBase[] Items;
 }

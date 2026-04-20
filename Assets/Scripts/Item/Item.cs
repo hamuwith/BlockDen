@@ -104,9 +104,6 @@ public class Item : MonoBehaviour
         cancellationTokenSource?.Dispose();
     }
 }
-/// <summary>
-/// �A�C�e���̑f�ނ�\���\����
-/// </summary>
 [System.Serializable]
 public struct ItemAccess
 {

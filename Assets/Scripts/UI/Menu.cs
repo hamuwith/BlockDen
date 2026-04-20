@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using static Item;
 
 public class Menu : MonoBehaviour
 {
@@ -20,11 +20,11 @@ public class Menu : MonoBehaviour
         }
         menuCanvas.enabled = false;
     }
-    public void ShowMenu(Transform transform, ItemAccess[] itemAccesses)
+    public void ShowMenu(Transform transform, List<ItemAccess> itemAccesses)
     {
         menuCanvas.enabled = true;
         this.transform.position = transform.position;
-        for (int i = 0; i < itemAccesses.Length; i++)
+        for (int i = 0; i < itemAccesses.Count; i++)
         {
             menuTexts[i].text = itemAccesses[i].Num.ToString();
             menuImages[i].sprite = itemManager.GetItemIcon(itemAccesses[i]);

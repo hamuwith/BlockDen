@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc5e4a8be47788d4b9ec020414cd9f64, type: 3}
+  m_Name: ItemDataSO
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDataSO
+  csvFile: {fileID: 4900000, guid: b857d1f1db5f305409f09e4cf95c4ea8, type: 3}
+  itemDatas:
+  - Name: test
+    ItemAccess:
+      Category: 8
+      Id: 0
+      Num: 0
+    ItemMaterials:
+    - Category: 8
+      Id: 1
+      Num: 1
+    UnitNum: 1
+    MaxNum: 10
+    Texture2D: {fileID: 2800000, guid: 95487d2532eee1f4c9c0a0978ce07dc7, type: 3}
+    Icon: {fileID: 21300000, guid: e31765b9b27d3cf4a889dfe3e7526dce, type: 3}
+  - Name: test1
+    ItemAccess:
+      Category: 8
+      Id: 1
+      Num: 0
+    ItemMaterials:
+    - Category: 8
+      Id: 0
+      Num: 1
+    UnitNum: 2
+    MaxNum: 100
+    Texture2D: {fileID: 2800000, guid: 632dbdf81c51bfd44bbaaa4ff0ce1e25, type: 3}
+    Icon: {fileID: 21300000, guid: 1c70b1b67a875ce49b7c1ecfa1113b0c, type: 3}
