@@ -333,7 +333,7 @@ public class Player : Character
         }
     }
 
-    private int BagUpdate(ItemData itemData, bool isUnit = true, bool first = false)
+    private int BagUpdate(ItemDataBase itemData, bool isUnit = true, bool first = false)
     {
         var itemAccess = itemData.ItemAccess;
         var bagStatus = GetBagState(itemAccess);

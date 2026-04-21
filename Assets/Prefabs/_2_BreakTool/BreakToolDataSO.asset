@@ -1,0 +1,328 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2413f3caeada3ba42a591d02826a8dea, type: 3}
+  m_Name: BreakToolDataSO
+  m_EditorClassIdentifier: Assembly-CSharp::BreakToolDataSO
+  csvFile: {fileID: 4900000, guid: 41e81359b84ddac4590d792289ad0a37, type: 3}
+  itemDatas:
+  - Name: wood axe
+    ItemAccess:
+      Category: 2
+      Id: 0
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 2
+    Lv: 0
+    BreakPower: 1
+  - Name: stone axe
+    ItemAccess:
+      Category: 2
+      Id: 1
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 2
+    Lv: 0
+    BreakPower: 2
+  - Name: iron axe
+    ItemAccess:
+      Category: 2
+      Id: 2
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 2
+    Lv: 0
+    BreakPower: 5
+  - Name: silver axe
+    ItemAccess:
+      Category: 2
+      Id: 3
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 2
+    Lv: 1
+    BreakPower: 5
+  - Name: diamond axe
+    ItemAccess:
+      Category: 2
+      Id: 4
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 2
+    Lv: 0
+    BreakPower: 9
+  - Name: gold axe
+    ItemAccess:
+      Category: 2
+      Id: 5
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 2
+    Lv: 2
+    BreakPower: 7
+  - Name: wood pickaxe
+    ItemAccess:
+      Category: 2
+      Id: 6
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 1
+    Lv: 0
+    BreakPower: 1
+  - Name: stone pickaxe
+    ItemAccess:
+      Category: 2
+      Id: 7
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 1
+    Lv: 0
+    BreakPower: 2
+  - Name: iron pickaxe
+    ItemAccess:
+      Category: 2
+      Id: 8
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 1
+    Lv: 0
+    BreakPower: 5
+  - Name: silver pickaxe
+    ItemAccess:
+      Category: 2
+      Id: 9
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 1
+    Lv: 1
+    BreakPower: 5
+  - Name: diamond pickaxe
+    ItemAccess:
+      Category: 2
+      Id: 10
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 1
+    Lv: 0
+    BreakPower: 9
+  - Name: gold pickaxe
+    ItemAccess:
+      Category: 2
+      Id: 11
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 1
+    Lv: 2
+    BreakPower: 7
+  - Name: wood shovel
+    ItemAccess:
+      Category: 2
+      Id: 12
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 0
+    Lv: 0
+    BreakPower: 1
+  - Name: iron shovel
+    ItemAccess:
+      Category: 2
+      Id: 13
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 0
+    Lv: 0
+    BreakPower: 2
+  - Name: silver shovel
+    ItemAccess:
+      Category: 2
+      Id: 14
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 0
+    Lv: 1
+    BreakPower: 2
+  - Name: gold shovel
+    ItemAccess:
+      Category: 2
+      Id: 15
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 0
+    Lv: 2
+    BreakPower: 3
+  - Name: wood watering can
+    ItemAccess:
+      Category: 2
+      Id: 16
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 3
+    Lv: 0
+    BreakPower: 1
+  - Name: iron watering can
+    ItemAccess:
+      Category: 2
+      Id: 17
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 3
+    Lv: 0
+    BreakPower: 1
+  - Name: silver watering can
+    ItemAccess:
+      Category: 2
+      Id: 18
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 3
+    Lv: 1
+    BreakPower: 1
+  - Name: gold watering can
+    ItemAccess:
+      Category: 2
+      Id: 19
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 3
+    Lv: 2
+    BreakPower: 1
+  - Name: wood harvesting shears
+    ItemAccess:
+      Category: 2
+      Id: 20
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 4
+    Lv: 0
+    BreakPower: 1
+  - Name: iron harvesting shears
+    ItemAccess:
+      Category: 2
+      Id: 21
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 4
+    Lv: 0
+    BreakPower: 2
+  - Name: silver harvesting shears
+    ItemAccess:
+      Category: 2
+      Id: 22
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 4
+    Lv: 1
+    BreakPower: 2
+  - Name: gold harvesting shears
+    ItemAccess:
+      Category: 2
+      Id: 23
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    BlockType: 4
+    Lv: 2
+    BreakPower: 3

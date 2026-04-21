@@ -1,0 +1,5 @@
+Name,Category,Id,UnitNum,MaxNum,GrowNum,GrowBlock_Category,GrowBlock_Id
+strawberry seed,6,0,4,20,3,1,16
+potato seed,6,1,4,20,5,1,17
+carrot seed,6,2,4,20,5,1,18
+melon seed,6,3,4,20,8,1,19

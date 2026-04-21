@@ -55,7 +55,8 @@ public class BreakToolDataSOEditor : Editor
                 Icon = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Icon/{name}.png"),
                 BlockType = (BlockTypeEnum)int.Parse(Col(cols, headerMap, "BlockType")),
                 Lv = int.Parse(Col(cols, headerMap, "Lv")),
-                BreakPower = int.Parse(Col(cols, headerMap, "BreakPower"))
+                BreakPower = int.Parse(Col(cols, headerMap, "BreakPower")),
+                ItemMaterials = ParseMaterials(cols, headerMap)
             };
 
             list.Add(data);
@@ -64,6 +65,23 @@ public class BreakToolDataSOEditor : Editor
         so.SetItemDatas(list.ToArray());
         AssetDatabase.SaveAssets();
         Debug.Log($"{list.Count}件のBreakToolデータを読み込みました");
+    }
+
+    List<ItemAccess> ParseMaterials(string[] cols, Dictionary<string, int> map)
+    {
+        var list = new List<ItemAccess>();
+        for (int m = 0; m < 9; m++)
+        {
+            int matId = int.Parse(Col(cols, map, $"Mat{m}_Id"));
+            if (matId < 0) continue;
+            list.Add(new ItemAccess
+            {
+                Category = (Item.ItemCategory)int.Parse(Col(cols, map, $"Mat{m}_Category")),
+                Id = matId,
+                Num = int.Parse(Col(cols, map, $"Mat{m}_Num"))
+            });
+        }
+        return list;
     }
 
     string Col(string[] cols, Dictionary<string, int> map, string key)

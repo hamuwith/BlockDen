@@ -17,7 +17,7 @@ public class MakerUI : BaseUI
         var makableItemList = new List<ItemData>();
         foreach (var category in makableCategorys)
         {
-            makableItemList.AddRange(itemManager.GetMakableItems(category));
+            makableItemList.AddRange((ItemData[])itemManager.GetMakableItems(category));
         }
         makableItems = makableItemList.ToArray();
         InitBase(itemManager);
@@ -151,7 +151,7 @@ public class MakerUI : BaseUI
             }
         }
     }
-    protected void _SelectIn(ItemData item = null)
+    protected void _SelectIn(ItemDataBase item = null)
     {
         var type = player.GetInventoryType(item.ItemAccess);
         inventoryIndex = (int)type;

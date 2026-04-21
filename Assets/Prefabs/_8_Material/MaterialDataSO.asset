@@ -1,0 +1,376 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc5e4a8be47788d4b9ec020414cd9f64, type: 3}
+  m_Name: MaterialDataSO
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDataSO
+  csvFile: {fileID: 4900000, guid: 097e055b11ece9645a309509d1337d8a, type: 3}
+  itemDatas:
+  - Name: sand
+    ItemAccess:
+      Category: 8
+      Id: 0
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: gravel
+    ItemAccess:
+      Category: 8
+      Id: 1
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: soil
+    ItemAccess:
+      Category: 8
+      Id: 2
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: wood
+    ItemAccess:
+      Category: 8
+      Id: 3
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: stone
+    ItemAccess:
+      Category: 8
+      Id: 4
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: iron
+    ItemAccess:
+      Category: 8
+      Id: 5
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: silver
+    ItemAccess:
+      Category: 8
+      Id: 6
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: gold
+    ItemAccess:
+      Category: 8
+      Id: 7
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: charcoal
+    ItemAccess:
+      Category: 8
+      Id: 8
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: coal
+    ItemAccess:
+      Category: 8
+      Id: 9
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: gunpowder
+    ItemAccess:
+      Category: 8
+      Id: 10
+      Num: 0
+    UnitNum: 10
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: diamond
+    ItemAccess:
+      Category: 8
+      Id: 11
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: sapphire
+    ItemAccess:
+      Category: 8
+      Id: 12
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: ruby
+    ItemAccess:
+      Category: 8
+      Id: 13
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: onyx
+    ItemAccess:
+      Category: 8
+      Id: 14
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: emerald
+    ItemAccess:
+      Category: 8
+      Id: 15
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: jade
+    ItemAccess:
+      Category: 8
+      Id: 16
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: sanukite
+    ItemAccess:
+      Category: 8
+      Id: 17
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: obsidian
+    ItemAccess:
+      Category: 8
+      Id: 18
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: pearl
+    ItemAccess:
+      Category: 8
+      Id: 19
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: black pearl
+    ItemAccess:
+      Category: 8
+      Id: 20
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: clams
+    ItemAccess:
+      Category: 8
+      Id: 21
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: apple
+    ItemAccess:
+      Category: 8
+      Id: 22
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: strawberry
+    ItemAccess:
+      Category: 8
+      Id: 23
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: Amiou
+    ItemAccess:
+      Category: 8
+      Id: 24
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: potato
+    ItemAccess:
+      Category: 8
+      Id: 25
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: Nishiakari
+    ItemAccess:
+      Category: 8
+      Id: 26
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: carrot
+    ItemAccess:
+      Category: 8
+      Id: 27
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: Ms.Carotene
+    ItemAccess:
+      Category: 8
+      Id: 28
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: melon
+    ItemAccess:
+      Category: 8
+      Id: 29
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: Yuuhimelon
+    ItemAccess:
+      Category: 8
+      Id: 30
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: mushroom
+    ItemAccess:
+      Category: 8
+      Id: 31
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: salmon
+    ItemAccess:
+      Category: 8
+      Id: 32
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: something seed
+    ItemAccess:
+      Category: 8
+      Id: 33
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: food waste
+    ItemAccess:
+      Category: 8
+      Id: 34
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+  - Name: earthworm
+    ItemAccess:
+      Category: 8
+      Id: 35
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []

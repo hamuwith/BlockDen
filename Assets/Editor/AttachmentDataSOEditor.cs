@@ -66,12 +66,30 @@ public class AttachmentDataSOEditor : Editor
                     cells = cells,
                     width = int.Parse(Col(cols, map, "ShapeWidth")),
                     height = int.Parse(Col(cols, map, "ShapeHeight"))
-                }
+                },
+                ItemMaterials = ParseMaterials(cols, map)
             });
         }
         so.SetItemDatas(list.ToArray());
         AssetDatabase.SaveAssets();
         Debug.Log($"{list.Count}件のAttachmentDataを読み込みました");
+    }
+
+    List<ItemAccess> ParseMaterials(string[] cols, Dictionary<string, int> map)
+    {
+        var list = new List<ItemAccess>();
+        for (int m = 0; m < 9; m++)
+        {
+            int matId = int.Parse(Col(cols, map, $"Mat{m}_Id"));
+            if (matId < 0) continue;
+            list.Add(new ItemAccess
+            {
+                Category = (ItemCategory)int.Parse(Col(cols, map, $"Mat{m}_Category")),
+                Id = matId,
+                Num = int.Parse(Col(cols, map, $"Mat{m}_Num"))
+            });
+        }
+        return list;
     }
 
     string Col(string[] cols, Dictionary<string, int> map, string key)

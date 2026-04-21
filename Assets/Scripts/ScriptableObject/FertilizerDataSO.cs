@@ -17,7 +17,7 @@ public class FertilizerDataSO : ScriptableObject
 }
 
 [System.Serializable]
-public class FertilizerData : ItemDataBase
+public class FertilizerData : ItemData
 {
     public FertilizerStatus FertilizerStatus;
     public AttachmentShape Shape;

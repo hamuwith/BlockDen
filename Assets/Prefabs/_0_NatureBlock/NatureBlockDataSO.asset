@@ -1,0 +1,431 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c0d82964f642e4c95bcde613a6cacc, type: 3}
+  m_Name: NatureBlockDataSO
+  m_EditorClassIdentifier: Assembly-CSharp::BlockDataSO
+  csvFile: {fileID: 4900000, guid: fe8625e756434714e8a32be76c8ee4d8, type: 3}
+  itemDatas:
+  - Name: house
+    ItemAccess:
+      Category: 0
+      Id: 0
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 2800000, guid: 929433a1351edf64590c0b395b31d064, type: 3}
+    Icon: {fileID: 21300000, guid: 38c630677dc025649ab15e082567e180, type: 3}
+    Hardness: -1
+    ItemPercents: []
+    DropItem100:
+      Category: 8
+      Id: -1
+      Num: 0
+    Life: -1
+    BlockType: 2
+  - Name: sand
+    ItemAccess:
+      Category: 0
+      Id: 1
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 1
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 19
+        Num: 1
+      Percent: 20
+    - ItemAccess:
+        Category: 8
+        Id: 20
+        Num: 1
+      Percent: 20
+    - ItemAccess:
+        Category: 8
+        Id: 21
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 0
+      Num: 0
+    Life: -1
+    BlockType: 0
+  - Name: gravel
+    ItemAccess:
+      Category: 0
+      Id: 2
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 3
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 16
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 1
+      Num: 0
+    Life: -1
+    BlockType: 0
+  - Name: soil
+    ItemAccess:
+      Category: 0
+      Id: 3
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 2
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 17
+        Num: 1
+      Percent: 20
+    - ItemAccess:
+        Category: 8
+        Id: 35
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 2
+      Num: 0
+    Life: 3
+    BlockType: 0
+  - Name: wood
+    ItemAccess:
+      Category: 0
+      Id: 4
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 3
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 31
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 3
+      Num: 0
+    Life: 8
+    BlockType: 2
+  - Name: leaf
+    ItemAccess:
+      Category: 0
+      Id: 5
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 1
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 22
+        Num: 1
+      Percent: 20
+    - ItemAccess:
+        Category: 8
+        Id: 33
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 2
+      Num: 0
+    Life: 1
+    BlockType: 4
+  - Name: stone
+    ItemAccess:
+      Category: 0
+      Id: 6
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 3
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 18
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 4
+      Num: 0
+    Life: 5
+    BlockType: 1
+  - Name: water
+    ItemAccess:
+      Category: 0
+      Id: 7
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 1
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 32
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: -1
+      Num: 0
+    Life: -1
+    BlockType: 3
+  - Name: iron
+    ItemAccess:
+      Category: 0
+      Id: 8
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 8
+    ItemPercents: []
+    DropItem100:
+      Category: 8
+      Id: 5
+      Num: 0
+    Life: 13
+    BlockType: 1
+  - Name: silver
+    ItemAccess:
+      Category: 0
+      Id: 9
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 10
+    ItemPercents: []
+    DropItem100:
+      Category: 8
+      Id: 6
+      Num: 0
+    Life: 20
+    BlockType: 1
+  - Name: gold
+    ItemAccess:
+      Category: 0
+      Id: 10
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 13
+    ItemPercents: []
+    DropItem100:
+      Category: 8
+      Id: 7
+      Num: 0
+    Life: 20
+    BlockType: 1
+  - Name: diamond
+    ItemAccess:
+      Category: 0
+      Id: 11
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 25
+    ItemPercents: []
+    DropItem100:
+      Category: 8
+      Id: 11
+      Num: 0
+    Life: 20
+    BlockType: 1
+  - Name: sapphire
+    ItemAccess:
+      Category: 0
+      Id: 12
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 18
+    ItemPercents: []
+    DropItem100:
+      Category: 8
+      Id: 12
+      Num: 0
+    Life: 25
+    BlockType: 1
+  - Name: ruby
+    ItemAccess:
+      Category: 0
+      Id: 13
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 18
+    ItemPercents: []
+    DropItem100:
+      Category: 8
+      Id: 13
+      Num: 0
+    Life: 25
+    BlockType: 1
+  - Name: onyx
+    ItemAccess:
+      Category: 0
+      Id: 14
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 18
+    ItemPercents: []
+    DropItem100:
+      Category: 8
+      Id: 14
+      Num: 0
+    Life: 25
+    BlockType: 1
+  - Name: emerald
+    ItemAccess:
+      Category: 0
+      Id: 15
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 18
+    ItemPercents: []
+    DropItem100:
+      Category: 8
+      Id: 15
+      Num: 0
+    Life: 25
+    BlockType: 1
+  - Name: strawberry
+    ItemAccess:
+      Category: 0
+      Id: 16
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 1
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 23
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 23
+      Num: 0
+    Life: 12
+    BlockType: 4
+  - Name: potato
+    ItemAccess:
+      Category: 0
+      Id: 17
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 2
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 25
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 25
+      Num: 0
+    Life: 8
+    BlockType: 4
+  - Name: carrot
+    ItemAccess:
+      Category: 0
+      Id: 18
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 2
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 27
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 27
+      Num: 0
+    Life: 8
+    BlockType: 4
+  - Name: melon
+    ItemAccess:
+      Category: 0
+      Id: 19
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    Hardness: 3
+    ItemPercents:
+    - ItemAccess:
+        Category: 8
+        Id: 29
+        Num: 1
+      Percent: 20
+    DropItem100:
+      Category: 8
+      Id: 29
+      Num: 0
+    Life: 3
+    BlockType: 4

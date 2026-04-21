@@ -17,7 +17,7 @@ public class WeaponDataSO : ScriptableObject
 }
 
 [System.Serializable]
-public class WeaponData : BlockData
+public class WeaponData : ItemData
 {
     public int ArrowId;
     public int Damage;

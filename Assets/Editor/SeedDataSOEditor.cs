@@ -4,7 +4,7 @@ using UnityEngine;
 using static Item;
 
 [CustomEditor(typeof(SeedDataSO))]
-public class SeedDataSOEditor : BlockDataSOEditor
+public class SeedDataSOEditor : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -19,27 +19,30 @@ public class SeedDataSOEditor : BlockDataSOEditor
         string[] lines = so.csvFile.text.Split('\n');
         if (lines.Length < 2) return;
 
-        var map = BuildHeaderMap(lines[0]);
+        var map = new Dictionary<string, int>();
+        string[] headers = lines[0].Trim().Split(',');
+        for (int i = 0; i < headers.Length; i++) map[headers[i].Trim()] = i;
+
         var list = new List<SeedData>();
         for (int li = 1; li < lines.Length; li++)
         {
             string line = lines[li].Trim();
             if (string.IsNullOrEmpty(line)) continue;
             string[] cols = line.Split(',');
-            var block = ParseBlockData(cols, map);
-            var data = new SeedData
+            string name = Col(cols, map, "Name");
+            list.Add(new SeedData
             {
-                Name = block.Name,
-                ItemAccess = block.ItemAccess,
-                UnitNum = block.UnitNum,
-                MaxNum = block.MaxNum,
-                Texture2D = block.Texture2D,
-                Icon = block.Icon,
-                BlockType = block.BlockType,
-                Hardness = block.Hardness,
-                Life = block.Life,
-                DropItem100 = block.DropItem100,
-                ItemPercents = block.ItemPercents,
+                Name = name,
+                ItemAccess = new ItemAccess
+                {
+                    Category = (ItemCategory)int.Parse(Col(cols, map, "Category")),
+                    Id = int.Parse(Col(cols, map, "Id")),
+                    Num = 0
+                },
+                UnitNum = int.Parse(Col(cols, map, "UnitNum")),
+                MaxNum = int.Parse(Col(cols, map, "MaxNum")),
+                Texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>($"Assets/Texture/{name}.png"),
+                Icon = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Icon/{name}.png"),
                 GrowNum = int.Parse(Col(cols, map, "GrowNum")),
                 GrowBlock = new ItemAccess
                 {
@@ -47,11 +50,13 @@ public class SeedDataSOEditor : BlockDataSOEditor
                     Id = int.Parse(Col(cols, map, "GrowBlock_Id")),
                     Num = 0
                 }
-            };
-            list.Add(data);
+            });
         }
         so.SetItemDatas(list.ToArray());
         AssetDatabase.SaveAssets();
         Debug.Log($"{list.Count}件のSeedDataを読み込みました");
     }
+
+    string Col(string[] cols, Dictionary<string, int> map, string key)
+        => map.TryGetValue(key, out int i) && i < cols.Length ? cols[i].Trim() : "0";
 }

@@ -4,7 +4,18 @@ using static Item;
 
 public class ItemManager : MonoBehaviour
 {
-    [SerializeField] ItemList[] itemLists;
+    [SerializeField] BlockDataSO natureBlockDataSO;
+    [SerializeField] BlockDataSO unnaturalBlockDataSO;
+    [SerializeField] BreakToolDataSO breakToolDataSO;
+    [SerializeField] WeaponDataSO weaponDataSO;
+    [SerializeField] AttachmentDataSO statusDataSO;
+    [SerializeField] FoodDataSO foodDataSO;
+    [SerializeField] SeedDataSO seedDataSO;
+    [SerializeField] FertilizerDataSO fertilizerDataSO;
+    [SerializeField] ItemDataSO materialDataSO;
+    [SerializeField] ItemDataSO bagDataSO;
+    [SerializeField] ItemDataSO toolDataSO;
+    [SerializeField] WeaponBaseDataSO weaponBaseDataSO;
     [SerializeField] Item itemPrefab;
     [SerializeField] Block blockPrefab;
     [SerializeField] Seed seedPrefab;
@@ -21,8 +32,22 @@ public class ItemManager : MonoBehaviour
     int[][] itemsNum;
     Sprite[][] itemIcons;
     Material[][] itemMaterials;
+    ItemList[] itemLists;
     public void Init(MainManager mainManager)
     {
+        itemLists = new ItemList[(int)ItemCategory.Length];
+        itemLists[(int)ItemCategory.NatureBlock] = new ItemList { Items = natureBlockDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.UnnatureBlock] = new ItemList { Items = unnaturalBlockDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.BreakTool] = new ItemList { Items = breakToolDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.Weapon] = new ItemList { Items = weaponDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.Status] = new ItemList { Items = statusDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.Food] = new ItemList { Items = foodDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.Seed] = new ItemList { Items = seedDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.Fertilizer] = new ItemList { Items = fertilizerDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.Material] = new ItemList { Items = materialDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.Bag] = new ItemList { Items = bagDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.Tool] = new ItemList { Items = toolDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.WeaponBase] = new ItemList { Items = weaponBaseDataSO.ItemDatas };
         Items = new List<Item>();
         MainManager = mainManager;
         mapManager = mainManager.MapManager;

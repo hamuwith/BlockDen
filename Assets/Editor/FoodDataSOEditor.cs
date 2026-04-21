@@ -46,12 +46,30 @@ public class FoodDataSOEditor : Editor
                 Duration = int.Parse(Col(cols, map, "Duration")),
                 MoveSpeed = float.Parse(Col(cols, map, "MoveSpeed")),
                 Power = int.Parse(Col(cols, map, "Power")),
-                Damage = int.Parse(Col(cols, map, "Damage"))
+                Damage = int.Parse(Col(cols, map, "Damage")),
+                ItemMaterials = ParseMaterials(cols, map)
             });
         }
         so.SetItemDatas(list.ToArray());
         AssetDatabase.SaveAssets();
         Debug.Log($"{list.Count}件のFoodDataを読み込みました");
+    }
+
+    List<ItemAccess> ParseMaterials(string[] cols, Dictionary<string, int> map)
+    {
+        var list = new List<ItemAccess>();
+        for (int m = 0; m < 9; m++)
+        {
+            int matId = int.Parse(Col(cols, map, $"Mat{m}_Id"));
+            if (matId < 0) continue;
+            list.Add(new ItemAccess
+            {
+                Category = (ItemCategory)int.Parse(Col(cols, map, $"Mat{m}_Category")),
+                Id = matId,
+                Num = int.Parse(Col(cols, map, $"Mat{m}_Num"))
+            });
+        }
+        return list;
     }
 
     string Col(string[] cols, Dictionary<string, int> map, string key)

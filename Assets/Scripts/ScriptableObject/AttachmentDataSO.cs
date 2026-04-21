@@ -33,7 +33,7 @@ public struct AttachmentShape
 }
 
 [System.Serializable]
-public class AttachmentData : ItemDataBase
+public class AttachmentData : ItemData
 {
     public AttachmentStatus AttachmentStatus;
     public AttachmentShape Shape;

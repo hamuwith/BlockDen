@@ -17,7 +17,7 @@ public class WeaponBaseDataSO : ScriptableObject
 }
 
 [System.Serializable]
-public class WeaponBaseData : BlockData
+public class WeaponBaseData : ItemData
 {
     public Vector2Int BoardSize;
 }

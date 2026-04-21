@@ -17,7 +17,7 @@ public class FoodDataSO : ScriptableObject
 }
 
 [System.Serializable]
-public class FoodData : ItemDataBase
+public class FoodData : ItemData
 {
     public int Duration;
     public float MoveSpeed;

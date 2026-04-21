@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6cecf13bded1546be785acf901e7de, type: 3}
+  m_Name: SeedDataSO
+  m_EditorClassIdentifier: Assembly-CSharp::SeedDataSO
+  csvFile: {fileID: 4900000, guid: f116f0edda05def4892e45f81e150b0f, type: 3}
+  itemDatas:
+  - Name: strawberry seed
+    ItemAccess:
+      Category: 6
+      Id: 0
+      Num: 0
+    UnitNum: 4
+    MaxNum: 20
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    GrowNum: 3
+    GrowBlock:
+      Category: 1
+      Id: 16
+      Num: 0
+  - Name: potato seed
+    ItemAccess:
+      Category: 6
+      Id: 1
+      Num: 0
+    UnitNum: 4
+    MaxNum: 20
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    GrowNum: 5
+    GrowBlock:
+      Category: 1
+      Id: 17
+      Num: 0
+  - Name: carrot seed
+    ItemAccess:
+      Category: 6
+      Id: 2
+      Num: 0
+    UnitNum: 4
+    MaxNum: 20
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    GrowNum: 5
+    GrowBlock:
+      Category: 1
+      Id: 18
+      Num: 0
+  - Name: melon seed
+    ItemAccess:
+      Category: 6
+      Id: 3
+      Num: 0
+    UnitNum: 4
+    MaxNum: 20
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    GrowNum: 8
+    GrowBlock:
+      Category: 1
+      Id: 19
+      Num: 0
