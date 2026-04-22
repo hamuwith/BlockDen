@@ -117,7 +117,7 @@ public class MakerUI : BaseUI
             makable[i] = true;
             foreach (var material in makableItems[i].ItemMaterials)
             {
-                makable[i] &= (haveItems[(int)material.Category][material.Id]) >= material.Num;
+                makable[i] &= haveItems[(int)material.Category][material.Id] >= material.Num;
             }
             isEnabled |= makable[i];
         }

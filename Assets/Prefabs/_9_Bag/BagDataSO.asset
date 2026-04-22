@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc5e4a8be47788d4b9ec020414cd9f64, type: 3}
+  m_Name: BagDataSO
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDataSO
+  csvFile: {fileID: 4900000, guid: aae8a5576a1d41e49b9f6d0cf6da6ae2, type: 3}
+  itemDatas:
+  - Name: bag
+    ItemAccess:
+      Category: 9
+      Id: 0
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 2800000, guid: 014ead567322f9243b2421dc14422172, type: 3}
+    Icon: {fileID: 21300000, guid: 3841cba1620f2e842be737339d660341, type: 3}
+    ItemMaterials:
+    - Category: 8
+      Id: 0
+      Num: 1
+  - Name: bigger bag
+    ItemAccess:
+      Category: 9
+      Id: 1
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials:
+    - Category: 8
+      Id: 0
+      Num: 1
+  - Name: big bag
+    ItemAccess:
+      Category: 9
+      Id: 2
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials:
+    - Category: 8
+      Id: 0
+      Num: 1
+  - Name: biggest
+    ItemAccess:
+      Category: 9
+      Id: 3
+      Num: 0
+    UnitNum: 1
+    MaxNum: 1
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials:
+    - Category: 8
+      Id: 0
+      Num: 1

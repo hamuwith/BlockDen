@@ -21,8 +21,12 @@ MonoBehaviour:
       Num: 0
     UnitNum: 4
     MaxNum: 20
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 03a129181fbb8c44397757c47d83e008, type: 3}
+    Icon: {fileID: 21300000, guid: 26ccc88c5cb76c545a85369e477a300d, type: 3}
+    ItemMaterials:
+    - Category: 8
+      Id: 2
+      Num: 1
     GrowNum: 3
     GrowBlock:
       Category: 1
@@ -37,6 +41,10 @@ MonoBehaviour:
     MaxNum: 20
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
+    ItemMaterials:
+    - Category: 8
+      Id: 2
+      Num: 1
     GrowNum: 5
     GrowBlock:
       Category: 1
@@ -51,6 +59,10 @@ MonoBehaviour:
     MaxNum: 20
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
+    ItemMaterials:
+    - Category: 8
+      Id: 2
+      Num: 1
     GrowNum: 5
     GrowBlock:
       Category: 1
@@ -65,6 +77,10 @@ MonoBehaviour:
     MaxNum: 20
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
+    ItemMaterials:
+    - Category: 8
+      Id: 2
+      Num: 1
     GrowNum: 8
     GrowBlock:
       Category: 1

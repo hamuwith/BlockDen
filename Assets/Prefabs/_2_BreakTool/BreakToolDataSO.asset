@@ -99,8 +99,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 402028b0f15b8a547b0183d0c6da89a4, type: 3}
+    Icon: {fileID: 21300000, guid: 66a9b4cc61afc754ea50da33f3c00e16, type: 3}
     ItemMaterials: []
     BlockType: 1
     Lv: 0
@@ -177,8 +177,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 005a67a39391d234bb8a42cfee377532, type: 3}
+    Icon: {fileID: 21300000, guid: 58456777db0050d498451eb528b6bbea, type: 3}
     ItemMaterials: []
     BlockType: 0
     Lv: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 37327f4fdfb255941ab6d7fdb7fe3f87, type: 3}
     Icon: {fileID: 0}
     ItemMaterials: []
     BlockType: 3

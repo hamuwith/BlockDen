@@ -11,11 +11,11 @@ using UnityEngine.Splines;
 public class StageAuthoringWindow : EditorWindow
 {
     private float previewTime;
-    private StageSceneBinding binding; 
+    private StageSceneBinding binding;
     private bool isPlaying;
-    private double lastEditorTime; 
+    private double lastEditorTime;
     private float flattenY = 0f;
-    private bool autoSmoothPreview = true; 
+    private bool autoSmoothPreview = true;
     private int targetSplineIndex = 0;
 
     [MenuItem("Tools/Stage Authoring")]
@@ -26,7 +26,7 @@ public class StageAuthoringWindow : EditorWindow
 
     private void OnEnable()
     {
-        SceneView.duringSceneGui += OnSceneGUI; 
+        SceneView.duringSceneGui += OnSceneGUI;
         lastEditorTime = EditorApplication.timeSinceStartup;
     }
 

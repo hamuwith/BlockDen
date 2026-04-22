@@ -333,11 +333,11 @@ public class Player : Character
         }
     }
 
-    private int BagUpdate(ItemDataBase itemData, bool isUnit = true, bool first = false)
+    private int BagUpdate(ItemDataBase itemData, int number, bool isUnit = true)
     {
         var itemAccess = itemData.ItemAccess;
         var bagStatus = GetBagState(itemAccess);
-        var num = isUnit ? Mathf.Min(itemAccess.Num, itemData.UnitNum) : itemAccess.Num;
+        var num = isUnit ? Mathf.Min(number, itemData.UnitNum) : number;
         var intentoryType = GetInventoryType(itemAccess);
         if (bagStatus == BagStatus.Success)
         {
@@ -370,12 +370,9 @@ public class Player : Character
                         {
                             num -= MaterialBag[i].Num - itemData.MaxNum;
                             MaterialBag[i].Num = itemData.MaxNum;
-                            return num;
                         }
-                        else
-                        {
-                            return num;
-                        }
+                        InventoryUpdate();
+                        return num;
                     }
                 }
                 else if (nullNum == -1)
@@ -388,6 +385,7 @@ public class Player : Character
                 MaterialBag[nullNum].Num = num;
                 MaterialBag[nullNum].Id = itemAccess.Id;
                 MaterialBag[nullNum].Category = itemAccess.Category;
+                InventoryUpdate();
                 return num;
             }
         }
@@ -409,10 +407,10 @@ public class Player : Character
         }
         return num;
     }
-    public int BagUpdate(ItemAccess boxItem, bool isUnit = true, bool first = false)
+    public int BagUpdate(ItemAccess boxItem, bool isUnit = true)
     {
         var baseItem = itemManager.GetItem(boxItem);
-        return BagUpdate(baseItem, isUnit, first);
+        return BagUpdate(baseItem, boxItem.Num, isUnit);
     }
     public BagStatus BagReduce(int num, int index)
     {
@@ -609,7 +607,7 @@ public class Player : Character
         if (targetBlock.HasValue)
         {
             var block = mapManager.GetBlock(targetBlock.Value);
-            ChangeTool(block.BlockType);
+            ChangeTool(block.BlockType.Value);
         }
         TargetHighlight(targetBlock);
     }

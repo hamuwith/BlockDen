@@ -1,5 +1,5 @@
-Name,Category,Id,UnitNum,MaxNum,GrowNum,GrowBlock_Category,GrowBlock_Id
-strawberry seed,6,0,4,20,3,1,16
-potato seed,6,1,4,20,5,1,17
-carrot seed,6,2,4,20,5,1,18
-melon seed,6,3,4,20,8,1,19
+Name,Category,Id,UnitNum,MaxNum,GrowNum,GrowBlock_Category,GrowBlock_Id,Mat0_Category,Mat0_Id,Mat0_Num,Mat1_Category,Mat1_Id,Mat1_Num,Mat2_Category,Mat2_Id,Mat2_Num,Mat3_Category,Mat3_Id,Mat3_Num
+strawberry seed,6,0,4,20,3,1,16,8,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+potato seed,6,1,4,20,5,1,17,8,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+carrot seed,6,2,4,20,5,1,18,8,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+melon seed,6,3,4,20,8,1,19,8,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1

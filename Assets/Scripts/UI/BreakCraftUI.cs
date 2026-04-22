@@ -1,4 +1,3 @@
-using UnityEngine;
 
 public class BreakCraftUI : CraftUI
 {
@@ -6,6 +5,7 @@ public class BreakCraftUI : CraftUI
     {
         InitBase(itemManager);
         craftResult.Id = -1;
+        craftResult.Num = 1;
         craftSlots = new ItemAccess[buttons.Length];
         for (int i = 0; i < craftSlots.Length; i++) craftSlots[i].Id = -1;
     }

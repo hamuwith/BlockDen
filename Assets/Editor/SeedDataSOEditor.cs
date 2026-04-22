@@ -49,12 +49,30 @@ public class SeedDataSOEditor : Editor
                     Category = (ItemCategory)int.Parse(Col(cols, map, "GrowBlock_Category")),
                     Id = int.Parse(Col(cols, map, "GrowBlock_Id")),
                     Num = 0
-                }
+                },
+                ItemMaterials = ParseMaterials(cols, map)
             });
         }
         so.SetItemDatas(list.ToArray());
         AssetDatabase.SaveAssets();
         Debug.Log($"{list.Count}件のSeedDataを読み込みました");
+    }
+
+    List<ItemAccess> ParseMaterials(string[] cols, Dictionary<string, int> map)
+    {
+        var list = new List<ItemAccess>();
+        for (int m = 0; m < 4; m++)
+        {
+            int matId = int.Parse(Col(cols, map, $"Mat{m}_Id"));
+            if (matId < 0) continue;
+            list.Add(new ItemAccess
+            {
+                Category = (ItemCategory)int.Parse(Col(cols, map, $"Mat{m}_Category")),
+                Id = matId,
+                Num = int.Parse(Col(cols, map, $"Mat{m}_Num"))
+            });
+        }
+        return list;
     }
 
     string Col(string[] cols, Dictionary<string, int> map, string key)

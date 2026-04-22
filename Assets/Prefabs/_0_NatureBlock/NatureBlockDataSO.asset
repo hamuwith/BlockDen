@@ -28,7 +28,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: -1
-      Num: 0
+      Num: 1
     Life: -1
     BlockType: 2
   - Name: sand
@@ -38,8 +38,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 04b7a040384bf91408bcddc08fc36edf, type: 3}
+    Icon: {fileID: 21300000, guid: 64120ac62bac94041965a9dc0453cbda, type: 3}
     Hardness: 1
     ItemPercents:
     - ItemAccess:
@@ -60,7 +60,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 0
-      Num: 0
+      Num: 1
     Life: -1
     BlockType: 0
   - Name: gravel
@@ -82,7 +82,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 1
-      Num: 0
+      Num: 1
     Life: -1
     BlockType: 0
   - Name: soil
@@ -92,8 +92,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 6f5f71198ae212c498bf66c83b30faf6, type: 3}
+    Icon: {fileID: 21300000, guid: 3751bb6ee2553d944a1fdaba75fcb2ce, type: 3}
     Hardness: 2
     ItemPercents:
     - ItemAccess:
@@ -109,7 +109,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 2
-      Num: 0
+      Num: 1
     Life: 3
     BlockType: 0
   - Name: wood
@@ -119,8 +119,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 4c14ebaec731f09488abd1ad2e25e550, type: 3}
+    Icon: {fileID: 21300000, guid: 22cf13217b951ff42b9007fc6145ed41, type: 3}
     Hardness: 3
     ItemPercents:
     - ItemAccess:
@@ -131,7 +131,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 3
-      Num: 0
+      Num: 1
     Life: 8
     BlockType: 2
   - Name: leaf
@@ -158,7 +158,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 2
-      Num: 0
+      Num: 1
     Life: 1
     BlockType: 4
   - Name: stone
@@ -180,7 +180,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 4
-      Num: 0
+      Num: 1
     Life: 5
     BlockType: 1
   - Name: water
@@ -190,7 +190,7 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: fc39cda3eb74069418006d1af7c1a4f0, type: 3}
     Icon: {fileID: 0}
     Hardness: 1
     ItemPercents:
@@ -202,7 +202,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: -1
-      Num: 0
+      Num: 1
     Life: -1
     BlockType: 3
   - Name: iron
@@ -219,7 +219,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 5
-      Num: 0
+      Num: 1
     Life: 13
     BlockType: 1
   - Name: silver
@@ -236,7 +236,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 6
-      Num: 0
+      Num: 1
     Life: 20
     BlockType: 1
   - Name: gold
@@ -253,7 +253,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 7
-      Num: 0
+      Num: 1
     Life: 20
     BlockType: 1
   - Name: diamond
@@ -270,7 +270,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 11
-      Num: 0
+      Num: 1
     Life: 20
     BlockType: 1
   - Name: sapphire
@@ -287,7 +287,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 12
-      Num: 0
+      Num: 1
     Life: 25
     BlockType: 1
   - Name: ruby
@@ -304,7 +304,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 13
-      Num: 0
+      Num: 1
     Life: 25
     BlockType: 1
   - Name: onyx
@@ -321,7 +321,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 14
-      Num: 0
+      Num: 1
     Life: 25
     BlockType: 1
   - Name: emerald
@@ -338,7 +338,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 15
-      Num: 0
+      Num: 1
     Life: 25
     BlockType: 1
   - Name: strawberry
@@ -348,8 +348,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 0a811ed624cd81a478b232ea04aa92d9, type: 3}
+    Icon: {fileID: 21300000, guid: 250c2cb64fea43343a49cbfc4463ca24, type: 3}
     Hardness: 1
     ItemPercents:
     - ItemAccess:
@@ -360,7 +360,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 23
-      Num: 0
+      Num: 1
     Life: 12
     BlockType: 4
   - Name: potato
@@ -382,7 +382,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 25
-      Num: 0
+      Num: 1
     Life: 8
     BlockType: 4
   - Name: carrot
@@ -404,7 +404,7 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 27
-      Num: 0
+      Num: 1
     Life: 8
     BlockType: 4
   - Name: melon
@@ -426,6 +426,6 @@ MonoBehaviour:
     DropItem100:
       Category: 8
       Id: 29
-      Num: 0
+      Num: 1
     Life: 3
     BlockType: 4

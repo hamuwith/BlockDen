@@ -17,7 +17,7 @@ public class SeedDataSO : ScriptableObject
 }
 
 [System.Serializable]
-public class SeedData : ItemDataBase
+public class SeedData : ItemData
 {
     public int GrowNum;
     public ItemAccess GrowBlock;

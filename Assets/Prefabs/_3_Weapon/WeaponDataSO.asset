@@ -21,10 +21,10 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 256d5c3031e5a6640b8401739d008001, type: 3}
+    Icon: {fileID: 21300000, guid: 07fd47c839923c94eb4ab3e17afd014b, type: 3}
     ItemMaterials:
-    - Category: 0
+    - Category: 8
       Id: 0
       Num: 1
     ArrowId: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials:
-    - Category: 0
+    - Category: 8
       Id: 0
       Num: 1
     ArrowId: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials:
-    - Category: 0
+    - Category: 8
       Id: 0
       Num: 1
     ArrowId: 0
@@ -72,10 +72,10 @@ MonoBehaviour:
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 1859e326d930371489876506f0a6a4d7, type: 3}
+    Icon: {fileID: 21300000, guid: 61d0269183d6f1742ac1d9a850de0b73, type: 3}
     ItemMaterials:
-    - Category: 0
+    - Category: 8
       Id: 0
       Num: 1
     ArrowId: 1
@@ -92,7 +92,7 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials:
-    - Category: 0
+    - Category: 8
       Id: 0
       Num: 1
     ArrowId: 1
@@ -109,7 +109,7 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials:
-    - Category: 0
+    - Category: 8
       Id: 0
       Num: 1
     ArrowId: 1

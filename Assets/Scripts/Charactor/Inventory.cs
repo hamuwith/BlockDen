@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
     public int InventorySize => inventoryButtons.Length;
     public int BagSize => bagButtons.Length;
     /// <summary>
-    /// ƒCƒ“ƒxƒ“ƒgƒŠ‚Ì‰Šú‰»‚ğs‚¤
+    /// ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
     /// </summary>
     /// <param name="player"></param>
     public void Init(Player player, ItemManager itemManager)
@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour
         inventoryHighlightMaterial.SetFloat(sliceWidthId, 0.1f);
     }
     /// <summary>
-    /// ƒCƒ“ƒxƒ“ƒgƒŠ‚ÌUI‚ğŠJ‚«A‘I‘ğ‚µ‚½ƒAƒCƒeƒ€‚ğƒvƒŒƒCƒ„[‚ÌƒoƒbƒO‚É”½‰f‚³‚¹‚é
+    /// ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½UIï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½Aï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìƒoï¿½bï¿½Oï¿½É”ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="left"></param>
     public void SelectItem(bool left)
@@ -68,12 +68,9 @@ public class Inventory : MonoBehaviour
         await UniTask.Delay(openDuration, cancellationToken: cancellationToken);
         CloseUI();
     }
-    /// <summary>
-    /// ƒCƒ“ƒxƒ“ƒgƒŠ‚ÌUI‚ğXV‚·‚é
-    /// </summary>
     public void UpdateInventory()
     {
-        if(!canvas.enabled) return;
+        if (!canvas.enabled) return;
         for (int i = 0; i < InventorySize; i++)
         {
             if (player.Bag[i] != null)
@@ -110,7 +107,7 @@ public class Inventory : MonoBehaviour
     {
         canvas.enabled = false;
         bagCanvas.enabled = false;
-        if(player.BagIndex == (int)InventoryType.Bag)
+        if (player.BagIndex == (int)InventoryType.Bag)
         {
             player.BagIndex = 0;
         }
@@ -118,7 +115,7 @@ public class Inventory : MonoBehaviour
     public void Select(bool left)
     {
         _Select(left);
-        if(player.BagIndex == (int)InventoryType.Bag)
+        if (player.BagIndex == (int)InventoryType.Bag)
         {
             bagCanvas.enabled = true;
             inventoryHighlightMaterial.SetFloat(sliceWidthId, 0.0f);

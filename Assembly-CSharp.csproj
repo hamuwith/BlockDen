@@ -49,11 +49,13 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.6f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\EditorHelper\MapDataHolder.cs" />
     <Compile Include="Assets\Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Item\Weapon.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\StageData.cs" />
     <Compile Include="Assets\Scripts\Item\WeaponBase.cs" />
     <Compile Include="Assets\Scripts\UI\BaseUI.cs" />
+    <Compile Include="Assets\Scripts\EditorHelper\StageAuthoringWindow.cs" />
     <Compile Include="Assets\Scripts\Item\Seed.cs" />
     <Compile Include="Assets\Scripts\Manager\WeaponManager.cs" />
     <Compile Include="Assets\Scripts\Item\Fertilizer.cs" />
@@ -68,8 +70,6 @@
     <Compile Include="Assets\Scripts\Support\StageSceneBinding.cs" />
     <Compile Include="Assets\Scripts\Pool\ArrowPool.cs" />
     <Compile Include="Assets\Scripts\Pool\DropItemPool.cs" />
-    <Compile Include="Assets\Scripts\Edior\MapDataHolder.cs" />
-    <Compile Include="Assets\Scripts\Edior\StageAuthoringWindow.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\SeedDataSO.cs" />
     <Compile Include="Assets\Scripts\Manager\MainManager.cs" />
     <Compile Include="Assets\Scripts\UI\AttachUI.cs" />
@@ -93,7 +93,6 @@
     <Compile Include="Assets\Scripts\Charactor\Enemy.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\WeaponDataSO.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\BreakToolDataSO.cs" />
-    <Compile Include="Assets\Edior\MapEditorWindow.cs" />
     <Compile Include="Assets\Scripts\Item\Item.cs" />
     <Compile Include="Assets\Scripts\Item\Block.cs" />
     <Compile Include="Assets\Scripts\Item\Attachment.cs" />

@@ -8,7 +8,7 @@ public class Block : Item
     readonly float HideRate = 0.35f;
     Color color;
     BlockData blockData;
-    public BlockTypeEnum BlockType => blockData.BlockType;
+    public BlockTypeEnum? BlockType => blockData?.BlockType;
 
     public enum BlockTypeEnum
     {
@@ -30,7 +30,7 @@ public class Block : Item
         materialBlock = new MaterialPropertyBlock();
         meshRenderer.GetPropertyBlock(materialBlock);
         color = Color.white;
-        currentLife = blockData.Life;
+        if (blockData != null) currentLife = blockData.Life;
     }
     public virtual bool Break(int power, Vector3Int pos)
     {

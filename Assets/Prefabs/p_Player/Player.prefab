@@ -3861,22 +3861,22 @@ MonoBehaviour:
   highlightPrefab: {fileID: 7845834766657059244, guid: 0937325a9122540458cffab6f4b7b465, type: 3}
   firstItems:
   - Category: 2
-    Id: 30
+    Id: 0
     Num: 1
   - Category: 2
-    Id: 31
+    Id: 6
     Num: 1
   - Category: 2
-    Id: 32
+    Id: 12
     Num: 1
   - Category: 2
-    Id: 33
+    Id: 16
     Num: 1
   - Category: 2
-    Id: 34
+    Id: 20
     Num: 1
   - Category: 9
-    Id: 30
+    Id: 0
     Num: 1
 --- !u!95 &-7535496821631984726
 Animator:
@@ -3935,6 +3935,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105406000708013300}
     m_Modifications:
+    - target: {fileID: 876771110330268206, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: makableCategorys.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1716543101824426112, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: 'makableCategorys.Array.data[0]'
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6497870171596328608, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
       propertyPath: m_Name
       value: houseUI

@@ -53,7 +53,7 @@ public class ItemDataSOEditor : Editor
                 Icon = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Icon/{Col(cols, headerMap, "Name")}.png")
             };
 
-            for (int m = 0; m < 4; m++)
+            for (int m = 0; m < 9; m++)
             {
                 int matId = int.Parse(Col(cols, headerMap, $"Mat{m}_Id"));
                 if (matId < 0) continue;

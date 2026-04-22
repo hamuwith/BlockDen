@@ -1,0 +1,5 @@
+Name,Category,Id,UnitNum,MaxNum,Mat0_Category,Mat0_Id,Mat0_Num,Mat1_Category,Mat1_Id,Mat1_Num,Mat2_Category,Mat2_Id,Mat2_Num,Mat3_Category,Mat3_Id,Mat3_Num,Mat4_Category,Mat4_Id,Mat4_Num,Mat5_Category,Mat5_Id,Mat5_Num,Mat6_Category,Mat6_Id,Mat6_Num,Mat7_Category,Mat7_Id,Mat7_Num,Mat8_Category,Mat8_Id,Mat8_Num
+bag,9,0,1,1,8,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+bigger bag,9,1,1,1,8,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+big bag,9,2,1,1,8,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+biggest,9,3,1,1,8,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1

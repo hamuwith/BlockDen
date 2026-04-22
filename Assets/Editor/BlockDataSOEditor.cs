@@ -56,7 +56,7 @@ public class BlockDataSOEditor : Editor
             {
                 Category = (ItemCategory)int.Parse(Col(cols, map, "Drop100_Category")),
                 Id = int.Parse(Col(cols, map, "Drop100_Id")),
-                Num = 0
+                Num = 1
             },
             ItemPercents = ParseItemPercents(cols, map)
         };

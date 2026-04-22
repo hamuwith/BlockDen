@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5e4a8be47788d4b9ec020414cd9f64, type: 3}
   m_Name: MaterialDataSO
   m_EditorClassIdentifier: Assembly-CSharp::ItemDataSO
-  csvFile: {fileID: 4900000, guid: 097e055b11ece9645a309509d1337d8a, type: 3}
+  csvFile: {fileID: 4900000, guid: 570e279ce88ca3142899f254b96ab8fb, type: 3}
   itemDatas:
   - Name: sand
     ItemAccess:
@@ -21,8 +21,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 10
     MaxNum: 999
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 04b7a040384bf91408bcddc08fc36edf, type: 3}
+    Icon: {fileID: 21300000, guid: 64120ac62bac94041965a9dc0453cbda, type: 3}
     ItemMaterials: []
   - Name: gravel
     ItemAccess:
@@ -41,8 +41,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 10
     MaxNum: 999
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 6f5f71198ae212c498bf66c83b30faf6, type: 3}
+    Icon: {fileID: 21300000, guid: 3751bb6ee2553d944a1fdaba75fcb2ce, type: 3}
     ItemMaterials: []
   - Name: wood
     ItemAccess:
@@ -51,8 +51,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 10
     MaxNum: 999
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 4c14ebaec731f09488abd1ad2e25e550, type: 3}
+    Icon: {fileID: 21300000, guid: 22cf13217b951ff42b9007fc6145ed41, type: 3}
     ItemMaterials: []
   - Name: stone
     ItemAccess:
@@ -251,8 +251,8 @@ MonoBehaviour:
       Num: 0
     UnitNum: 5
     MaxNum: 999
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 0a811ed624cd81a478b232ea04aa92d9, type: 3}
+    Icon: {fileID: 21300000, guid: 250c2cb64fea43343a49cbfc4463ca24, type: 3}
     ItemMaterials: []
   - Name: Amiou
     ItemAccess:
