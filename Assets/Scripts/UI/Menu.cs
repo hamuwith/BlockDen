@@ -24,10 +24,18 @@ public class Menu : MonoBehaviour
     {
         menuCanvas.enabled = true;
         this.transform.position = transform.position;
-        for (int i = 0; i < itemAccesses.Count; i++)
+        for (int i = 0; i < menuImages.Length; i++)
         {
-            menuTexts[i].text = itemAccesses[i].Num.ToString();
-            menuImages[i].sprite = itemManager.GetItemIcon(itemAccesses[i]);
+            if (i >= itemAccesses.Count)
+            {
+                menuTexts[i].text = "";
+                menuImages[i].sprite = null;
+            }
+            else
+            {
+                menuTexts[i].text = itemAccesses[i].Num.ToString();
+                menuImages[i].sprite = itemManager.GetItemIcon(itemAccesses[i]);
+            }
         }
     }
     public void HideMenu()

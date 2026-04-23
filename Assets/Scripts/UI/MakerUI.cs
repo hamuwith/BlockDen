@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using static Item;
 using System.Collections.Generic;
 
@@ -6,9 +8,15 @@ public class MakerUI : BaseUI
 {
     [SerializeField] ItemCategory[] makableCategorys;
     [SerializeField] Menu menu;
+    [SerializeField] Image[] bagButtons;
+    [SerializeField] Canvas inventoryCanvas;
+    [SerializeField] Canvas bagCanvas;
     ItemData[] makableItems;
     bool[] makable;
     ItemData makeItem;
+    int bagIndex;
+    bool isBag;
+    TextMeshProUGUI[] bagItemTexts;
     protected override int MaxIndex => Mathf.Min(makableItems.Length, buttons.Length);
     public override bool IsMakable => makableItems?.Length > 0;
 
@@ -21,14 +29,26 @@ public class MakerUI : BaseUI
         }
         makableItems = makableItemList.ToArray();
         InitBase(itemManager);
+        inventoryCanvas.enabled = false;
+        bagCanvas.enabled = false;
         for (int i = 0; i < makableItems.Length; i++)
         {
             if (i >= buttons.Length) break;
             buttons[i].sprite = makableItems[i].Icon;
         }
+        if (bagButtons.Length > 0 && bagButtons[0].GetComponentInChildren<TextMeshProUGUI>() != null)
+        {
+            bagItemTexts = new TextMeshProUGUI[bagButtons.Length];
+            for (int i = 0; i < bagButtons.Length; i++)
+            {
+                bagItemTexts[i] = bagButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+                bagItemTexts[i].text = "";
+            }
+        }
     }
     public override void OpenUI(Player player)
     {
+        this.player = player;
         makable = new bool[makableItems.Length];
         SetEnabled();
         for (int i = 0; i < makableItems.Length; i++)
@@ -36,6 +56,8 @@ public class MakerUI : BaseUI
             if (i >= buttons.Length) break;
             buttons[i].sprite = makableItems[i].Icon;
         }
+        inventoryCanvas.enabled = true;
+        bagCanvas.enabled = true;
         menu.Init(itemManager);
         _Menu(true);
         OpenUIBase(player);
@@ -45,13 +67,14 @@ public class MakerUI : BaseUI
     public override void CloseUI()
     {
         canvas.enabled = false;
-        if (player != null) player.BagIndex = inventoryIndex;
+        inventoryCanvas.enabled = false;
+        bagCanvas.enabled = false;
+        if (player != null && !isBag) player.BagIndex = inventoryIndex;
         player = null;
     }
     public override void Select(Vector2 vector)
     {
         var change = _GetSelect(vector);
-        //change = change == SelectState.DownOuterChange && isInventory || change == SelectState.UpOuterChange && !isInventory ? SelectState.NoChange : change;
         change = SelectState.NoChange;
         if (change == SelectState.NoChange)
         {
@@ -119,23 +142,25 @@ public class MakerUI : BaseUI
             {
                 makable[i] &= haveItems[(int)material.Category][material.Id] >= material.Num;
             }
+            if (makable[i])
+            {
+                var type = player.GetInventoryType(makableItems[i].ItemAccess);
+                if (type == Player.InventoryType.Material)
+                {
+                    makable[i] = !IsMaterialBagFull(makableItems[i].ItemAccess);
+                }
+            }
             isEnabled |= makable[i];
         }
         return isEnabled;
     }
     public override void UpdateAction()
     {
+        SetEnabled();
         for (int i = 0; i < makableItems.Length; i++)
         {
             if (i >= buttons.Length) break;
-            if (makable[i])
-            {
-                buttons[i].color = Color.white;
-            }
-            else
-            {
-                buttons[i].color = Color.gray;
-            }
+            buttons[i].color = makable[i] ? Color.white : Color.gray;
         }
         for (int i = 0; i < inventoryButtons.Length; i++)
         {
@@ -150,19 +175,94 @@ public class MakerUI : BaseUI
                 inventoryItemTexts[i].text = "";
             }
         }
+        for (int i = 0; i < bagButtons.Length; i++)
+        {
+            if (i < player.MaterialBag.Length && player.MaterialBag[i].Id != -1)
+            {
+                bagButtons[i].sprite = itemManager.GetItemIcon(player.MaterialBag[i]);
+                if (bagItemTexts != null)
+                    bagItemTexts[i].text = player.MaterialBag[i].Num > 1 ? player.MaterialBag[i].Num.ToString() : "";
+            }
+            else
+            {
+                bagButtons[i].sprite = null;
+                if (bagItemTexts != null)
+                    bagItemTexts[i].text = "";
+            }
+        }
+    }
+    protected override void _HighLight()
+    {
+        highlightMaterial.SetFloat(sliceWidthId, isInventory ? 0.0f : 0.1f);
+        inventoryHighlightMaterial.SetFloat(sliceWidthId, isInventory ? 0.1f : 0.0f);
     }
     protected void _SelectIn(ItemDataBase item = null)
     {
         var type = player.GetInventoryType(item.ItemAccess);
-        inventoryIndex = (int)type;
         if (type == Player.InventoryType.Null)
         {
             inventoryIndex = 0;
+            isBag = false;
+        }
+        else if (type == Player.InventoryType.Material)
+        {
+            isBag = true;
+            bagIndex = FindMaterialBagIndex(item.ItemAccess);
         }
         else if (type == Player.InventoryType.Tool)
         {
+            inventoryIndex = (int)type;
+            isBag = false;
             player.ChangeTool((item as BreakToolData).BlockType);
         }
+        else
+        {
+            inventoryIndex = (int)type;
+            isBag = false;
+        }
+    }
+    protected override void _Cursor()
+    {
+        if (isBag && bagButtons != null && bagIndex >= 0 && bagIndex < bagButtons.Length)
+        {
+            inventoryHighlight.transform.position = bagButtons[bagIndex].transform.position;
+            inventoryCanvas.sortingOrder = 10;
+            bagCanvas.sortingOrder = 11;
+        }
+        else
+        {
+            inventoryHighlight.transform.position = inventoryButtons[inventoryIndex].transform.position;
+            inventoryCanvas.sortingOrder = 11;
+            bagCanvas.sortingOrder = 10;
+        }
+        highlight.transform.position = buttons[index].transform.position;
+    }
+    int FindMaterialBagIndex(ItemAccess itemAccess)
+    {
+        int firstNull = -1;
+        for (int i = 0; i < player.MaterialBag.Length; i++)
+        {
+            if (player.MaterialBag[i].Id == -1)
+            {
+                if (firstNull == -1) firstNull = i;
+            }
+            else if (player.MaterialBag[i].Category == itemAccess.Category &&
+                     player.MaterialBag[i].Id == itemAccess.Id)
+            {
+                return i;
+            }
+        }
+        return firstNull != -1 ? firstNull : 0;
+    }
+    bool IsMaterialBagFull(ItemAccess itemAccess)
+    {
+        for (int i = 0; i < player.MaterialBag.Length; i++)
+        {
+            if (player.MaterialBag[i].Id == -1) return false;
+            if (player.MaterialBag[i].Category == itemAccess.Category &&
+                player.MaterialBag[i].Id == itemAccess.Id) return false;
+        }
+        return true;
     }
     void _Menu(bool isShow)
     {

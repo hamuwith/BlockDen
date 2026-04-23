@@ -10,7 +10,7 @@ public class BaseUI : MonoBehaviour
     [SerializeField] protected Image inventoryHighlight;
     [SerializeField] protected Canvas canvas;
     [SerializeField] protected int buttonRowSize = 8;
-    Material highlightMaterial;
+    protected Material highlightMaterial;
     protected Material inventoryHighlightMaterial;
     protected TextMeshProUGUI[] itemTexts;
     protected TextMeshProUGUI[] inventoryItemTexts;
