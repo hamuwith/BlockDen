@@ -196,11 +196,13 @@ public class CraftUI : BaseUI
             {
                 inventoryButtons[i].sprite = itemManager.GetItemIcon(player.MaterialBag[i]);
                 inventoryItemTexts[i].text = player.MaterialBag[i].Num > 1 ? player.MaterialBag[i].Num.ToString() : "";
+                inventoryItemTexts[i].color = EqualMaterialType(itemManager.GetItem(player.MaterialBag[i])) ? Color.white : Color.gray;
             }
             else
             {
                 inventoryButtons[i].sprite = null;
                 inventoryItemTexts[i].text = "";
+                inventoryItemTexts[i].color = Color.white;
             }
         }
         makeButton.sprite = craftResult.Id != -1 ? itemManager.GetItemIcon(craftResult) : null;
@@ -250,5 +252,10 @@ public class CraftUI : BaseUI
             player.MaterialBag[inventoryIndex].Num++;
         }
         craftSlots[slotIndex].Id = -1;
+    }
+    public virtual bool EqualMaterialType(ItemDataBase itemData)
+    {
+        var itemMaterialType = (itemData as MaterialData).MaterialType;
+        return itemMaterialType == MaterialType.Block || itemMaterialType == MaterialType.Jewelry;
     }
 }

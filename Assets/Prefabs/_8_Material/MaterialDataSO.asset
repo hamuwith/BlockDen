@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5e4a8be47788d4b9ec020414cd9f64, type: 3}
+  m_Script: {fileID: 11500000, guid: 99e1ef9f04597e446a39945cca08ef49, type: 3}
   m_Name: MaterialDataSO
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDataSO
-  csvFile: {fileID: 4900000, guid: 570e279ce88ca3142899f254b96ab8fb, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialDataSO
+  csvFile: {fileID: 4900000, guid: 77bf7aa7a5111be45a801d5e440b83ff, type: 3}
   itemDatas:
   - Name: sand
     ItemAccess:
@@ -24,6 +24,7 @@ MonoBehaviour:
     Texture2D: {fileID: 2800000, guid: 04b7a040384bf91408bcddc08fc36edf, type: 3}
     Icon: {fileID: 21300000, guid: 64120ac62bac94041965a9dc0453cbda, type: 3}
     ItemMaterials: []
+    MaterialType: 0
   - Name: gravel
     ItemAccess:
       Category: 8
@@ -34,6 +35,7 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
+    MaterialType: 0
   - Name: soil
     ItemAccess:
       Category: 8
@@ -44,6 +46,7 @@ MonoBehaviour:
     Texture2D: {fileID: 2800000, guid: 6f5f71198ae212c498bf66c83b30faf6, type: 3}
     Icon: {fileID: 21300000, guid: 3751bb6ee2553d944a1fdaba75fcb2ce, type: 3}
     ItemMaterials: []
+    MaterialType: 0
   - Name: wood
     ItemAccess:
       Category: 8
@@ -54,6 +57,7 @@ MonoBehaviour:
     Texture2D: {fileID: 2800000, guid: 4c14ebaec731f09488abd1ad2e25e550, type: 3}
     Icon: {fileID: 21300000, guid: 22cf13217b951ff42b9007fc6145ed41, type: 3}
     ItemMaterials: []
+    MaterialType: 0
   - Name: stone
     ItemAccess:
       Category: 8
@@ -64,6 +68,7 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
+    MaterialType: 0
   - Name: iron
     ItemAccess:
       Category: 8
@@ -74,6 +79,7 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
+    MaterialType: 0
   - Name: silver
     ItemAccess:
       Category: 8
@@ -84,6 +90,7 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
+    MaterialType: 0
   - Name: gold
     ItemAccess:
       Category: 8
@@ -94,6 +101,7 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
+    MaterialType: 0
   - Name: charcoal
     ItemAccess:
       Category: 8
@@ -103,7 +111,11 @@ MonoBehaviour:
     MaxNum: 999
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
-    ItemMaterials: []
+    ItemMaterials:
+    - Category: 8
+      Id: 3
+      Num: 3
+    MaterialType: 4
   - Name: coal
     ItemAccess:
       Category: 8
@@ -113,8 +125,12 @@ MonoBehaviour:
     MaxNum: 999
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
-    ItemMaterials: []
-  - Name: gunpowder
+    ItemMaterials:
+    - Category: 8
+      Id: 4
+      Num: 3
+    MaterialType: 4
+  - Name: sulfur
     ItemAccess:
       Category: 8
       Id: 10
@@ -124,17 +140,28 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: diamond
+    MaterialType: 4
+  - Name: gunpowder
     ItemAccess:
       Category: 8
       Id: 11
       Num: 0
-    UnitNum: 5
+    UnitNum: 10
     MaxNum: 999
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
-    ItemMaterials: []
-  - Name: sapphire
+    ItemMaterials:
+    - Category: 8
+      Id: 8
+      Num: 5
+    - Category: 8
+      Id: 9
+      Num: 5
+    - Category: 8
+      Id: 10
+      Num: 1
+    MaterialType: 2
+  - Name: diamond
     ItemAccess:
       Category: 8
       Id: 12
@@ -144,7 +171,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: ruby
+    MaterialType: 0
+  - Name: sapphire
     ItemAccess:
       Category: 8
       Id: 13
@@ -154,7 +182,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: onyx
+    MaterialType: 2
+  - Name: ruby
     ItemAccess:
       Category: 8
       Id: 14
@@ -164,7 +193,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: emerald
+    MaterialType: 2
+  - Name: onyx
     ItemAccess:
       Category: 8
       Id: 15
@@ -174,7 +204,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: jade
+    MaterialType: 2
+  - Name: emerald
     ItemAccess:
       Category: 8
       Id: 16
@@ -184,7 +215,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: sanukite
+    MaterialType: 2
+  - Name: jade
     ItemAccess:
       Category: 8
       Id: 17
@@ -194,7 +226,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: obsidian
+    MaterialType: 2
+  - Name: sanukite
     ItemAccess:
       Category: 8
       Id: 18
@@ -204,7 +237,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: pearl
+    MaterialType: 2
+  - Name: obsidian
     ItemAccess:
       Category: 8
       Id: 19
@@ -214,7 +248,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: black pearl
+    MaterialType: 2
+  - Name: pearl
     ItemAccess:
       Category: 8
       Id: 20
@@ -224,7 +259,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: clams
+    MaterialType: 2
+  - Name: black pearl
     ItemAccess:
       Category: 8
       Id: 21
@@ -234,7 +270,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: apple
+    MaterialType: 2
+  - Name: clams
     ItemAccess:
       Category: 8
       Id: 22
@@ -244,27 +281,30 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: strawberry
+    MaterialType: 3
+  - Name: apple
     ItemAccess:
       Category: 8
       Id: 23
       Num: 0
     UnitNum: 5
     MaxNum: 999
-    Texture2D: {fileID: 2800000, guid: 0a811ed624cd81a478b232ea04aa92d9, type: 3}
-    Icon: {fileID: 21300000, guid: 250c2cb64fea43343a49cbfc4463ca24, type: 3}
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: Amiou
+    MaterialType: 3
+  - Name: strawberry
     ItemAccess:
       Category: 8
       Id: 24
       Num: 0
     UnitNum: 5
     MaxNum: 999
-    Texture2D: {fileID: 0}
-    Icon: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 0a811ed624cd81a478b232ea04aa92d9, type: 3}
+    Icon: {fileID: 21300000, guid: 250c2cb64fea43343a49cbfc4463ca24, type: 3}
     ItemMaterials: []
-  - Name: potato
+    MaterialType: 3
+  - Name: Amiou
     ItemAccess:
       Category: 8
       Id: 25
@@ -274,7 +314,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: Nishiakari
+    MaterialType: 3
+  - Name: potato
     ItemAccess:
       Category: 8
       Id: 26
@@ -284,7 +325,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: carrot
+    MaterialType: 3
+  - Name: Nishiakari
     ItemAccess:
       Category: 8
       Id: 27
@@ -294,7 +336,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: Ms.Carotene
+    MaterialType: 3
+  - Name: carrot
     ItemAccess:
       Category: 8
       Id: 28
@@ -304,7 +347,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: melon
+    MaterialType: 3
+  - Name: Ms.Carotene
     ItemAccess:
       Category: 8
       Id: 29
@@ -314,7 +358,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: Yuuhimelon
+    MaterialType: 3
+  - Name: melon
     ItemAccess:
       Category: 8
       Id: 30
@@ -324,7 +369,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: mushroom
+    MaterialType: 3
+  - Name: Yuuhimelon
     ItemAccess:
       Category: 8
       Id: 31
@@ -334,7 +380,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: salmon
+    MaterialType: 3
+  - Name: mushroom
     ItemAccess:
       Category: 8
       Id: 32
@@ -344,7 +391,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: something seed
+    MaterialType: 3
+  - Name: salmon
     ItemAccess:
       Category: 8
       Id: 33
@@ -354,7 +402,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: food waste
+    MaterialType: 3
+  - Name: something seed
     ItemAccess:
       Category: 8
       Id: 34
@@ -364,7 +413,8 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
-  - Name: earthworm
+    MaterialType: 4
+  - Name: leaf
     ItemAccess:
       Category: 8
       Id: 35
@@ -374,3 +424,26 @@ MonoBehaviour:
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
     ItemMaterials: []
+    MaterialType: 1
+  - Name: earthworm
+    ItemAccess:
+      Category: 8
+      Id: 36
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    MaterialType: 1
+  - Name: phosphate
+    ItemAccess:
+      Category: 8
+      Id: 37
+      Num: 0
+    UnitNum: 5
+    MaxNum: 999
+    Texture2D: {fileID: 0}
+    Icon: {fileID: 0}
+    ItemMaterials: []
+    MaterialType: 1

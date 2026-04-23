@@ -961,7 +961,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6887234125144645679}
-  - component: {fileID: 4468326176087566444}
   - component: {fileID: 6828347721114155300}
   - component: {fileID: 7594567806826378933}
   m_Layer: 0
@@ -993,58 +992,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4468326176087566444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2125804509096475829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55010842a56702246afdf01a3479328c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CraftUI
-  buttons:
-  - {fileID: 0}
-  - {fileID: 7646559322621669725}
-  - {fileID: 8153175470718438472}
-  - {fileID: 2504719142670468969}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 493475268647059877}
-  - {fileID: 8477169292086612220}
-  - {fileID: 3127950471506478617}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 3667383799481187587}
-  - {fileID: 1218291210993298282}
-  - {fileID: 707336235164235160}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  highlight: {fileID: 9189523499015876430}
-  inventoryButtons:
-  - {fileID: 1366492980677537484}
-  - {fileID: 2377838561659501701}
-  - {fileID: 6699164864628421546}
-  - {fileID: 6756084009595307118}
-  - {fileID: 3069457738580715712}
-  - {fileID: 5733381202593816753}
-  - {fileID: 3491539669097847971}
-  - {fileID: 7332472418996772565}
-  inventoryHighlight: {fileID: 8957682270589894539}
-  canvas: {fileID: 7594567806826378933}
-  buttonRowSize: 5
-  makeButton: {fileID: 4368428588265710914}
 --- !u!114 &6828347721114155300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3411,7 +3358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tool
   uis: []
-  breakCraftUI: {fileID: 6828347721114155300}
+  itemCraftUI: {fileID: 6828347721114155300}
 --- !u!1 &8023624248877115960
 GameObject:
   m_ObjectHideFlags: 0

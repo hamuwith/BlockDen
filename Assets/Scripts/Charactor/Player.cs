@@ -393,6 +393,10 @@ public class Player : Character
                 InventoryUpdate();
                 return num;
             }
+            else
+            {
+                return 0;
+            }
         }
         else if (bagStatus == BagStatus.ToolSuccess)
         {
@@ -470,16 +474,23 @@ public class Player : Character
                 else if (status == BagStatus.Add)
                 {
                     item.Release();
+                    getItems.Add(item);
                 }
                 else if (status == BagStatus.MaterialAdd && num >= item.Num)
                 {
                     item.Release();
+                    getItems.Add(item);
                 }
                 else if (status == BagStatus.Success || status == BagStatus.ToolSuccess)
                 {
                     item.Release();
+                    getItems.Add(item);
                 }
-                getItems.Add(item);
+                else
+                {
+                    item.SetItemNum(item.ItemAccess.Num - num);
+                    Debug.Log($"GetItem Error: {status}, Item: {item.ItemAccess.Category}, Num: {item.ItemAccess.Num}");
+                }
             }
         }
         foreach (var getItem in getItems)

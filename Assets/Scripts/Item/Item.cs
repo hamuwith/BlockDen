@@ -103,6 +103,10 @@ public class Item : MonoBehaviour
         cancellationTokenSource?.Cancel();
         cancellationTokenSource?.Dispose();
     }
+    public void SetItemNum(int num)
+    {
+        itemAccess.Num = num;
+    }
 }
 [System.Serializable]
 public struct ItemAccess
@@ -110,4 +114,13 @@ public struct ItemAccess
     public ItemCategory Category;
     public int Id;
     public int Num;
+}
+[System.Serializable]
+public enum MaterialType
+{
+    Block,
+    Fertilizer,
+    Jewelry,
+    Food,
+    Other,
 }

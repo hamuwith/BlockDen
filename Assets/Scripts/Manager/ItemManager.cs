@@ -12,9 +12,9 @@ public class ItemManager : MonoBehaviour
     [SerializeField] FoodDataSO foodDataSO;
     [SerializeField] SeedDataSO seedDataSO;
     [SerializeField] FertilizerDataSO fertilizerDataSO;
-    [SerializeField] ItemDataSO materialDataSO;
+    [SerializeField] MaterialDataSO materialDataSO;
     [SerializeField] ItemDataSO bagDataSO;
-    [SerializeField] ItemDataSO toolDataSO;
+    [SerializeField] ToolDataSO toolDataSO;
     [SerializeField] WeaponBaseDataSO weaponBaseDataSO;
     [SerializeField] Item itemPrefab;
     [SerializeField] Block blockPrefab;
@@ -216,10 +216,16 @@ public class ItemManager : MonoBehaviour
     {
         return itemIcons[(int)itemAccess.Category][itemAccess.Id];
     }
-    public ItemDataBase[] GetMakableItems(ItemCategory category)
+    public List<ItemData> GetMakableItems(ItemCategory category)
     {
         ItemList itemList = itemLists[(int)category];
-        return itemList.Items;
+        var makableItems = new List<ItemData>();
+        foreach (var itemData in itemList.Items)
+        {
+            if ((itemData as ItemData).ItemMaterials.Count == 0) continue;
+            makableItems.Add(itemData as ItemData);
+        }
+        return makableItems;
     }
     public ItemDataBase GetItem(ItemAccess itemAccess)
     {
@@ -235,11 +241,11 @@ public class ItemManager : MonoBehaviour
         };
         return item;
     }
-    public ItemAccess CraftToBreakTool(ItemAccess[] craftSlots)
+    public ItemAccess CraftToItem(ItemAccess[] craftSlots, ItemCategory category)
     {
         var item = new ItemAccess
         {
-            Category = ItemCategory.BreakTool,
+            Category = category,
             Id = 0
         };
         return item;

@@ -2,32 +2,35 @@ using UnityEngine;
 
 public class Tool : PlayerUI
 {
-    [SerializeField] BreakCraftUI breakCraftUI;
+    [SerializeField] ItemCraftUI itemCraftUI;
     public override void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
         base.Init(itemManager, material, itemAccess);
-        breakCraftUI.Init(itemManager);
+        var itemData = itemManager.GetItem(itemAccess) as ToolData;
+        var materialType = itemData.MaterialType;
+        var craftType = itemData.CraftCategory;
+        itemCraftUI.Init(itemManager, materialType, craftType);
     }
     public override void OpenUI(Player player)
     {
         this.player = player;
-        breakCraftUI.OpenUI(player);
+        itemCraftUI.OpenUI(player);
     }
     public override void CloseUI()
     {
-        breakCraftUI.CloseUI();
+        itemCraftUI.CloseUI();
     }
     public override void Select(Vector2 vector)
     {
-        breakCraftUI.Select(vector);
+        itemCraftUI.Select(vector);
     }
     public override void Action()
     {
-        breakCraftUI.Action();
+        itemCraftUI.Action();
     }
     public override void Cancel()
     {
-        var close = breakCraftUI.Cancel();
+        var close = itemCraftUI.Cancel();
         if (close)
         {
             CloseUI();
@@ -35,7 +38,7 @@ public class Tool : PlayerUI
     }
     public override void UpdateAction()
     {
-        breakCraftUI.UpdateAction();
+        itemCraftUI.UpdateAction();
     }
     public override void SelectTab(bool left)
     {

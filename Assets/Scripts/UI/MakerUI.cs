@@ -17,7 +17,7 @@ public class MakerUI : BaseUI
         var makableItemList = new List<ItemData>();
         foreach (var category in makableCategorys)
         {
-            makableItemList.AddRange((ItemData[])itemManager.GetMakableItems(category));
+            makableItemList.AddRange(itemManager.GetMakableItems(category));
         }
         makableItems = makableItemList.ToArray();
         InitBase(itemManager);

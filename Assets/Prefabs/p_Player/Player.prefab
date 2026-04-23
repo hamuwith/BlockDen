@@ -3943,10 +3943,50 @@ PrefabInstance:
       propertyPath: 'makableCategorys.Array.data[0]'
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4859716244349151931, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: makableCategorys.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4859716244349151931, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: 'makableCategorys.Array.data[0]'
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4859716244349151931, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: 'makableCategorys.Array.data[1]'
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4859716244349151931, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: 'makableCategorys.Array.data[2]'
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4859716244349151931, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: 'makableCategorys.Array.data[3]'
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6497870171596328608, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
       propertyPath: m_Name
       value: houseUI
       objectReference: {fileID: 0}
+    - target: {fileID: 7275033983663123487, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: uis.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7275033983663123487, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: 'uis.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2989295003128433801}
+    - target: {fileID: 7275033983663123487, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: 'uis.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2326486590150266448}
+    - target: {fileID: 7275033983663123487, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: 'uis.Array.data[5]'
+      value: 
+      objectReference: {fileID: 2989295003128433801}
+    - target: {fileID: 7275033983663123487, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+      propertyPath: 'uis.Array.data[6]'
+      value: 
+      objectReference: {fileID: 2326486590150266448}
     - target: {fileID: 9129513364272449228, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3993,6 +4033,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+--- !u!114 &2326486590150266448 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7934557553267892436, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+  m_PrefabInstance: {fileID: 5644243108984073860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5b71adac7d9aa48804d80cb70e8a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodBoxUI
+--- !u!114 &2989295003128433801 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7433326165707923981, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
+  m_PrefabInstance: {fileID: 5644243108984073860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd2895142f0e8d44ba9bcdf5ae76a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoxUI
 --- !u!114 &3072156335598699163 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7275033983663123487, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}

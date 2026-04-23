@@ -53,9 +53,11 @@
     <Compile Include="Assets\Editor\BreakToolDataSOEditor.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
     <Compile Include="Assets\Editor\AttachmentDataSOEditor.cs" />
+    <Compile Include="Assets\Editor\ToolDataSOEditor.cs" />
     <Compile Include="Assets\Editor\ItemDataSOEditor.cs" />
     <Compile Include="Assets\Editor\WeaponDataSOEditor.cs" />
     <Compile Include="Assets\Editor\WeaponBaseDataSOEditor.cs" />
+    <Compile Include="Assets\Editor\MaterialDataSOEditor.cs" />
     <Compile Include="Assets\Editor\BlockDataSOEditor.cs" />
     <Compile Include="Assets\Editor\MapEditorWindow.cs" />
     <Compile Include="Assets\Editor\FertilizerDataSOEditor.cs" />
