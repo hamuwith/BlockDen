@@ -2600,7 +2600,7 @@ GameObject:
   - component: {fileID: 916359242653036030}
   - component: {fileID: 2108070430345632071}
   m_Layer: 6
-  m_Name: _3_0_yagura
+  m_Name: weapon
   m_TagString: Tool
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

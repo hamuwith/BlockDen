@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 916359242653036030}
   - component: {fileID: -3772468040003020464}
   m_Layer: 7
-  m_Name: _7_0_hiryou
+  m_Name: fertilizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

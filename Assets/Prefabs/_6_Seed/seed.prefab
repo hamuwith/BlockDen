@@ -2837,7 +2837,7 @@ GameObject:
   - component: {fileID: 315099736648640108}
   - component: {fileID: 916359242653036030}
   m_Layer: 6
-  m_Name: _6_0_itigoseed
+  m_Name: seed
   m_TagString: Tool
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

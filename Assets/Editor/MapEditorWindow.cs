@@ -1,14 +1,16 @@
-using UnityEditor;
+Ôªøusing UnityEditor;
 using UnityEngine;
 
 public class MapEditorWindow : EditorWindow
 {
+    private static readonly Vector3Int InvalidGridPos = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
+
     private MapDataHolder mapHolder;
-    private int placeBlockId = 0;
-    private bool editMode = false; 
-    private bool isDeleteMode; 
-    private Vector3Int lastPlacedGridPos = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
-    private Vector3Int lastDeletedGridPos = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
+    private int placeBlockId;
+    private bool editMode;
+    private bool isDeleteMode;
+    private Vector3Int lastPlacedGridPos = InvalidGridPos;
+    private Vector3Int lastDeletedGridPos = InvalidGridPos;
 
     [MenuItem("Tools/Map Editor")]
     public static void Open()
@@ -28,11 +30,6 @@ public class MapEditorWindow : EditorWindow
 
     private void OnGUI()
     {
-        if (mapHolder != null)
-        {
-            mapHolder.EnsureInitialized();
-        }
-
         EditorGUILayout.LabelField("Map Editor", EditorStyles.boldLabel);
 
         mapHolder = (MapDataHolder)EditorGUILayout.ObjectField(
@@ -42,31 +39,22 @@ public class MapEditorWindow : EditorWindow
             true
         );
 
+        if (mapHolder != null)
+        {
+            mapHolder.EnsureInitialized();
+        }
+
         editMode = EditorGUILayout.Toggle("Edit Mode", editMode);
 
         EditorGUILayout.Space();
 
-        if (mapHolder != null && mapHolder.blockPrefabs != null && mapHolder.blockPrefabs.Length > 0)
-        {
-            string[] options = new string[mapHolder.blockPrefabs.Length];
-            for (int i = 0; i < options.Length; i++)
-            {
-                options[i] = mapHolder.blockPrefabs[i] != null
-                    ? $"{i}: {mapHolder.blockPrefabs[i].name}"
-                    : $"{i}: None";
-            }
-
-            placeBlockId = EditorGUILayout.Popup("Block ID", placeBlockId, options);
-        }
-        else
-        {
-            EditorGUILayout.LabelField("Block ID", "No Prefabs");
-        }
+        DrawBlockSelector();
 
         EditorGUILayout.HelpBox(
-            "Edit Mode Ç ON Ç…ÇµÇƒ SceneView è„Ç≈ç∂ÉNÉäÉbÉNÇ∑ÇÈÇ∆ÉuÉçÉbÉNÇîzíuÇµÇ‹Ç∑ÅB",
+            "Turn on Edit Mode. Left click places a block. Hold D and left click to delete. Press A to fill one block above each column.",
             MessageType.Info
-        ); 
+        );
+
         using (new EditorGUI.DisabledScope(mapHolder == null))
         {
             if (GUILayout.Button("Reset Map"))
@@ -79,13 +67,15 @@ public class MapEditorWindow : EditorWindow
                 }
 
                 mapHolder.InitializeBlockIds(-1);
-                mapHolder.initialized = true;
                 EditorUtility.SetDirty(mapHolder);
             }
-        }
 
-        if (mapHolder != null)
-        {
+            if (GUILayout.Button("Rebuild Map Preview"))
+            {
+                mapHolder.RebuildMap();
+                EditorUtility.SetDirty(mapHolder);
+            }
+
             if (GUILayout.Button("Save Map Json"))
             {
                 string path = EditorUtility.SaveFilePanel(
@@ -118,10 +108,45 @@ public class MapEditorWindow : EditorWindow
         }
     }
 
+    private void DrawBlockSelector()
+    {
+        if (mapHolder == null)
+        {
+            EditorGUILayout.LabelField("Block ID", "No Map Holder selected");
+            return;
+        }
+
+        if (!mapHolder.HasBlockDefinitions)
+        {
+            EditorGUILayout.LabelField("Block ID", "No block data");
+            EditorGUILayout.HelpBox(
+                "Assign BlockDataSO and Block Base Prefab on MapDataHolder.",
+                MessageType.Warning
+            );
+            return;
+        }
+
+        placeBlockId = Mathf.Clamp(placeBlockId, 0, Mathf.Max(0, mapHolder.BlockOptionCount - 1));
+        placeBlockId = EditorGUILayout.Popup("Block ID", placeBlockId, mapHolder.GetBlockOptions());
+
+        if (mapHolder.UsesBlockData)
+        {
+            EditorGUILayout.HelpBox("Using BlockDataSO + base prefab.", MessageType.Info);
+        }
+        else
+        {
+            EditorGUILayout.HelpBox("Assign Block Base Prefab on MapDataHolder.", MessageType.Warning);
+        }
+    }
+
     private void OnSceneGUI(SceneView sceneView)
     {
         if (!editMode || mapHolder == null)
+        {
             return;
+        }
+
+        mapHolder.EnsureInitialized();
 
         Event e = Event.current;
         Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
@@ -137,22 +162,26 @@ public class MapEditorWindow : EditorWindow
             isDeleteMode = false;
             e.Use();
         }
+
         if (e.type == EventType.KeyDown && e.keyCode == KeyCode.A)
         {
             FillTopPlusOne();
             e.Use();
         }
+
         if (isDeleteMode)
         {
-            if (TryGetDeletePosition(ray, out Vector3Int deleteGridPos))
+            bool hasDeleteTarget = TryGetDeletePosition(ray, out Vector3Int deleteGridPos);
+            if (hasDeleteTarget)
             {
                 DrawDeletePreview(deleteGridPos);
             }
+
             if (!e.alt)
             {
                 if ((e.type == EventType.MouseDown || e.type == EventType.MouseDrag) && e.button == 0)
                 {
-                    if (deleteGridPos != lastDeletedGridPos)
+                    if (hasDeleteTarget && deleteGridPos != lastDeletedGridPos)
                     {
                         DeleteBlock(ray);
                         lastDeletedGridPos = deleteGridPos;
@@ -161,20 +190,25 @@ public class MapEditorWindow : EditorWindow
                 }
                 else if (e.type == EventType.MouseUp && e.button == 0)
                 {
-                    lastDeletedGridPos = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
+                    lastDeletedGridPos = InvalidGridPos;
                 }
             }
         }
-        else {
-            if(TryGetPlacementPosition(ray, out Vector3Int placeGridPos) && mapHolder.IsInRange(placeGridPos))
+        else
+        {
+            bool hasPlacementTarget = TryGetPlacementPosition(ray, out Vector3Int placeGridPos)
+                && mapHolder.IsInRange(placeGridPos);
+
+            if (hasPlacementTarget)
             {
                 DrawPreview(placeGridPos);
             }
+
             if (!e.alt)
             {
                 if ((e.type == EventType.MouseDown || e.type == EventType.MouseDrag) && e.button == 0)
                 {
-                    if (placeGridPos != lastPlacedGridPos)
+                    if (hasPlacementTarget && placeGridPos != lastPlacedGridPos)
                     {
                         PlaceBlock(placeGridPos);
                         lastPlacedGridPos = placeGridPos;
@@ -183,30 +217,31 @@ public class MapEditorWindow : EditorWindow
                 }
                 else if (e.type == EventType.MouseUp && e.button == 0)
                 {
-                    lastPlacedGridPos = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
+                    lastPlacedGridPos = InvalidGridPos;
                 }
             }
         }
 
         sceneView.Repaint();
     }
+
     private bool TryGetPlacementPosition(Ray ray, out Vector3Int gridPos)
     {
         gridPos = Vector3Int.zero;
 
-        // Ç‹Ç∏ä˘ë∂ÉuÉçÉbÉNÇ…ìñÇΩÇÈÇ©ééÇ∑
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f)
+            && hit.collider.transform.IsChildOf(mapHolder.transform))
         {
             Vector3 placePos = hit.collider.transform.position + hit.normal;
             gridPos = Vector3Int.RoundToInt(placePos);
             return true;
         }
 
-        // ìñÇΩÇÁÇ»ÇØÇÍÇŒ y=0 ÇÃè∞Ç…ÉtÉHÅ[ÉãÉoÉbÉN
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-
         if (!groundPlane.Raycast(ray, out float enter))
+        {
             return false;
+        }
 
         Vector3 hitPoint = ray.GetPoint(enter);
         gridPos = new Vector3Int(
@@ -220,11 +255,7 @@ public class MapEditorWindow : EditorWindow
 
     private void DrawPreview(Vector3Int gridPos)
     {
-        Vector3 center = new Vector3(
-            gridPos.x,
-            gridPos.y,
-            gridPos.z
-        );
+        Vector3 center = new Vector3(gridPos.x, gridPos.y, gridPos.z);
 
         Color fillColor = new Color(0f, 1f, 1f, 0.25f);
         Color wireColor = new Color(0f, 1f, 1f, 1f);
@@ -232,40 +263,37 @@ public class MapEditorWindow : EditorWindow
         Handles.zTest = UnityEngine.Rendering.CompareFunction.LessEqual;
         Handles.DrawWireCube(center, Vector3.one);
 
-        Color prevColor = Handles.color;
+        Color previousColor = Handles.color;
         Handles.color = fillColor;
         Handles.CubeHandleCap(0, center, Quaternion.identity, 1f, EventType.Repaint);
-        Handles.color = prevColor;
-
         Handles.color = wireColor;
         Handles.DrawWireCube(center, Vector3.one);
+        Handles.color = previousColor;
     }
 
     private void PlaceBlock(Vector3Int gridPos)
     {
-        if (!mapHolder.IsEmpty(gridPos))
-            return;
-
-        int prefabIndex = placeBlockId;
-        if (mapHolder.blockPrefabs == null
-            || prefabIndex < 0
-            || prefabIndex >= mapHolder.blockPrefabs.Length
-            || mapHolder.blockPrefabs[prefabIndex] == null)
+        if (!mapHolder.IsInRange(gridPos) || !mapHolder.IsEmpty(gridPos))
         {
-            Debug.LogWarning("ëŒâûÇ∑ÇÈÉvÉåÉnÉuÇ™Ç†ÇËÇ‹ÇπÇÒÅB");
             return;
         }
 
-        GameObject prefab = mapHolder.blockPrefabs[prefabIndex];
-        GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, mapHolder.transform);
+        if (!mapHolder.CanInstantiateBlock(placeBlockId))
+        {
+            Debug.LogWarning("No block data or prefab is configured for the selected block ID.");
+            return;
+        }
 
-        instance.transform.position = new Vector3(gridPos.x, gridPos.y, gridPos.z);
-        instance.name = $"Block_{placeBlockId}_{gridPos.x}_{gridPos.y}_{gridPos.z}";
+        Undo.RecordObject(mapHolder, "Set Block ID");
+        GameObject instance = mapHolder.CreatePlacedBlock(placeBlockId, gridPos);
+        if (instance == null)
+        {
+            Debug.LogWarning("Failed to create the block preview object.");
+            return;
+        }
 
         Undo.RegisterCreatedObjectUndo(instance, "Place Block");
-        Undo.RecordObject(mapHolder, "Set Block ID");
         mapHolder.SetBlockId(gridPos, placeBlockId);
-
         EditorUtility.SetDirty(mapHolder);
     }
 
@@ -274,7 +302,14 @@ public class MapEditorWindow : EditorWindow
         gridPos = Vector3Int.zero;
 
         if (!Physics.Raycast(ray, out RaycastHit hit, 1000f))
+        {
             return false;
+        }
+
+        if (!hit.collider.transform.IsChildOf(mapHolder.transform))
+        {
+            return false;
+        }
 
         gridPos = Vector3Int.RoundToInt(hit.collider.transform.position);
         return mapHolder.IsInRange(gridPos) && !mapHolder.IsEmpty(gridPos);
@@ -282,49 +317,52 @@ public class MapEditorWindow : EditorWindow
 
     private void DrawDeletePreview(Vector3Int gridPos)
     {
-        Vector3 center = new Vector3(
-            gridPos.x,
-            gridPos.y,
-            gridPos.z
-        );
+        Vector3 center = new Vector3(gridPos.x, gridPos.y, gridPos.z);
 
         Color fillColor = new Color(1f, 0f, 0f, 0.25f);
         Color wireColor = new Color(1f, 0f, 0f, 1f);
 
         Handles.zTest = UnityEngine.Rendering.CompareFunction.LessEqual;
 
-        Color prevColor = Handles.color;
-
+        Color previousColor = Handles.color;
         Handles.color = fillColor;
         Handles.CubeHandleCap(0, center, Quaternion.identity, 1f, EventType.Repaint);
-
         Handles.color = wireColor;
         Handles.DrawWireCube(center, Vector3.one);
-
-        Handles.color = prevColor;
+        Handles.color = previousColor;
     }
 
     private void DeleteBlock(Ray ray)
     {
         if (!Physics.Raycast(ray, out RaycastHit hit, 1000f))
+        {
             return;
+        }
+
+        if (!hit.collider.transform.IsChildOf(mapHolder.transform))
+        {
+            return;
+        }
 
         Vector3Int gridPos = Vector3Int.RoundToInt(hit.collider.transform.position);
-
-        if (!mapHolder.IsInRange(gridPos))
+        if (!mapHolder.IsInRange(gridPos) || mapHolder.IsEmpty(gridPos))
+        {
             return;
-
-        if (mapHolder.IsEmpty(gridPos))
-            return;
+        }
 
         Undo.RecordObject(mapHolder, "Delete Block");
         mapHolder.SetBlockId(gridPos, -1);
-
         Undo.DestroyObjectImmediate(hit.collider.gameObject);
         EditorUtility.SetDirty(mapHolder);
     }
+
     private void FillTopPlusOne()
     {
+        if (mapHolder == null)
+        {
+            return;
+        }
+
         Undo.IncrementCurrentGroup();
         int undoGroup = Undo.GetCurrentGroup();
 
@@ -334,7 +372,6 @@ public class MapEditorWindow : EditorWindow
             {
                 Vector3Int? placePos = null;
 
-                // Ç‹Ç∏â∫Ç©ÇÁå©ÇƒÅAìríÜÇÃãÛì¥Ç1É}ÉXÇæÇØñÑÇﬂÇÈ
                 for (int y = 1; y < mapHolder.Height; y++)
                 {
                     Vector3Int current = new Vector3Int(x, y, z);
@@ -347,7 +384,6 @@ public class MapEditorWindow : EditorWindow
                     }
                 }
 
-                // ãÛì¥Ç™Ç»ÇØÇÍÇŒÅAÇªÇÃóÒÇÃàÍî‘è„Ç…1É}ÉXë´Ç∑
                 if (placePos == null)
                 {
                     int highestY = -1;
@@ -361,7 +397,6 @@ public class MapEditorWindow : EditorWindow
                     }
 
                     int targetY = highestY + 1;
-
                     if (targetY >= 0 && targetY < mapHolder.Height)
                     {
                         Vector3Int pos = new Vector3Int(x, targetY, z);

@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 7528032464249859226}
   - component: {fileID: 3094954838979268697}
   - component: {fileID: 916359242653036030}
-  - component: {fileID: -8440485178977658288}
-  m_Layer: 6
-  m_Name: _4_0_attachment
-  m_TagString: Untagged
+  - component: {fileID: -49428150740105974}
+  m_Layer: 7
+  m_Name: material
+  m_TagString: Material
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,7 +141,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8440485178977658288
+--- !u!114 &-49428150740105974
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,6 +150,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7845834766657059244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91a6d066a03e2ac4aacbfa43866336d8, type: 3}
+  m_Script: {fileID: 11500000, guid: c8cdb197823fa1e4487b7cb41973cc41, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Attachment
+  m_EditorClassIdentifier: Assembly-CSharp::Item

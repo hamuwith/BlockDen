@@ -43,6 +43,7 @@ public class Seed : PlayerUI
     }
     public override void Select(Vector2 vector)
     {
+        fertilizerUI.Select(vector);
     }
     public override void Action()
     {

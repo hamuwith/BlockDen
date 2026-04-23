@@ -9,14 +9,14 @@ public class AttachUI : BaseUI
     protected int attachmentIndex;
     protected virtual Item.ItemCategory ItemCategory => Item.ItemCategory.Status;
 
-    private int[] boardState; // -1=empty, >=0=index into attachmentItems
+    protected int[] boardState; // -1=empty, >=0=index into attachmentItems
     private ItemAccess[] craftSlotItems; // craft materials displayed on board (non-placeable)
-    private ItemAccess heldItem;
+    protected ItemAccess heldItem;
     private bool heldFromBoard;
     private int heldFromBoardIndex;
     private List<int> heldOriginalCells;
     private bool isMove;
-    private Vector2Int boardSize;
+    protected Vector2Int boardSize;
 
 
     public override void Init(ItemManager itemManager)
@@ -228,9 +228,14 @@ public class AttachUI : BaseUI
             var shape = GetHeldShape();
             var (cells, outOfBounds) = GetShapeCellsRaw(index, shape);
             bool valid = !outOfBounds && cells.Count > 0 && IsValidPlacement(cells);
-            Color preview = valid ? new Color(1f, 1f, 1f, 0.4f) : new Color(1f, 0f, 0f, 0.4f);
+            Color preview = valid ? new Color(1f, 1f, 1f, 0.8f) : new Color(1f, 0f, 0f, 0.8f);
+            Sprite icon = itemManager.GetItemIcon(heldItem);
             foreach (int c in cells)
-                if (c >= 0 && c < buttons.Length) buttons[c].color = preview;
+                if (c >= 0 && c < buttons.Length)
+                {
+                    buttons[c].color = preview;
+                    buttons[c].sprite = icon;
+                }
         }
 
         // Inventory
@@ -252,7 +257,7 @@ public class AttachUI : BaseUI
         }
     }
 
-    private AttachmentShape GetHeldShape()
+    protected virtual AttachmentShape GetHeldShape()
     {
         var data = itemManager.GetItem(heldItem) as AttachmentData;
         return data != null ? data.Shape : default;
