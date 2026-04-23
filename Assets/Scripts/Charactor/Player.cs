@@ -184,7 +184,6 @@ public class Player : Character
             else if (mapManager.IsHouse(toolTargetPosition.Value))
             {
                 currentTool = playerUI;
-                itemManager.BoxAdd(MaterialBag);
             }
             else
             {

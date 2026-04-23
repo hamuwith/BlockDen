@@ -1022,7 +1022,7 @@ MonoBehaviour:
   fertilizerDataSO: {fileID: 11400000, guid: 0ad81db9d31d0f94d8a1a5a173db882b, type: 2}
   materialDataSO: {fileID: 11400000, guid: 3a0dec79d553bb54db435340fb769ff6, type: 2}
   bagDataSO: {fileID: 11400000, guid: 33b578d19a84b3440b94874231eddbb0, type: 2}
-  toolDataSO: {fileID: 11400000, guid: 33b578d19a84b3440b94874231eddbb0, type: 2}
+  toolDataSO: {fileID: 11400000, guid: 5a0bb6c5a8aa3814082860e3e9a4f88a, type: 2}
   weaponBaseDataSO: {fileID: 11400000, guid: e1050cb6b9320fb41bab97de9f341ecd, type: 2}
   itemPrefab: {fileID: -49428150740105974, guid: 87ad0ff216108e541bbe04bc31c63f6b, type: 3}
   blockPrefab: {fileID: 2276174998139632747, guid: 9f32e433c1a5aac4998b7b072aff857f, type: 3}
