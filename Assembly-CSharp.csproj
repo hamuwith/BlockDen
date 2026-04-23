@@ -73,9 +73,11 @@
     <Compile Include="Assets\Scripts\ScriptableObject\SeedDataSO.cs" />
     <Compile Include="Assets\Scripts\Manager\MainManager.cs" />
     <Compile Include="Assets\Scripts\UI\AttachUI.cs" />
+    <Compile Include="Assets\Scripts\UI\CarryBoxUI.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\ToolDataSO.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\MaterialDataSO.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\BlockDataSO.cs" />
+    <Compile Include="Assets\Scripts\UI\FoodBoxUI.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\FoodDataSO.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\FertilizerDataSO.cs" />

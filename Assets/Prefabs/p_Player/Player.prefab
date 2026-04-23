@@ -3939,10 +3939,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: houseUI
       objectReference: {fileID: 0}
-    - target: {fileID: 7275033983663123487, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
-      propertyPath: uis.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 9129513364272449228, guid: ec9112bc9d711f6469e9f9405dcf557f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
