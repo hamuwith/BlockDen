@@ -8,7 +8,7 @@ public class Block : Item
     readonly float HideRate = 0.35f;
     Color color;
     BlockData blockData;
-    public BlockTypeEnum? BlockType => blockData?.BlockType;
+    public virtual BlockTypeEnum? BlockType => blockData?.BlockType;
 
     public enum BlockTypeEnum
     {
@@ -21,6 +21,7 @@ public class Block : Item
     }
     public void ResetHardness()
     {
+        if (blockData == null) return;
         currentHardness = blockData.Hardness;
     }
     public override void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)

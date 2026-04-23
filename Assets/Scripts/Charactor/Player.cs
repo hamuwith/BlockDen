@@ -21,7 +21,7 @@ public class Player : Character
     [SerializeField] GameObject highlightPrefab;
     [SerializeField] ItemAccess[] firstItems;
     Transform highlight;
-    Item[] toolItems;
+    BreakTool[] toolItems;
     public Item HaveItem
     {
         get
@@ -137,7 +137,7 @@ public class Player : Character
             MaterialBag[i].Id = -1;
         }
         currentToolType = Block.BlockTypeEnum.Dirt;
-        toolItems = new Item[firstItems.Length];
+        toolItems = new BreakTool[firstItems.Length];
         foreach (var firstItem in firstItems)
         {
             BagUpdate(firstItem);
@@ -175,7 +175,8 @@ public class Player : Character
         }
         else if (toolTargetPosition.HasValue)
         {
-            if (HaveItem?.ItemAccess.Category == ItemCategory.BreakTool && mapManager.GetBlock(toolTargetPosition.Value).BlockType == Block.BlockTypeEnum.Water)
+            if (HaveItem?.ItemAccess.Category == ItemCategory.BreakTool && mapManager.GetBlock(toolTargetPosition.Value).BlockType == Block.BlockTypeEnum.Water
+                && toolItems[(int)Block.BlockTypeEnum.Water]?.HasWater > 0)
             {
                 Break();
                 return;
@@ -250,19 +251,23 @@ public class Player : Character
         var block = mapManager.GetBlock(targetPositionValue);
         var power = 0;
         var breakToolData = itemManager.GetItem(HaveItem.ItemAccess) as BreakToolData;
-        if (HaveItem.ItemAccess.Category == ItemCategory.BreakTool && block.BlockType == breakToolData.BlockType)
+        if (HaveItem.ItemAccess.Category == ItemCategory.BreakTool)
         {
-            power = breakToolData.BreakPower;
-            bool isWater = block.BlockType == Block.BlockTypeEnum.Water;
-            if (isWater)
+            if (block.BlockType == breakToolData.BlockType)
             {
-                if (block is Seed)
+                power = breakToolData.BreakPower;
+                bool isWater = block.BlockType == Block.BlockTypeEnum.Water;
+                if (isWater)
                 {
-                    power = (HaveItem as BreakTool).UseWater();
-                }
-                else
-                {
-                    (HaveItem as BreakTool).GetWater();
+                    if (block is Seed)
+                    {
+                        power = (HaveItem as BreakTool).UseWater();
+                    }
+                    else
+                    {
+                        (HaveItem as BreakTool).GetWater();
+                        return;
+                    }
                 }
             }
         }
@@ -395,7 +400,7 @@ public class Player : Character
             var breakToolData = itemData as BreakToolData;
             var breakToolType = breakToolData.BlockType;
             if (toolItems[(int)breakToolType] != null) Destroy(toolItems[(int)breakToolType].gameObject);
-            toolItems[(int)breakToolType] = item;
+            toolItems[(int)breakToolType] = item as BreakTool;
             InBag(item);
             ChangeTool(breakToolType, true);
             return 1;

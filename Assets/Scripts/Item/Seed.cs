@@ -10,6 +10,7 @@ public class Seed : PlayerUI
     bool isWater;
     CancellationTokenSource cancellationTokenSource;
     readonly int WaterTime = 20000;
+    public override BlockTypeEnum? BlockType => BlockTypeEnum.Water;
     async UniTaskVoid WaterWait(CancellationToken cancellationToken)
     {
         isWater = false;
@@ -66,6 +67,7 @@ public class Seed : PlayerUI
         if (power > 0 && isWater)
         {
             growCount++;
+            fertilizerUI.UnlockNextCell();
             var seedData = itemManager.GetItem(itemAccess) as SeedData;
             if (growCount >= seedData.GrowNum)
             {

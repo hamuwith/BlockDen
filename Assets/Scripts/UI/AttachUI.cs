@@ -4,12 +4,14 @@ using System.Collections.Generic;
 public class AttachUI : BaseUI
 {
     private const int ShapeMaxSize = 3;
+    protected const int HiddenBoardCellState = -2;
+    protected const int EmptyBoardCellState = -1;
 
     protected List<ItemAccess> attachmentItems;
     protected int attachmentIndex;
     protected virtual Item.ItemCategory ItemCategory => Item.ItemCategory.Status;
 
-    protected int[] boardState; // -1=empty, >=0=index into attachmentItems
+    protected int[] boardState; // -2=hidden, -1=empty, >=0=index into attachmentItems
     private ItemAccess[] craftSlotItems; // craft materials displayed on board (non-placeable)
     protected ItemAccess heldItem;
     private bool heldFromBoard;
@@ -76,22 +78,21 @@ public class AttachUI : BaseUI
         {
             if (isMove)
             {
-                var shape = GetHeldShape();
-                int maxCol = boardSize.x - Mathf.Clamp(shape.width, 1, ShapeMaxSize);
-                int maxRow = boardSize.y - Mathf.Clamp(shape.height, 1, ShapeMaxSize);
-                SelectBoard(vector, maxCol, maxRow);
+                SelectBoard(vector, GetHeldShape(), true);
                 UpdateAction();
             }
             else
             {
-                SelectBoard(vector, boardSize.x - 1, boardSize.y - 1);
+                SelectBoard(vector, default, false);
             }
         }
         _Cursor();
     }
 
-    private void SelectBoard(Vector2 vector, int maxCol, int maxRow)
+    private void SelectBoard(Vector2 vector, AttachmentShape shape, bool useShape)
     {
+        index = FindNearestSelectableIndex(index, shape, useShape);
+
         var dir = ToDirection8(vector);
         int col = index % boardSize.x;
         int row = index / boardSize.x;
@@ -101,13 +102,18 @@ public class AttachUI : BaseUI
         bool up = dir == Direction8.Up || dir == Direction8.UpRight || dir == Direction8.UpLeft;
         bool down = dir == Direction8.Down || dir == Direction8.DownRight || dir == Direction8.DownLeft;
 
-        if (right && col + 1 <= maxCol) col++;
-        else if (left && col - 1 >= 0) col--;
+        int nextCol = col;
+        int nextRow = row;
 
-        if (up && row + 1 <= maxRow) row++;
-        else if (down && row - 1 >= 0) row--;
+        if (right && col + 1 < boardSize.x) nextCol++;
+        else if (left && col - 1 >= 0) nextCol--;
 
-        index = row * boardSize.x + col;
+        if (up && row + 1 < boardSize.y) nextRow++;
+        else if (down && row - 1 >= 0) nextRow--;
+
+        int nextIndex = nextRow * boardSize.x + nextCol;
+        if (CanSelectBoardIndex(nextIndex, shape, useShape))
+            index = nextIndex;
     }
 
     public override void Action()
@@ -133,7 +139,7 @@ public class AttachUI : BaseUI
             {
                 if (heldFromBoard)
                 {
-                    foreach (int c in heldOriginalCells) boardState[c] = -1;
+                    foreach (int c in heldOriginalCells) boardState[c] = EmptyBoardCellState;
                     foreach (int c in cells) boardState[c] = heldFromBoardIndex;
                     isMove = false;
                     // stay on board for further moves
@@ -154,6 +160,7 @@ public class AttachUI : BaseUI
         else
         {
             // Board browsing: pick up an unlocked placed item
+            index = FindNearestSelectableIndex(index, default, false);
             int itemIdx = boardState[index];
             if (itemIdx >= attachmentIndex && itemIdx >= 0)
             {
@@ -163,7 +170,7 @@ public class AttachUI : BaseUI
                 heldOriginalCells.Clear();
                 for (int i = 0; i < boardState.Length; i++)
                     if (boardState[i] == itemIdx) heldOriginalCells.Add(i);
-                foreach (int c in heldOriginalCells) boardState[c] = -1;
+                foreach (int c in heldOriginalCells) boardState[c] = EmptyBoardCellState;
                 isMove = true;
                 if (heldOriginalCells.Count > 0) index = heldOriginalCells[0]; // anchor = bottom-left cell
                 ClampIndexToShape(GetHeldShape());
@@ -200,11 +207,26 @@ public class AttachUI : BaseUI
 
     public override void UpdateAction()
     {
+        RefreshBoardButtonVisibility();
+
         // Board
         for (int i = 0; i < buttons.Length; i++)
         {
+            if (i >= boardState.Length)
+            {
+                buttons[i].sprite = null;
+                buttons[i].color = Color.white;
+                if (itemTexts != null && i < itemTexts.Length) itemTexts[i].text = "";
+                continue;
+            }
+
             int itemIdx = boardState[i];
-            if (itemIdx >= 0)
+            if (itemIdx == HiddenBoardCellState)
+            {
+                buttons[i].sprite = null;
+                buttons[i].color = Color.white;
+            }
+            else if (itemIdx >= 0)
             {
                 buttons[i].sprite = itemManager.GetItemIcon(attachmentItems[itemIdx]);
                 buttons[i].color = itemIdx < attachmentIndex ? Color.gray : Color.white;
@@ -231,7 +253,7 @@ public class AttachUI : BaseUI
             Color preview = valid ? new Color(1f, 1f, 1f, 0.8f) : new Color(1f, 0f, 0f, 0.8f);
             Sprite icon = itemManager.GetItemIcon(heldItem);
             foreach (int c in cells)
-                if (c >= 0 && c < buttons.Length)
+                if (c >= 0 && c < buttons.Length && boardState[c] != HiddenBoardCellState)
                 {
                     buttons[c].color = preview;
                     buttons[c].sprite = icon;
@@ -265,11 +287,7 @@ public class AttachUI : BaseUI
 
     private void ClampIndexToShape(AttachmentShape shape)
     {
-        int maxCol = boardSize.x - Mathf.Clamp(shape.width, 1, ShapeMaxSize);
-        int maxRow = boardSize.y - Mathf.Clamp(shape.height, 1, ShapeMaxSize);
-        int col = Mathf.Clamp(index % boardSize.x, 0, maxCol);
-        int row = Mathf.Clamp(index / boardSize.x, 0, maxRow);
-        index = row * boardSize.x + col;
+        index = FindNearestSelectableIndex(index, shape, true);
     }
 
     private (List<int> cells, bool outOfBounds) GetShapeCellsRaw(int anchorIndex, AttachmentShape shape)
@@ -305,7 +323,8 @@ public class AttachUI : BaseUI
         this.boardSize = boardSize;
         BoardShift(boardSize);
         boardState = new int[boardSize.x * boardSize.y];
-        for (int i = 0; i < boardState.Length; i++) boardState[i] = -1;
+        for (int i = 0; i < boardState.Length; i++) boardState[i] = EmptyBoardCellState;
+        RefreshBoardButtonVisibility();
     }
 
     private bool IsCraftCell(int cellIndex)
@@ -316,7 +335,79 @@ public class AttachUI : BaseUI
     private bool IsValidPlacement(List<int> cells)
     {
         foreach (int c in cells)
-            if (boardState[c] != -1 || IsCraftCell(c)) return false;
+            if (boardState[c] != EmptyBoardCellState || IsCraftCell(c)) return false;
+        return true;
+    }
+
+    protected void RefreshBoardButtonVisibility()
+    {
+        if (buttons == null || boardState == null) return;
+
+        int visibleCellCount = Mathf.Min(buttons.Length, boardState.Length);
+        for (int i = 0; i < visibleCellCount; i++)
+        {
+            bool isActive = boardState[i] != HiddenBoardCellState;
+            if (buttons[i].gameObject.activeSelf != isActive)
+                buttons[i].gameObject.SetActive(isActive);
+        }
+
+        for (int i = visibleCellCount; i < buttons.Length; i++)
+        {
+            if (buttons[i].gameObject.activeSelf)
+                buttons[i].gameObject.SetActive(false);
+        }
+    }
+
+    private int FindNearestSelectableIndex(int startIndex, AttachmentShape shape, bool useShape)
+    {
+        if (boardState == null || boardState.Length == 0) return 0;
+
+        int clampedIndex = Mathf.Clamp(startIndex, 0, boardState.Length - 1);
+        if (CanSelectBoardIndex(clampedIndex, shape, useShape))
+            return clampedIndex;
+
+        int startCol = clampedIndex % boardSize.x;
+        int startRow = clampedIndex / boardSize.x;
+        int nearestIndex = clampedIndex;
+        int nearestDistance = int.MaxValue;
+        bool found = false;
+
+        for (int i = 0; i < boardState.Length; i++)
+        {
+            if (!CanSelectBoardIndex(i, shape, useShape)) continue;
+
+            int col = i % boardSize.x;
+            int row = i / boardSize.x;
+            int distance = Mathf.Abs(col - startCol) + Mathf.Abs(row - startRow);
+            if (!found || distance < nearestDistance)
+            {
+                nearestIndex = i;
+                nearestDistance = distance;
+                found = true;
+            }
+        }
+
+        return found ? nearestIndex : clampedIndex;
+    }
+
+    private bool CanSelectBoardIndex(int boardIndex, AttachmentShape shape, bool useShape)
+    {
+        if (boardIndex < 0 || boardIndex >= boardState.Length) return false;
+
+        if (!useShape)
+            return boardState[boardIndex] != HiddenBoardCellState;
+
+        var (cells, outOfBounds) = GetShapeCellsRaw(boardIndex, shape);
+        return !outOfBounds && cells.Count > 0 && AreAllBoardCellsVisible(cells);
+    }
+
+    private bool AreAllBoardCellsVisible(List<int> cells)
+    {
+        foreach (int c in cells)
+        {
+            if (c < 0 || c >= boardState.Length || boardState[c] == HiddenBoardCellState)
+                return false;
+        }
         return true;
     }
     protected override void _Cursor()

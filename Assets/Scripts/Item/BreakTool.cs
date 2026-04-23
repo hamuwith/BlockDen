@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class BreakTool : Item
 {
-    int power;
+    public int HasWater { get; private set; }
     public override void Init(ItemManager itemManager, Material material, ItemAccess itemAccess)
     {
         base.Init(itemManager, material, itemAccess);
-        power = 0;
+        HasWater = 0;
     }
     public void GetWater()
     {
-        power = (itemManager.GetItem(itemAccess) as BreakToolData).BreakPower;
+        HasWater = (itemManager.GetItem(itemAccess) as BreakToolData).BreakPower;
     }
     public int UseWater()
     {
-        int power = this.power;
-        this.power = 0;
-        return power;
+        int hasWater = HasWater;
+        HasWater = 0;
+        return hasWater;
     }
 }
