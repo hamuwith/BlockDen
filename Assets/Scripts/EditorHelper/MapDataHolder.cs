@@ -516,7 +516,11 @@ public class MapDataHolder : MonoBehaviour, ISerializationCallbackReceiver
         instance.transform.SetParent(transform);
         instance.transform.position = new Vector3(gridPos.x, gridPos.y, gridPos.z);
         instance.transform.rotation = Quaternion.identity;
-        instance.name = $"Block_{blockId}_{gridPos.x}_{gridPos.y}_{gridPos.z}";
+
+        if ((instance.hideFlags & HideFlags.NotEditable) == 0)
+        {
+            instance.name = $"Block_{blockId}_{gridPos.x}_{gridPos.y}_{gridPos.z}";
+        }
 
         if (!UsesBlockData)
         {

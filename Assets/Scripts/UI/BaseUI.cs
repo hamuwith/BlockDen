@@ -23,6 +23,7 @@ public class BaseUI : MonoBehaviour
     protected virtual int MaxIndex => buttons.Length;
     protected int InventoryMaxIndex => inventoryButtons.Length;
     public virtual bool IsMakable => true;
+    protected virtual Image[] ActiveBoxButtons => buttons;
     readonly protected int inventoryRowSize = 8;
 
     public enum Direction8
@@ -168,7 +169,7 @@ public class BaseUI : MonoBehaviour
         if (vector.sqrMagnitude <= 0.7f) return SelectState.NoChange;
         var index = isInventory ? inventoryIndex : this.index;
         var rawSize = isInventory ? inventoryRowSize : buttonRowSize;
-        Image[] buttons = isInventory ? inventoryButtons : this.buttons;
+        Image[] buttons = isInventory ? inventoryButtons : ActiveBoxButtons;
         var derection = ToDirection8(vector);
         if (derection == Direction8.Right || derection == Direction8.Left)
         {

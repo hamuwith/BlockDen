@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
             bagItemTexts[i] = bagButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             bagItemTexts[i].text = "";
         }
-        transform.parent = null;
+        transform.SetParent(null, false);
         canvas.enabled = false;
         bagCanvas.enabled = false;
         inventoryHighlightMaterial = new Material(inventoryHighlight.material);

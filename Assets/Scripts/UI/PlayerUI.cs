@@ -7,7 +7,7 @@ public class PlayerUI : Block
     protected Player player;
     public void Init(ItemManager itemManager)
     {
-        transform.parent = null;
+        transform.SetParent(null, false);
         foreach (var ui in uis)
         {
             ui.Init(itemManager);
