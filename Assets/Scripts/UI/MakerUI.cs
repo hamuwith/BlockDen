@@ -108,7 +108,7 @@ public class MakerUI : BaseUI
         }
         else
         {
-            itemManager.RemoveBoxItem(makeItem.ItemMaterials);
+            RemoveMakeMaterials(makeItem.ItemMaterials);
             player.Make(makeItem, makeItem.UnitNum);
             makeItem = null;
             isInventory = false;
@@ -133,14 +133,13 @@ public class MakerUI : BaseUI
     }
     public virtual bool SetEnabled()
     {
-        var haveItems = itemManager.GetBoxItemNum();
         var isEnabled = false;
         for (int i = 0; i < makableItems.Length; i++)
         {
             makable[i] = true;
             foreach (var material in makableItems[i].ItemMaterials)
             {
-                makable[i] &= haveItems[(int)material.Category][material.Id] >= material.Num;
+                makable[i] &= GetMaterialNum(material) >= material.Num;
             }
             if (makable[i])
             {
@@ -149,10 +148,57 @@ public class MakerUI : BaseUI
                 {
                     makable[i] = !IsMaterialBagFull(makableItems[i].ItemAccess);
                 }
+                else if (type == Player.InventoryType.Food || type == Player.InventoryType.Carry)
+                {
+                    makable[i] = player.Bag[(int)type] == null;
+                }
             }
             isEnabled |= makable[i];
         }
         return isEnabled;
+    }
+    int GetMaterialNum(ItemAccess material)
+    {
+        var haveItems = itemManager.GetBoxItemNum();
+        var num = haveItems[(int)material.Category][material.Id];
+        for (int i = 0; i < player.MaterialBag.Length; i++)
+        {
+            var bagItem = player.MaterialBag[i];
+            if (bagItem.Id == -1) continue;
+            if (bagItem.Category == material.Category && bagItem.Id == material.Id)
+            {
+                num += bagItem.Num;
+            }
+        }
+        return num;
+    }
+    void RemoveMakeMaterials(List<ItemAccess> materials)
+    {
+        var haveItems = itemManager.GetBoxItemNum();
+        foreach (var material in materials)
+        {
+            var remain = material.Num;
+            var boxNum = haveItems[(int)material.Category][material.Id];
+            var boxRemoveNum = Mathf.Min(remain, boxNum);
+            haveItems[(int)material.Category][material.Id] -= boxRemoveNum;
+            remain -= boxRemoveNum;
+
+            if (remain <= 0) continue;
+
+            for (int i = 0; i < player.MaterialBag.Length; i++)
+            {
+                var bagItem = player.MaterialBag[i];
+                if (bagItem.Id == -1) continue;
+                if (bagItem.Category != material.Category || bagItem.Id != material.Id) continue;
+
+                var bagRemoveNum = Mathf.Min(remain, bagItem.Num);
+                bagItem.Num -= bagRemoveNum;
+                remain -= bagRemoveNum;
+                player.MaterialBag[i] = bagItem.Num > 0 ? bagItem : new ItemAccess { Id = -1 };
+
+                if (remain <= 0) break;
+            }
+        }
     }
     public override void UpdateAction()
     {

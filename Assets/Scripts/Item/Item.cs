@@ -28,6 +28,7 @@ public class Item : MonoBehaviour
         Material,
         Bag,
         Tool,
+        Box,
         WeaponBase,
         Length,
     }

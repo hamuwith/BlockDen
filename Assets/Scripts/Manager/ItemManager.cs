@@ -15,6 +15,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] MaterialDataSO materialDataSO;
     [SerializeField] ItemDataSO bagDataSO;
     [SerializeField] ToolDataSO toolDataSO;
+    [SerializeField] BoxDataSO boxDataSO;
     [SerializeField] WeaponBaseDataSO weaponBaseDataSO;
     [SerializeField] Item itemPrefab;
     [SerializeField] Block blockPrefab;
@@ -23,6 +24,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] BreakTool breakToolPrefab;
     [SerializeField] WeaponBase weaponBasePrefab;
     [SerializeField] Tool toolPrefab;
+    [SerializeField] Box boxPrefab;
     [SerializeField] Material highlightMaterial;
     [SerializeField] DropItemPool dropItemPool;
     [SerializeField] Material baseMaterial;
@@ -47,6 +49,7 @@ public class ItemManager : MonoBehaviour
         itemLists[(int)ItemCategory.Material] = new ItemList { Items = materialDataSO.ItemDatas };
         itemLists[(int)ItemCategory.Bag] = new ItemList { Items = bagDataSO.ItemDatas };
         itemLists[(int)ItemCategory.Tool] = new ItemList { Items = toolDataSO.ItemDatas };
+        itemLists[(int)ItemCategory.Box] = new ItemList { Items = boxDataSO.ItemDatas };
         itemLists[(int)ItemCategory.WeaponBase] = new ItemList { Items = weaponBaseDataSO.ItemDatas };
         Items = new List<Item>();
         MainManager = mainManager;
@@ -163,6 +166,10 @@ public class ItemManager : MonoBehaviour
         else if (blockAccess.Category == ItemCategory.Tool)
         {
             item = Instantiate(toolPrefab, pos, Quaternion.identity, parent);
+        }
+        else if (blockAccess.Category == ItemCategory.Box)
+        {
+            item = Instantiate(boxPrefab, pos, Quaternion.identity, parent);
         }
         var material = GetMaterial(blockAccess);
         item.Init(this, material, blockAccess);

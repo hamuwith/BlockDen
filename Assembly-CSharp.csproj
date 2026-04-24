@@ -43,7 +43,7 @@
     <UnityVersion>6000.3.6f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\owner\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.2.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\owner\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.2.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.6f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.6f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.6f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
@@ -72,17 +72,17 @@
     <Compile Include="Assets\Scripts\Pool\DropItemPool.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\SeedDataSO.cs" />
     <Compile Include="Assets\Scripts\Manager\MainManager.cs" />
+    <Compile Include="Assets\Scripts\Item\Box.cs" />
     <Compile Include="Assets\Scripts\UI\AttachUI.cs" />
-    <Compile Include="Assets\Scripts\UI\CarryBoxUI.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\ToolDataSO.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\MaterialDataSO.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\BlockDataSO.cs" />
-    <Compile Include="Assets\Scripts\UI\FoodBoxUI.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\FoodDataSO.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\FertilizerDataSO.cs" />
     <Compile Include="Assets\Scripts\Manager\MapManager.cs" />
     <Compile Include="Assets\Scripts\Charactor\Character.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObject\BoxDataSO.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\AttachmentDataSO.cs" />
     <Compile Include="Assets\Scripts\Charactor\Player.cs" />
@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\Item\Item.cs" />
     <Compile Include="Assets\Scripts\Item\Block.cs" />
     <Compile Include="Assets\Scripts\Item\Attachment.cs" />
+    <Compile Include="Assets\Scripts\UI\ItemBoxUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

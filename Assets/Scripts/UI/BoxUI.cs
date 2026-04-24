@@ -107,7 +107,7 @@ public class BoxUI : BaseUI
         return false;
     }
 
-    void CompleteMaterialMove()
+    bool CompleteMaterialMove()
     {
         int materialId = index - 1;
         var matData = MaterialBoxData;
@@ -117,10 +117,11 @@ public class BoxUI : BaseUI
         if (boxCount > 0 && bagSlot.Id == -1)
         {
             var access = new ItemAccess { Category = ItemCategory.Material, Id = materialId };
-            int maxNum = itemManager.GetItem(access).MaxNum;
-            int transfer = Mathf.Min(boxCount, maxNum);
+            var itemData = itemManager.GetItem(access);
+            int transfer = Mathf.Min(boxCount, itemData.UnitNum);
             player.MaterialBag[inventoryIndex] = new ItemAccess { Category = ItemCategory.Material, Id = materialId, Num = transfer };
             matData[materialId] -= transfer;
+            return matData[materialId] == 0;
         }
         else if (bagSlot.Id != -1 && bagSlot.Category == ItemCategory.Material && bagSlot.Id == materialId)
         {
@@ -128,23 +129,28 @@ public class BoxUI : BaseUI
             {
                 matData[materialId] += bagSlot.Num;
                 player.MaterialBag[inventoryIndex] = new ItemAccess { Id = -1 };
+                return true;
             }
             else if (isInventory)
             {
                 int maxNum = itemManager.GetItem(bagSlot).MaxNum;
-                int transfer = Mathf.Min(boxCount, maxNum - bagSlot.Num);
+                int unitNum = itemManager.GetItem(bagSlot).UnitNum;
+                int transfer = Mathf.Min(boxCount, Mathf.Min(unitNum, maxNum - bagSlot.Num));
                 if (transfer > 0)
                 {
                     player.MaterialBag[inventoryIndex].Num += transfer;
                     matData[materialId] -= transfer;
                 }
+                return matData[materialId] == 0 || player.MaterialBag[inventoryIndex].Num >= maxNum;
             }
             else
             {
                 matData[materialId] += bagSlot.Num;
                 player.MaterialBag[inventoryIndex] = new ItemAccess { Id = -1 };
+                return true;
             }
         }
+        return true;
     }
 
     public override void UpdateAction()

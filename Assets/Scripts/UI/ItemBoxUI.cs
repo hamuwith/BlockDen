@@ -1,21 +1,21 @@
 using UnityEngine;
-using UnityEngine.UI;
 using static Player;
-using static Item;
 
-public class CarryBoxUI : BaseUI
+public class ItemBoxUI : BaseUI
 {
     // buttons[] from BaseUI = box slots
     // inventoryButtons[0] from BaseUI = player.Bag slot
 
     protected ItemAccess[] boxItems;
     bool isMove;
+    InventoryType inventoryType;
 
-    protected virtual int BagIndex => (int)InventoryType.Carry;
+    protected virtual int BagIndex => (int)inventoryType;
 
-    public override void Init(ItemManager itemManager)
+    public void Init(ItemManager itemManager, InventoryType inventoryType)
     {
         InitBase(itemManager);
+        this.inventoryType = inventoryType;
         boxItems = new ItemAccess[buttons.Length];
         for (int i = 0; i < boxItems.Length; i++) boxItems[i].Id = -1;
     }
