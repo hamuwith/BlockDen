@@ -4,6 +4,10 @@ using static Item;
 
 public class ItemManager : MonoBehaviour
 {
+    const int MinWeaponCraftMaterialCount = 5;
+    static readonly Vector2Int SmallRecipeSize = new Vector2Int(3, 3);
+    static readonly Vector2Int WeaponRecipeSize = new Vector2Int(5, 5);
+
     [SerializeField] BlockDataSO natureBlockDataSO;
     [SerializeField] BlockDataSO unnaturalBlockDataSO;
     [SerializeField] BreakToolDataSO breakToolDataSO;
@@ -229,8 +233,9 @@ public class ItemManager : MonoBehaviour
         var makableItems = new List<ItemData>();
         foreach (var itemData in itemList.Items)
         {
-            if ((itemData as ItemData).ItemMaterials.Count == 0) continue;
-            makableItems.Add(itemData as ItemData);
+            if (itemData is not ItemData makableItem) continue;
+            if (makableItem.ItemMaterials.Count == 0) continue;
+            makableItems.Add(makableItem);
         }
         return makableItems;
     }
@@ -238,24 +243,187 @@ public class ItemManager : MonoBehaviour
     {
         return itemLists[(int)itemAccess.Category].Items[itemAccess.Id];
     }
-    public ItemAccess CraftToWeapon(ItemAccess[] craftSlots)
+    public ItemAccess CraftToWeapon(ItemAccess[] craftSlots, Vector2Int boardSize)
     {
-        // var makableItems = GetMakableItems(ItemCategory.Weapon);
-        var item = new ItemAccess
+        if (CountFilledSlots(craftSlots) < MinWeaponCraftMaterialCount)
         {
-            Category = ItemCategory.Weapon,
-            Id = 0
-        };
-        return item;
+            return EmptyItemAccess();
+        }
+        ItemAccess exactRecipe = FindExactCraftItemRecipe(craftSlots, boardSize, ItemCategory.Weapon, WeaponRecipeSize, true, true);
+        Debug.Log($"Exact weapon recipe result: Id={exactRecipe.Id}, Category={exactRecipe.Category}");
+        if (exactRecipe.Id != -1) return exactRecipe;
+
+        if (weaponDataSO.ItemDatas == null || weaponDataSO.ItemDatas.Length == 0)
+        {
+            return EmptyItemAccess();
+        }
+
+        foreach (WeaponData weaponData in weaponDataSO.ItemDatas)
+        {
+            Debug.Log($"Checking weapon recipe: {weaponData.Name}");
+            if (weaponData == null) continue;
+
+            ItemAccess fallback = weaponData.ItemAccess;
+            fallback.Num = 1;
+            return fallback;
+        }
+
+        return EmptyItemAccess();
     }
-    public ItemAccess CraftToItem(ItemAccess[] craftSlots, ItemCategory category)
+
+    ItemAccess FindExactCraftItemRecipe(ItemAccess[] craftSlots, Vector2Int boardSize, ItemCategory category, Vector2Int recipeSize, bool allowFlip, bool trimEmptyEdges)
     {
-        var item = new ItemAccess
+        ItemList itemList = itemLists[(int)category];
+        if (itemList?.Items == null) return EmptyItemAccess();
+
+        foreach (ItemDataBase itemData in itemList.Items)
         {
-            Category = category,
-            Id = 0
-        };
-        return item;
+            if (itemData is not CraftItemData craftItemData) continue;
+            if (craftItemData.RecipeSlots == null || craftItemData.RecipeSlots.Length == 0) continue;
+            if (CountFilledSlots(craftItemData.RecipeSlots) == 0) continue;
+
+            bool matches = trimEmptyEdges
+                ? MatchesTrimmedRecipe(craftSlots, boardSize, craftItemData, recipeSize, false)
+                : MatchesExactRecipe(craftSlots, boardSize, craftItemData.RecipeSlots, recipeSize, false);
+            if (!matches && allowFlip)
+            {
+                matches = trimEmptyEdges
+                    ? MatchesTrimmedRecipe(craftSlots, boardSize, craftItemData, recipeSize, true)
+                    : MatchesExactRecipe(craftSlots, boardSize, craftItemData.RecipeSlots, recipeSize, true);
+            }
+
+            if (matches)
+            {
+                ItemAccess itemAccess = craftItemData.ItemAccess;
+                itemAccess.Num = 1;
+                return itemAccess;
+            }
+        }
+
+        return EmptyItemAccess();
+    }
+
+    bool MatchesTrimmedRecipe(ItemAccess[] craftSlots, Vector2Int craftSize, CraftItemData recipeData, Vector2Int recipeSize, bool flipX)
+    {
+        if (!TryGetUsedBounds(craftSlots, craftSize, out RectInt craftBounds)) return false;
+
+        RectInt recipeBounds;
+        if (recipeData.HasRecipeBounds)
+            recipeBounds = recipeData.RecipeBounds;
+        else if (!TryGetUsedBounds(recipeData.RecipeSlots, recipeSize, out recipeBounds))
+            return false;
+
+        if (craftBounds.width != recipeBounds.width || craftBounds.height != recipeBounds.height) return false;
+
+        for (int y = 0; y < craftBounds.height; y++)
+        {
+            for (int x = 0; x < craftBounds.width; x++)
+            {
+                int craftIndex = (craftBounds.y + y) * craftSize.x + craftBounds.x + x;
+                int recipeX = flipX ? recipeBounds.xMax - 1 - x : recipeBounds.x + x;
+                int recipeIndex = (recipeBounds.y + y) * recipeSize.x + recipeX;
+
+                if (!SameRecipeCell(craftSlots[craftIndex], recipeData.RecipeSlots[recipeIndex]))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool MatchesExactRecipe(ItemAccess[] craftSlots, Vector2Int craftSize, ItemAccess[] recipeSlots, Vector2Int recipeSize, bool flipX)
+    {
+        if (craftSize != recipeSize) return false;
+
+        int cellCount = craftSize.x * craftSize.y;
+        if (craftSlots.Length < cellCount || recipeSlots.Length < cellCount) return false;
+
+        for (int y = 0; y < craftSize.y; y++)
+        {
+            for (int x = 0; x < craftSize.x; x++)
+            {
+                int craftIndex = y * craftSize.x + x;
+                int recipeX = flipX ? recipeSize.x - 1 - x : x;
+                int recipeIndex = y * recipeSize.x + recipeX;
+
+                if (!SameRecipeCell(craftSlots[craftIndex], recipeSlots[recipeIndex]))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    bool TryGetUsedBounds(ItemAccess[] slots, Vector2Int size, out RectInt bounds)
+    {
+        int width = size.x;
+        int height = size.y;
+        int minX = width;
+        int minY = height;
+        int maxX = -1;
+        int maxY = -1;
+        int cellCount = Mathf.Min(slots.Length, width * height);
+
+        for (int i = 0; i < cellCount; i++)
+        {
+            if (IsEmptySlot(slots[i])) continue;
+
+            int x = i % width;
+            int y = i / width;
+            minX = Mathf.Min(minX, x);
+            minY = Mathf.Min(minY, y);
+            maxX = Mathf.Max(maxX, x);
+            maxY = Mathf.Max(maxY, y);
+        }
+
+        if (maxX < 0)
+        {
+            bounds = new RectInt();
+            return false;
+        }
+
+        bounds = new RectInt(minX, minY, maxX - minX + 1, maxY - minY + 1);
+        return true;
+    }
+
+    int CountFilledSlots(ItemAccess[] slots)
+    {
+        if (slots == null) return 0;
+
+        int count = 0;
+        foreach (ItemAccess slot in slots)
+        {
+            if (!IsEmptySlot(slot)) count++;
+        }
+        return count;
+    }
+
+    bool SameRecipeCell(ItemAccess a, ItemAccess b)
+    {
+        if (IsEmptySlot(a) && IsEmptySlot(b)) return true;
+        if (IsEmptySlot(a) || IsEmptySlot(b)) return false;
+        return a.Category == b.Category && a.Id == b.Id;
+    }
+
+    bool IsEmptySlot(ItemAccess slot)
+    {
+        return slot.Id < 0;
+    }
+
+    ItemAccess EmptyItemAccess()
+    {
+        return new ItemAccess { Id = -1 };
+    }
+    public ItemAccess CraftToItem(ItemAccess[] craftSlots, Vector2Int boardSize, ItemCategory category)
+    {
+        if (CountFilledSlots(craftSlots) == 0)
+        {
+            return EmptyItemAccess();
+        }
+
+        return FindExactCraftItemRecipe(craftSlots, boardSize, category, SmallRecipeSize, false, false);
     }
 }
 [System.Serializable]

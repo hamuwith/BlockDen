@@ -7,7 +7,7 @@ public class CraftUI : BaseUI
     [SerializeField] Image makeButton;
     bool isMove;
     bool isMake;
-    Vector2Int boardSize;
+    protected Vector2Int boardSize;
     protected ItemAccess craftResult;
 
     public override bool IsMakable => true;
@@ -97,13 +97,14 @@ public class CraftUI : BaseUI
     }
     protected virtual void CheckCraft()
     {
-        craftResult = itemManager.CraftToWeapon(craftSlots);
+        craftResult = itemManager.CraftToWeapon(craftSlots, boardSize);
     }
 
     public override void Action()
     {
         if (isMake)
         {
+            if (craftResult.Id == -1) return;
             Craft();
             CloseUI();
             return;

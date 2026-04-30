@@ -23,10 +23,82 @@ MonoBehaviour:
     MaxNum: 1
     Texture2D: {fileID: 2800000, guid: 256d5c3031e5a6640b8401739d008001, type: 3}
     Icon: {fileID: 21300000, guid: 07fd47c839923c94eb4ab3e17afd014b, type: 3}
-    ItemMaterials:
+    RecipeSlots:
     - Category: 8
       Id: 0
       Num: 1
+    - Category: 8
+      Id: 0
+      Num: 1
+    - Category: 8
+      Id: 0
+      Num: 1
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: 0
+      Num: 1
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: 0
+      Num: 1
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
     ArrowId: 0
     Damage: 1
     AttackSpeed: 1000
@@ -40,10 +112,82 @@ MonoBehaviour:
     MaxNum: 1
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
-    ItemMaterials:
+    RecipeSlots:
     - Category: 8
       Id: 0
       Num: 1
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
     ArrowId: 0
     Damage: 2
     AttackSpeed: 1000
@@ -57,10 +201,82 @@ MonoBehaviour:
     MaxNum: 1
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
-    ItemMaterials:
+    RecipeSlots:
     - Category: 8
       Id: 0
       Num: 1
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
     ArrowId: 0
     Damage: 3
     AttackSpeed: 1000
@@ -74,10 +290,82 @@ MonoBehaviour:
     MaxNum: 1
     Texture2D: {fileID: 2800000, guid: 1859e326d930371489876506f0a6a4d7, type: 3}
     Icon: {fileID: 21300000, guid: 61d0269183d6f1742ac1d9a850de0b73, type: 3}
-    ItemMaterials:
+    RecipeSlots:
     - Category: 8
       Id: 0
       Num: 1
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
     ArrowId: 1
     Damage: 2
     AttackSpeed: 1500
@@ -91,10 +379,82 @@ MonoBehaviour:
     MaxNum: 1
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
-    ItemMaterials:
+    RecipeSlots:
     - Category: 8
       Id: 0
       Num: 1
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
     ArrowId: 1
     Damage: 3
     AttackSpeed: 1500
@@ -108,10 +468,82 @@ MonoBehaviour:
     MaxNum: 1
     Texture2D: {fileID: 0}
     Icon: {fileID: 0}
-    ItemMaterials:
+    RecipeSlots:
     - Category: 8
       Id: 0
       Num: 1
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
     ArrowId: 1
     Damage: 5
     AttackSpeed: 1500

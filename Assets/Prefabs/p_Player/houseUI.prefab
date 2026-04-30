@@ -8947,7 +8947,7 @@ MonoBehaviour:
   inventoryHighlight: {fileID: 148825383835028713}
   canvas: {fileID: 6287252541036019566}
   buttonRowSize: 8
-  makableCategorys: 0c0000000b0000000a0000000600000008000000
+  makableCategorys: 0c0000000a0000000b0000000600000008000000
   menu: {fileID: 2189488515090272693}
   bagButtons:
   - {fileID: 7875750336534822254}

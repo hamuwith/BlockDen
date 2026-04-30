@@ -8,6 +8,7 @@ public class ItemCraftUI : CraftUI
         InitBase(itemManager);
         this.craftCategory = craftCategory;
         this.materialType = materialType;
+        boardSize = new UnityEngine.Vector2Int(buttonRowSize, buttons.Length / buttonRowSize);
         craftResult.Id = -1;
         craftResult.Num = 1;
         craftSlots = new ItemAccess[buttons.Length];
@@ -21,7 +22,7 @@ public class ItemCraftUI : CraftUI
     }
     protected override void CheckCraft()
     {
-        craftResult = itemManager.CraftToItem(craftSlots, craftCategory);
+        craftResult = itemManager.CraftToItem(craftSlots, boardSize, craftCategory);
     }
     public override bool EqualMaterialType(ItemDataBase itemData)
     {

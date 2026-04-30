@@ -23,9 +23,10 @@ public class ItemBoxUI : BaseUI
     public override void OpenUI(Player player)
     {
         this.player = player;
+        inventoryIndex = BagIndex;
+        Debug.Log($"Open ItemBoxUI with inventoryIndex: {inventoryIndex}");
         isMove = false;
         index = 0;
-        inventoryIndex = 0;
         isInventory = false;
         UpdateAction();
         _HighLight();
@@ -36,6 +37,7 @@ public class ItemBoxUI : BaseUI
     public override void CloseUI()
     {
         canvas.enabled = false;
+        player.CloseToolUI();
         player = null;
     }
 
@@ -163,15 +165,20 @@ public class ItemBoxUI : BaseUI
                 if (itemTexts != null) itemTexts[i].text = "";
             }
         }
-        if (player.Bag[BagIndex] != null)
+        for (int i = 0; i < inventoryButtons.Length; i++)
         {
-            inventoryButtons[0].sprite = itemManager.GetItemIcon(player.Bag[BagIndex].ItemAccess);
-            if (inventoryItemTexts != null) inventoryItemTexts[0].text = player.Bag[BagIndex].Num > 1 ? player.Bag[BagIndex].Num.ToString() : "";
-        }
-        else
-        {
-            inventoryButtons[0].sprite = null;
-            if (inventoryItemTexts != null) inventoryItemTexts[0].text = "";
+            if (player.Bag[i] != null)
+            {
+                inventoryButtons[i].sprite = itemManager.GetItemIcon(player.Bag[i].ItemAccess);
+                if (inventoryItemTexts != null && i < inventoryItemTexts.Length)
+                    inventoryItemTexts[i].text = player.Bag[i].Num > 1 ? player.Bag[i].Num.ToString() : "";
+            }
+            else
+            {
+                inventoryButtons[i].sprite = null;
+                if (inventoryItemTexts != null && i < inventoryItemTexts.Length)
+                    inventoryItemTexts[i].text = "";
+            }
         }
     }
 
@@ -184,6 +191,6 @@ public class ItemBoxUI : BaseUI
     protected override void _Cursor()
     {
         highlight.transform.position = buttons[index].transform.position;
-        inventoryHighlight.transform.position = inventoryButtons[0].transform.position;
+        inventoryHighlight.transform.position = inventoryButtons[inventoryIndex].transform.position;
     }
 }

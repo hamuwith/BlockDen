@@ -16,12 +16,12 @@ MonoBehaviour:
   itemDatas:
   - Name: wood base
     ItemAccess:
-      Category: 11
+      Category: 12
       Id: 0
       Num: 0
     UnitNum: 1
     MaxNum: 1
-    Texture2D: {fileID: 0}
+    Texture2D: {fileID: 2800000, guid: 9aaaf2d3d2bb3944493567e8ed30ff40, type: 3}
     Icon: {fileID: 21300000, guid: 448eafe4ee408844190445cf7ba9d545, type: 3}
     ItemMaterials:
     - Category: 8

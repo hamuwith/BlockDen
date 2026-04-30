@@ -18,7 +18,7 @@ public class BreakToolDataSO : ScriptableObject
 }
 
 [System.Serializable]
-public class BreakToolData : ItemData
+public class BreakToolData : CraftItemData
 {
     public BlockTypeEnum BlockType;
     public int Lv;

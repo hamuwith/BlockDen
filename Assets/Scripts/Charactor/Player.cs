@@ -743,7 +743,7 @@ public class Player : Character
     }
     private bool PutType(ItemCategory category)
     {
-        return category == ItemCategory.UnnatureBlock || category == ItemCategory.Weapon || category == ItemCategory.Seed || category == ItemCategory.WeaponBase || category == ItemCategory.Tool;
+        return category == ItemCategory.UnnatureBlock || category == ItemCategory.Weapon || category == ItemCategory.Seed || category == ItemCategory.WeaponBase || category == ItemCategory.Tool || category == ItemCategory.Box;
     }
     void OnDestroy()
     {

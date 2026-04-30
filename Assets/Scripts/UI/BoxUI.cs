@@ -19,7 +19,6 @@ public class BoxUI : BaseUI
         this.player = player;
         isMove = false;
         index = 0;
-        inventoryIndex = 0;
         isInventory = false;
         UpdateAction();
         _HighLight();

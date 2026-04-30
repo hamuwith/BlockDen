@@ -23,10 +23,34 @@ MonoBehaviour:
     MaxNum: 1
     Texture2D: {fileID: 2800000, guid: a5b717a19c87f554cbbcbfe7d707a0f7, type: 3}
     Icon: {fileID: 21300000, guid: a709a2191d8326f49ac47571611567f3, type: 3}
-    ItemMaterials:
+    RecipeSlots:
+    - Category: 8
+      Id: -1
+      Num: 0
     - Category: 8
       Id: 2
       Num: 2
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
+    - Category: 8
+      Id: -1
+      Num: 0
     Duration: 0
     MoveSpeed: 0
     Power: 1
